@@ -22,7 +22,7 @@ public class Registro extends AppCompatActivity {
 
 
 
-    EditText Nombre, Usuario, Correo, Edad;
+    EditText Nombre, Usuario, Correo, Edad,Pass;
     Spinner Genero;
     Button Cancelar, Registrar;
 
@@ -34,6 +34,7 @@ public class Registro extends AppCompatActivity {
         Usuario = (EditText) findViewById(R.id.Usuario);
         Correo = (EditText) findViewById(R.id.Correo);
         Edad = (EditText) findViewById(R.id.Edad);
+        Pass=(EditText)findViewById(R.id.pass);
         Genero = (Spinner) findViewById(R.id.spinnerGenero);
         Cancelar = (Button) findViewById(R.id.BotonCancelar);
         Registrar = (Button) findViewById(R.id.BotonAgregar);
@@ -67,7 +68,7 @@ public class Registro extends AppCompatActivity {
         Usuario test = new Usuario();
         try{
             Statement pedir =contacto.conectar().createStatement();
-            ResultSet res= pedir.executeQuery("select * from TbRegistros");
+            ResultSet res= pedir.executeQuery("select * from DatosPersonales");
 
             while (res.next()){
                 usuarios.add(new Usuario(res.getString("Nombre"),res.getString("Correo")));
@@ -85,11 +86,12 @@ public class Registro extends AppCompatActivity {
             if (apusr(Usuario.getText().toString())){
                 Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
             }else{
-                Statement pedir = contacto.conectar().prepareStatement("insert into TbRegistros values(?,?,?,?,?)");
+                Statement pedir = contacto.conectar().prepareStatement("insert into DatosPersonales values(?,?,?,?,?)");
                 ((PreparedStatement) pedir).setString(1,Nombre.getText().toString());
-                ((PreparedStatement) pedir).setString(1,Usuario.getText().toString());
-                ((PreparedStatement) pedir).setString(1,Correo.getText().toString());
-                ((PreparedStatement) pedir).setString(1,Edad.getText().toString());
+                ((PreparedStatement) pedir).setString(2,Usuario.getText().toString());
+                ((PreparedStatement) pedir).setString(3,Pass.getText().toString());
+                ((PreparedStatement) pedir).setString(4,Correo.getText().toString());
+                ((PreparedStatement) pedir).setString(5,Edad.getText().toString());
                 //((PreparedStatement) pedir).setString(1,genselected);
                 ((PreparedStatement) pedir).executeUpdate();
                 Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
