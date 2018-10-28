@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent newusr = new Intent(MainActivity.this,MenuPrincipal.class);
 
                 startActivity(newusr);
-               // agregarusuario();
+                //agregarusuario();
             }
         });
         addusr.setOnClickListener(new View.OnClickListener() {

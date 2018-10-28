@@ -11,7 +11,7 @@ public class Conectar extends AppCompatActivity {
     public Conectar() {
     }
 
-    public Connection conectar(){
+    public Connection conectarabase(){
         Connection conexion=null;//objeto tipo conection para acceder
         try{
             //registramos el permiso de acceso para la aplicacion
