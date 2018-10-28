@@ -38,7 +38,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/Nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -58,7 +58,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/Usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -78,7 +78,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/Correo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -98,7 +98,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/Edad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -118,7 +118,7 @@
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinnerGenero"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -131,7 +131,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/BotonCancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -141,7 +141,7 @@
             android:text="@string/btncancel" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/BotonAgregar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

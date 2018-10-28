@@ -38,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
         btnIN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                agregarusuario();
+                Intent newusr = new Intent(MainActivity.this,MenuPrincipal.class);
+
+                startActivity(newusr);
+               // agregarusuario();
             }
         });
         addusr.setOnClickListener(new View.OnClickListener() {
