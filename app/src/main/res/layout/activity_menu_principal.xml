@@ -20,10 +20,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="CONTROL"
+            android:text="@string/MenuP"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:textSize="34sp" />
+            android:textSize="34sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
     <GridLayout
@@ -39,6 +39,7 @@
         <!--primer cuadrante-->
 
         <android.support.v7.widget.CardView
+            android:id="@+id/BtnAgregar"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -58,15 +59,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="37dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/twotone_edit_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Agregar Entrada"
+                    android:text="@string/btnEntrada"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -79,6 +80,7 @@
         <!--segundo cuadrante-->
 
         <android.support.v7.widget.CardView
+            android:id="@+id/BtnEstadisticas"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -98,15 +100,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="41dp"
+                    android:layout_height="42dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/twotone_show_chart_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Estadisticas"
+                    android:text="@string/btnGrafico"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -120,6 +122,7 @@
         <!--tercer cuadrante-->
 
         <android.support.v7.widget.CardView
+            android:id="@+id/BtnReloj"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -139,15 +142,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="52dp"
+                    android:layout_height="38dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/twotone_watch_24" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="63dp"
                     android:layout_height="wrap_content"
-                    android:text="Reloj"
+                    android:text="@string/btnReloj"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -157,6 +160,46 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+        <!--cuarto cuadrante-->
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/BtnDatos"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/cardview_light_background"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/twotone_account_circle_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btnDatos"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
 
     </GridLayout>
