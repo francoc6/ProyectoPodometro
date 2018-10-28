@@ -16,6 +16,10 @@
     <string name="usrform">Usuario:</string>
     <string name="generoform">Selecciona tu genero:</string>
     <string name="mailform">Ingresa tu correo:</string>
+    <string-array name ="genero">
+        <item> Hombre </item>
+        <item> Mujer</item>
+    </string-array>
     <string name="btncancel">CANCELAR</string>
     <string name="btnaddusr">CREAR CUENTA</string>
 
