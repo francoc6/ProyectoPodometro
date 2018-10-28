@@ -20,16 +20,17 @@ public class Registro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-        Nombre = (EditText)findViewById(R.id.Nombre);
-        Usuario = (EditText)findViewById(R.id.Usuario);
-        Correo = (EditText)findViewById(R.id.Correo);
-        Edad = (EditText)findViewById(R.id.Edad);
-        Genero=(Spinner)findViewById(R.id.spinnerGenero);
-        Cancelar =(Button)findViewById(R.id.BotonCancelar);
-        Registrar=(Button)findViewById(R.id.BotonAgregar);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.genero, android.R.layout.simple_spinner_item);
+        Nombre = (EditText) findViewById(R.id.Nombre);
+        Usuario = (EditText) findViewById(R.id.Usuario);
+        Correo = (EditText) findViewById(R.id.Correo);
+        Edad = (EditText) findViewById(R.id.Edad);
+        Genero = (Spinner) findViewById(R.id.spinnerGenero);
+        Cancelar = (Button) findViewById(R.id.BotonCancelar);
+        Registrar = (Button) findViewById(R.id.BotonAgregar);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genero, android.R.layout.simple_spinner_item);
         Genero.setAdapter(adapter);
-
-
     }
+    String tipo1 = Genero.getSelectedItem().toString();
+
+
 }
