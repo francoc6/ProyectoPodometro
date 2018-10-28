@@ -137,11 +137,32 @@
                 android:text="@string/generoform"
                 android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/spinnerGenero"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <RadioGroup
+                android:id="@+id/radio"
+                android:layout_width="wrap_content"
+                android:layout_height="167dp"
+                android:layout_alignEnd="@+id/button2"
+                android:layout_gravity="center_horizontal">
 
+                <RadioButton
+                    android:id="@+id/radioH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="61dp"
+                    android:checked="false"
+                    android:text="Hombre" />
+
+                <RadioButton
+                    android:id="@+id/radioM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioH"
+                    android:layout_centerHorizontal="true"
+                    android:checked="false"
+                    android:text="Mujer" />
+            </RadioGroup>
         </LinearLayout>
     </ScrollView>
 

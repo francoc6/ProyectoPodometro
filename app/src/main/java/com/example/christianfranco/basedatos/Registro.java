@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,9 +23,8 @@ import java.util.List;
 public class Registro extends AppCompatActivity {
 
 
-
+    RadioButton radioH, radioM;
     EditText Nombre, Usuario, Correo, Edad,Pass;
-    Spinner Genero;
     Button Cancelar, Registrar;
 
     @Override
@@ -35,11 +36,12 @@ public class Registro extends AppCompatActivity {
         Correo = (EditText) findViewById(R.id.Correo);
         Edad = (EditText) findViewById(R.id.Edad);
         Pass=(EditText)findViewById(R.id.pass);
-        Genero = (Spinner) findViewById(R.id.spinnerGenero);
+        radioH=(RadioButton)findViewById(R.id.radioH);
+        radioM=(RadioButton)findViewById(R.id.radioM);
+
         Cancelar = (Button) findViewById(R.id.BotonCancelar);
         Registrar = (Button) findViewById(R.id.BotonAgregar);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genero, android.R.layout.simple_spinner_item);
-        Genero.setAdapter(adapter);
+
 
         Registrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +49,6 @@ public class Registro extends AppCompatActivity {
                 agregarusuario();
             }
         });
-
-
         Cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +58,7 @@ public class Registro extends AppCompatActivity {
         });
 
     }
-    //String genselected = Genero.getSelectedItem().toString();
+
 
     Conectar contacto = new Conectar();
 
@@ -71,9 +71,8 @@ public class Registro extends AppCompatActivity {
             ResultSet res= pedir.executeQuery("select * from DatosPersonales");
 
             while (res.next()){
-                usuarios.add(new Usuario(res.getString("Nombre"),res.getString("Correo")));
+                usuarios.add(new Usuario(res.getString("Usuario"),res.getString("Correo")));
             }
-
         }catch (SQLException e){
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
@@ -86,13 +85,19 @@ public class Registro extends AppCompatActivity {
             if (apusr(Usuario.getText().toString())){
                 Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
             }else{
-                Statement pedir = contacto.conectar().prepareStatement("insert into DatosPersonales values(?,?,?,?,?)");
+                Statement pedir = contacto.conectar().prepareStatement("insert into DatosPersonales values(?,?,?,?,?,?)");
                 ((PreparedStatement) pedir).setString(1,Nombre.getText().toString());
                 ((PreparedStatement) pedir).setString(2,Usuario.getText().toString());
                 ((PreparedStatement) pedir).setString(3,Pass.getText().toString());
                 ((PreparedStatement) pedir).setString(4,Correo.getText().toString());
                 ((PreparedStatement) pedir).setString(5,Edad.getText().toString());
-                //((PreparedStatement) pedir).setString(1,genselected);
+                if (radioH.isChecked()==true) {
+                    ((PreparedStatement) pedir).setString(6,radioH.toString());
+                }else{
+                   if(radioM.isChecked()==true) {
+                       ((PreparedStatement) pedir).setString(6, radioM.toString());
+                   }
+                }
                 ((PreparedStatement) pedir).executeUpdate();
                 Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
             }
