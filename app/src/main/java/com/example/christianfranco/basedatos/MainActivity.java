@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ingreso(editUSR.getText().toString(),editPSW.getText().toString())){
-                    sp.edit().putBoolean("login",true).apply();
+                    sp.edit().putBoolean("login",true).apply();//cambia el valor a que ya esta logueado
                     iraprincipal();
                     finish();
                 } else {
