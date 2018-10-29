@@ -41,17 +41,25 @@ public class Registro extends AppCompatActivity {
         Cancelar = (Button) findViewById(R.id.BotonCancelar);
         Registrar = (Button) findViewById(R.id.BotonAgregar);
 
-
         Registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                agregarusuario();
+                //compruebo que boton fue seleccionado para agregarlo
+                String gen="";
+                if (radioH.isChecked()==true) {
+                    gen="Hombre";
+                } else
+                if (radioM.isChecked()==true) {
+                    gen="Mujer";
+                }
+                agregarusuario(gen);
                 if (aprobo) {
                     Intent regresar = new Intent(Registro.this, MainActivity.class);
                     startActivity(regresar);
                 }
             }
         });
+
         Cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +68,9 @@ public class Registro extends AppCompatActivity {
             }
         });
     }
+
+
+
 //valido que el usuario no este ya registrado
     public boolean apusr(String u){
         List<Usuario> usuarios = new ArrayList<>();
@@ -73,28 +84,25 @@ public class Registro extends AppCompatActivity {
         }catch (SQLException e){
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
-
-
         return test.yaexiste(u,usuarios);
     }
 
     Conectar contacto = new Conectar();
-
-    Boolean aprobo= false;
+    Boolean aprobo=false;
     //metodo para agregar usuario
-    public void agregarusuario(){
+    public void agregarusuario(String gen){
         try {
             if (apusr(Usuario.getText().toString())){
                 Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
             }else{
-                aprobo=true;
+                aprobo=true;//para regresar al inicio si se agrego usuario
                 PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into DatosPersonales values(?,?,?,?,?,?)");
                 pedir.setString(1,Nombre.getText().toString());
                 pedir.setString(2,Usuario.getText().toString());
                 pedir.setString(3,Pass.getText().toString());
                 pedir.setString(4,Correo.getText().toString());
                 pedir.setString(5,Edad.getText().toString());
-                pedir.setString(6,"holaaaa");
+                pedir.setString(6,gen);
                 pedir.executeUpdate();
                 Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
             }
