@@ -105,7 +105,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:ems="10"
-                android:inputType="textPersonName|textWebEmailAddress" />
+                android:inputType="textEmailAddress" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -125,7 +125,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="number" />
 
             <TextView
                 android:id="@+id/textView12"

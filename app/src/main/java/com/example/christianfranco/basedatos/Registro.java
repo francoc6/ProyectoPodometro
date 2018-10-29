@@ -47,6 +47,10 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 agregarusuario();
+                Intent regresar = new Intent(Registro.this,MainActivity.class);
+                startActivity(regresar);
+
+
             }
         });
         Cancelar.setOnClickListener(new View.OnClickListener() {
@@ -93,13 +97,8 @@ public class Registro extends AppCompatActivity {
                 pedir.setString(3,Pass.getText().toString());
                 pedir.setString(4,Correo.getText().toString());
                 pedir.setString(5,Edad.getText().toString());
-                if (radioH.isChecked()==true) {
-                    pedir.setString(6,radioH.toString());
-                }else{
-                   if(radioM.isChecked()==true) {
-                       pedir.setString(6, radioM.toString());
-                   }
-                }
+                pedir.setString(6,"holaaaa");
+
                 pedir.executeUpdate();
                 Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
             }
