@@ -46,8 +46,10 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 agregarusuario();
-                Intent regresar = new Intent(Registro.this,MainActivity.class);
-                startActivity(regresar);
+                if (aprobo) {
+                    Intent regresar = new Intent(Registro.this, MainActivity.class);
+                    startActivity(regresar);
+                }
             }
         });
         Cancelar.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +60,6 @@ public class Registro extends AppCompatActivity {
             }
         });
     }
-
 //valido que el usuario no este ya registrado
     public boolean apusr(String u){
         List<Usuario> usuarios = new ArrayList<>();
@@ -72,17 +73,21 @@ public class Registro extends AppCompatActivity {
         }catch (SQLException e){
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
+
+
         return test.yaexiste(u,usuarios);
     }
 
     Conectar contacto = new Conectar();
 
+    Boolean aprobo= false;
     //metodo para agregar usuario
     public void agregarusuario(){
         try {
             if (apusr(Usuario.getText().toString())){
                 Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
             }else{
+                aprobo=true;
                 PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into DatosPersonales values(?,?,?,?,?,?)");
                 pedir.setString(1,Nombre.getText().toString());
                 pedir.setString(2,Usuario.getText().toString());

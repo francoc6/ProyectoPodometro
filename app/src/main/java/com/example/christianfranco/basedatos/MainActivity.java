@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return conexion;
     }
-
-
     public boolean apusr(String u){
         List<Usuario> usuarios = new ArrayList<>();
         Usuario test = new Usuario();
@@ -85,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return test.yaexiste(u,usuarios);
     }
-
-
-
     //metodo para agregar usuario
     public void agregarusuario(){
         try {
