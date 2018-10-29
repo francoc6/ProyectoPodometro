@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(menuprin);
                     //onPause();
                     finish();
-                } else
+                } else {
                     Toast.makeText(getApplicationContext(), "CREDENCIALES INCORRECTAS", Toast.LENGTH_SHORT).show();
-                editUSR.setText("");
-                editPSW.setText("");
-
+                    editUSR.setText("");
+                    editPSW.setText("");
+                }
             }
         });
         addusr.setOnClickListener(new View.OnClickListener() {
