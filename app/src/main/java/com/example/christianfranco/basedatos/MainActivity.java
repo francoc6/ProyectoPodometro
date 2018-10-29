@@ -1,6 +1,7 @@
 package com.example.christianfranco.basedatos;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editUSR, editPSW;
     TextView addusr;
     Button btnIN;
+    SharedPreferences sp;//mantener logeado
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +36,19 @@ public class MainActivity extends AppCompatActivity {
         editPSW = (EditText) findViewById(R.id.editPSW);
         btnIN = (Button) findViewById(R.id.btnIN);
         addusr = (TextView) findViewById(R.id.registarse);
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+
+        if(sp.getBoolean("login",false)){//este metodo revisa si ya esta logueado
+            iraprincipal();
+            finish();
+        }
 
         btnIN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menuprin = new Intent(MainActivity.this, MenuPrincipal.class);
                 if (ingreso(editUSR.getText().toString(),editPSW.getText().toString())){
-                    startActivity(menuprin);
-                    //onPause();
+                    sp.edit().putBoolean("login",true).apply();
+                    iraprincipal();
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "CREDENCIALES INCORRECTAS", Toast.LENGTH_SHORT).show();
@@ -59,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    //ir a menu principal
+    public void iraprincipal(){
+        Intent menuprin = new Intent(MainActivity.this, MenuPrincipal.class);
+        startActivity(menuprin);
+    }
+
 
     //metodo para hacer la conexion a la base de datos
     Conectar contacto = new Conectar();

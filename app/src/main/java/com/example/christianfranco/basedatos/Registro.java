@@ -56,6 +56,7 @@ public class Registro extends AppCompatActivity {
                 if (aprobo) {
                     Intent regresar = new Intent(Registro.this, MainActivity.class);
                     startActivity(regresar);
+                    finish();
                 }
             }
         });
