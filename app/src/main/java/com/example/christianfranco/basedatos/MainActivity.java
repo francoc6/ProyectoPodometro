@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
         btnIN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newusr = new Intent(MainActivity.this,MenuPrincipal.class);
-
-                startActivity(newusr);
+                Intent menuprin = new Intent(MainActivity.this,MenuPrincipal.class);
+                startActivity(menuprin);
                 //agregarusuario();
+                finish();
             }
         });
         addusr.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent newusr = new Intent(MainActivity.this,Registro.class);
                 startActivity(newusr);
+                finish();//evito que regresen al presionar el boto del celular
             }
         });
     }
