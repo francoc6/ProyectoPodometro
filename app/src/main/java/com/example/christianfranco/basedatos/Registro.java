@@ -38,7 +38,6 @@ public class Registro extends AppCompatActivity {
         Pass=(EditText)findViewById(R.id.pass);
         radioH=(RadioButton)findViewById(R.id.radioH);
         radioM=(RadioButton)findViewById(R.id.radioM);
-
         Cancelar = (Button) findViewById(R.id.BotonCancelar);
         Registrar = (Button) findViewById(R.id.BotonAgregar);
 
@@ -49,8 +48,6 @@ public class Registro extends AppCompatActivity {
                 agregarusuario();
                 Intent regresar = new Intent(Registro.this,MainActivity.class);
                 startActivity(regresar);
-
-
             }
         });
         Cancelar.setOnClickListener(new View.OnClickListener() {
@@ -60,11 +57,7 @@ public class Registro extends AppCompatActivity {
                 startActivity(cancelar);
             }
         });
-
     }
-
-
-
 
 //valido que el usuario no este ya registrado
     public boolean apusr(String u){
@@ -73,7 +66,6 @@ public class Registro extends AppCompatActivity {
         try{
             Statement pedir =contacto.conectarabase().createStatement();
             ResultSet res= pedir.executeQuery("select * from DatosPersonales");
-
             while (res.next()){
                 usuarios.add(new Usuario(res.getString("Usuario"),res.getString("Correo")));
             }
@@ -98,7 +90,6 @@ public class Registro extends AppCompatActivity {
                 pedir.setString(4,Correo.getText().toString());
                 pedir.setString(5,Edad.getText().toString());
                 pedir.setString(6,"holaaaa");
-
                 pedir.executeUpdate();
                 Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
             }
@@ -106,8 +97,4 @@ public class Registro extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-
 }
