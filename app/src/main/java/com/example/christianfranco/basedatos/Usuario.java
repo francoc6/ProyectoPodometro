@@ -39,4 +39,16 @@ public class Usuario {
         return false;
 
     }
+
+    public boolean comprobar (String u,String p, List<Usuario> usuarios){
+        for (int i=0; i<usuarios.size(); ++i){
+            if (usuarios.get(i).getNombre().equals(u)&&usuarios.get(i).getCorreo().equals(p)){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
 }
