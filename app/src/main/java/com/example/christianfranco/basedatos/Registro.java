@@ -44,7 +44,7 @@ public class Registro extends AppCompatActivity {
         Registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //compruebo que boton fue seleccionado para agregarlo
+                //compruebo que radioboton fue seleccionado para agregarlo
                 String gen="";
                 if (radioH.isChecked()==true) {
                     gen="Hombre";

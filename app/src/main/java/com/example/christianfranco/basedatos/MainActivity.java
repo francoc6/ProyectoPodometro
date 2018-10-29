@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     //onPause();
                     finish();
                 } else
-                    Toast.makeText(getApplicationContext(), "Credenciales Incorrectas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "CREDENCIALES INCORRECTAS", Toast.LENGTH_SHORT).show();
                 editUSR.setText("");
                 editPSW.setText("");
 
