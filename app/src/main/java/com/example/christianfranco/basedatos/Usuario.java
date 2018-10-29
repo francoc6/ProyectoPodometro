@@ -3,7 +3,7 @@ package com.example.christianfranco.basedatos;
 import java.util.List;
 
 public class Usuario {
-    String Nombre, Correo;
+    String Nombre, Correo, Edad, Usuario, Contraseña, Genero;
 
     public Usuario(){
 
@@ -37,7 +37,6 @@ public class Usuario {
             }
         }
         return false;
-
     }
 
     public boolean comprobar (String u,String p, List<Usuario> usuarios){
