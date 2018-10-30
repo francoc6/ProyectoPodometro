@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     //ir a menu principal
     public void iraprincipal(){
-        Intent menuprin = new Intent(MainActivity.this, MenuPrincipal.class);
+        //Intent menuprin = new Intent(MainActivity.this, MenuPrincipal.class);
+        Intent menuprin = new Intent(MainActivity.this, MenuuPrincipal.class);
         startActivity(menuprin);
     }
 
