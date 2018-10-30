@@ -20,7 +20,12 @@ public class MenuuPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menuu_principal);
-        sp = getSharedPreferences("login",MODE_PRIVATE);
+        sp = getSharedPreferences("logged",MODE_PRIVATE);
+        btnLogOut =(Button)findViewById(R.id.btnLO) ;
+        btnReloj =(Button)findViewById(R.id.btnrel) ;
+        btnDatos =(Button)findViewById(R.id.btnDatos) ;
+        btnEsta =(Button)findViewById(R.id.btnEsta) ;
+        btnIngresar =(Button)findViewById(R.id.btnIN);
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override

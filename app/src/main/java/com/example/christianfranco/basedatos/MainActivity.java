@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         editPSW = (EditText) findViewById(R.id.editPSW);
         btnIN = (Button) findViewById(R.id.btnIN);
         addusr = (TextView) findViewById(R.id.registarse);
-        sp = getSharedPreferences("login",MODE_PRIVATE);
+        sp = getSharedPreferences("logged",MODE_PRIVATE);
 
         if(sp.getBoolean("logged",false)){//este metodo revisa si ya esta logueado
             iraprincipal();

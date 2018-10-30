@@ -18,31 +18,31 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnaddu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnEntrada" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnEsta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnGrafico" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnrel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnReloj" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnDatos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnDatos" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btnLO"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnLo" />
