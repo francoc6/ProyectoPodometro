@@ -16,7 +16,7 @@
     <string name="usrform">Usuario:</string>
     <string name="generoform">Selecciona tu genero:</string>
     <string name="mailform">Ingresa tu correo:</string>
-    <string-array name ="genero">
+    <string-array name="genero">
         <item> Hombre </item>
         <item> Mujer</item>
     </string-array>
@@ -29,6 +29,6 @@
     <string name="btnGrafico">Estadisticas</string>
     <string name="btnReloj">Reloj</string>
     <string name="btnDatos">Datos</string>
-
+    <string name="btnLo">Log Out</string>
 
 </resources>

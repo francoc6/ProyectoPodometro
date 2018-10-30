@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         addusr = (TextView) findViewById(R.id.registarse);
         sp = getSharedPreferences("login",MODE_PRIVATE);
 
-        if(sp.getBoolean("login",false)){//este metodo revisa si ya esta logueado
+        if(sp.getBoolean("logged",false)){//este metodo revisa si ya esta logueado
             iraprincipal();
             finish();
         }
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ingreso(editUSR.getText().toString(),editPSW.getText().toString())){
-                    sp.edit().putBoolean("login",true).apply();//cambia el valor a que ya esta logueado
+                    sp.edit().putBoolean("logged",true).apply();//cambia el valor a que ya esta logueado
                     iraprincipal();
                     finish();
                 } else {
