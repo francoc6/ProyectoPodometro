@@ -65,6 +65,7 @@ public class Registro extends AppCompatActivity {
             public void onClick(View v) {
                 Intent cancelar = new Intent(Registro.this,MainActivity.class);
                 startActivity(cancelar);
+                finish();
             }
         });
     }
