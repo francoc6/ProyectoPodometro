@@ -11,9 +11,8 @@
         android:id="@+id/Lugar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="24sp"
-        tools:text="Lugar:" />
+        android:text="Lugar:"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/resLugar"

@@ -30,7 +30,7 @@ public class ObtenerClima extends AsyncTask<String,Void,String> {
                 data = reader.read();
             }
             return result;
-        } catch (java.io.IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -43,15 +43,20 @@ public class ObtenerClima extends AsyncTask<String,Void,String> {
             JSONObject jsonObject = new JSONObject(result);
             JSONObject clima = new JSONObject(jsonObject.getString("main"));//segun ejemplo como agarra la info del archivo JSON
             double temperatura = Double.parseDouble(clima.getString("temp"));
+            //String tempp = clima.getString("temp");
+
             //cambbiar a centigrados
             int tempCelcius = (int)(temperatura - 273.15);
+
             //lugar donde se toma temperatura
             String lugar = jsonObject.getString("name");
-            Actividades.resLugar.setText(String.valueOf(lugar));//seteo el resultado para mostrar en la otra actividad
+           Actividades.resLugar.setText(String.valueOf(lugar));//seteo el resultado para mostrar en la otra actividad
+            //Actividades.resLugar.setText(lugar);
             Actividades.resTemperatura.setText(String.valueOf(tempCelcius));
+            //Actividades.resTemperatura.setText(tempp);
 
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
