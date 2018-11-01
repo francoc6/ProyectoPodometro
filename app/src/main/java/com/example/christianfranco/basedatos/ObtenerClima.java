@@ -47,6 +47,10 @@ public class ObtenerClima extends AsyncTask<String,Void,String> {
             int tempCelcius = (int)(temperatura - 273.15);
             //lugar donde se toma temperatura
             String lugar = jsonObject.getString("name");
+            Actividades.resLugar.setText(String.valueOf(lugar));//seteo el resultado para mostrar en la otra actividad
+            Actividades.resTemperatura.setText(String.valueOf(tempCelcius));
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -8,6 +8,20 @@
     tools:context=".Actividades">
 
     <TextView
+        android:id="@+id/Lugar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="24sp"
+        tools:text="Lugar:" />
+
+    <TextView
+        android:id="@+id/resLugar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+
+    <TextView
         android:id="@+id/temperatura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -43,6 +43,7 @@ public class MenuuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent actividades = new Intent(MenuuPrincipal.this, Actividades.class);
+                startActivity(actividades);
             }
         });
 
