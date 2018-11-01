@@ -38,5 +38,14 @@ public class MenuuPrincipal extends AppCompatActivity {
         });
 
 
+
+        btnDatos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent actividades = new Intent(MenuuPrincipal.this, Actividades.class);
+            }
+        });
+
+
     }
 }
