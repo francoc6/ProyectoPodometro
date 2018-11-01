@@ -46,15 +46,20 @@ public class MainActivity extends AppCompatActivity {
         btnIN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ingreso(editUSR.getText().toString(),editPSW.getText().toString())){
-                    sp.edit().putBoolean("logged",true).apply();//cambia el valor a que ya esta logueado
-                    iraprincipal();
-                    finish();
-                } else {
-                    Toast.makeText(getApplicationContext(), "CREDENCIALES INCORRECTAS", Toast.LENGTH_SHORT).show();
-                    editUSR.setText("");
-                    editPSW.setText("");
+                try{
+                    if (ingreso(editUSR.getText().toString(),editPSW.getText().toString())){
+                        sp.edit().putBoolean("logged",true).apply();//cambia el valor a que ya esta logueado
+                        iraprincipal();
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "CREDENCIALES INCORRECTAS", Toast.LENGTH_SHORT).show();
+                        editUSR.setText("");
+                        editPSW.setText("");
+                    }
+                }catch(Exception e){
+                    Toast.makeText(getApplicationContext(),"REVISA TU CONEXION",Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
         addusr.setOnClickListener(new View.OnClickListener() {
