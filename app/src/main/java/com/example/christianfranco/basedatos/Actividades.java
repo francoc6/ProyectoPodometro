@@ -48,8 +48,7 @@ public class Actividades extends AppCompatActivity {
         resLongitud.setText(String.valueOf(longitud));
 
         ObtenerClima task = new ObtenerClima();
-        task.execute("https://samples.openweathermap.org/data/2.5/weather?lat="+String.valueOf(latitud)+"&lon="+String.valueOf(longitud)+"&appid=b6907d289e10d714a6e88b30761fae22");
-
-
+       // task.execute("https://samples.openweathermap.org/data/2.5/weather?lat="+String.valueOf(latitud)+"&lon="+String.valueOf(longitud)+"&appid=b6907d289e10d714a6e88b30761fae22");
+        task.execute("https://api.openweathermap.org/data/2.5/weather?lat="+String.valueOf(latitud)+"&lon="+String.valueOf(longitud)+"&appid=dfc9b847f55f036cbc3ea844c1cc9bef");
     }
 }
