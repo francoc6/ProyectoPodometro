@@ -11,11 +11,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ObtenerClima extends AsyncTask<String,Void,String> {
+public class ObtenerClima extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... direccion) {
-        String result ="";
+        String result = "";
         URL url;
         HttpURLConnection urlConnection = null;
         try {
@@ -24,7 +24,7 @@ public class ObtenerClima extends AsyncTask<String,Void,String> {
             InputStream in = urlConnection.getInputStream();
             InputStreamReader reader = new InputStreamReader(in);
             int data = reader.read();
-            while (data != -1){
+            while (data != -1) {
                 char current = (char) data;
                 result += current;
                 data = reader.read();
@@ -43,19 +43,13 @@ public class ObtenerClima extends AsyncTask<String,Void,String> {
             JSONObject jsonObject = new JSONObject(result);
             JSONObject clima = new JSONObject(jsonObject.getString("main"));//segun ejemplo como agarra la info del archivo JSON
             double temperatura = Double.parseDouble(clima.getString("temp"));
-            //String tempp = clima.getString("temp");
-
             //cambbiar a centigrados
-            int tempCelcius = (int)(temperatura - 273.15);
-
+            int tempCelcius = (int) (temperatura - 273.15);
             //lugar donde se toma temperatura
             String lugar = jsonObject.getString("name");
-           Actividades.resLugar.setText(String.valueOf(lugar));//seteo el resultado para mostrar en la otra actividad
-            //Actividades.resLugar.setText(lugar);
+            //seteo el resultado para mostrar en la otra actividad
+            Actividades.resLugar.setText(String.valueOf(lugar));
             Actividades.resTemperatura.setText(String.valueOf(tempCelcius));
-            //Actividades.resTemperatura.setText(tempp);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }

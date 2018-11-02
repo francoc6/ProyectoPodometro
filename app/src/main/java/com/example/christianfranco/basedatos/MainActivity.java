@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
         editPSW = (EditText) findViewById(R.id.editPSW);
         btnIN = (Button) findViewById(R.id.btnIN);
         addusr = (TextView) findViewById(R.id.registarse);
-        sp = getSharedPreferences("logged",MODE_PRIVATE);
+        sp = getSharedPreferences("logged", MODE_PRIVATE);
 
-        if(sp.getBoolean("logged",false)){//este metodo revisa si ya esta logueado
+        if (sp.getBoolean("logged", false)) {//este metodo revisa si ya esta logueado
             iraprincipal();
             finish();
         }
@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         btnIN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    if (ingreso(editUSR.getText().toString(),editPSW.getText().toString())){
-                        sp.edit().putBoolean("logged",true).apply();//cambia el valor a que ya esta logueado
+                try {
+                    if (ingreso(editUSR.getText().toString(), editPSW.getText().toString())) {
+                        sp.edit().putBoolean("logged", true).apply();//cambia el valor a que ya esta logueado
                         iraprincipal();
                         finish();
                     } else {
@@ -56,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
                         editUSR.setText("");
                         editPSW.setText("");
                     }
-                }catch(Exception e){
-                    Toast.makeText(getApplicationContext(),"REVISA TU CONEXION",Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "REVISA TU CONEXION", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         addusr.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //ir a menu principal
-    public void iraprincipal(){
+    public void iraprincipal() {
         //Intent menuprin = new Intent(MainActivity.this, MenuPrincipal.class);
         Intent menuprin = new Intent(MainActivity.this, MenuuPrincipal.class);
         startActivity(menuprin);
@@ -84,21 +83,19 @@ public class MainActivity extends AppCompatActivity {
     //metodo para hacer la conexion a la base de datos
     Conectar contacto = new Conectar();
 
-//descargar lista para comprobar usuarios y contraseña
+    //descargar lista para comprobar usuarios y contraseña
     public boolean ingreso(String u, String p) {
         List<Usuario> usuarios = new ArrayList<>();
         Usuario test = new Usuario();
         try {
             Statement pedir = contacto.conectarabase().createStatement();
             ResultSet res = pedir.executeQuery("select * from DatosPersonales");
-
             while (res.next()) {
                 usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Password")));
             }
-
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        return test.comprobar(u,p, usuarios);
+        return test.comprobar(u, p, usuarios);
     }
 }
