@@ -18,15 +18,17 @@ public class Actividades extends AppCompatActivity {
     static TextView resLongitud;
     static TextView resLugar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividades);
-
         resTemperatura = (TextView) findViewById(R.id.resTemperatura);
         resLatitud = (TextView) findViewById(R.id.resLatitud);
         resLongitud = (TextView) findViewById(R.id.resLongitud);
         resLugar = (TextView) findViewById(R.id.resLugar);
+        double latitud;
+        double longitud;
         try {
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             String provider = locationManager.getBestProvider(new Criteria(), false);
@@ -41,15 +43,14 @@ public class Actividades extends AppCompatActivity {
                 return;
             }
             Location location = locationManager.getLastKnownLocation(provider);
-            double latitud = location.getLatitude();
-            double longitud = location.getLongitude();
+            latitud = location.getLatitude();
+            longitud = location.getLongitude();
             resLatitud.setText(String.valueOf(latitud));
             resLongitud.setText(String.valueOf(longitud));
             ObtenerClima task = new ObtenerClima();
             task.execute("https://api.openweathermap.org/data/2.5/weather?lat=" + String.valueOf(latitud) + "&lon=" + String.valueOf(longitud) + "&appid=dfc9b847f55f036cbc3ea844c1cc9bef");
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "ESTAS JODIDO", Toast.LENGTH_SHORT).show();
-
         }
 
     }
