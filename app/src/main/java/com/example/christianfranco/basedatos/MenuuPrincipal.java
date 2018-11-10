@@ -20,8 +20,8 @@ public class MenuuPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menuu_principal);
 //inicio el servicio de background
-        Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
-        startService(intentservice);
+       // Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
+        //startService(intentservice);
 
 
         sp = getSharedPreferences("logged",MODE_PRIVATE);

@@ -21,8 +21,6 @@ public class MostrarActividad extends AppCompatActivity {
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
     public static int numSteps,anterior=0;
     Button BtnStart, BtnStop;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +39,8 @@ public class MostrarActividad extends AppCompatActivity {
             }
         });
         BtnStop.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
-
-
             }
         });
     }
