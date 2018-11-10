@@ -18,14 +18,10 @@ public class MenuuPrincipal extends AppCompatActivity {
     Button btnLogOut;
     SharedPreferences sp;
 
-    TextView prueba;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menuu_principal);
-
-
 
         //inicio el servicio de background
         Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
@@ -50,9 +46,8 @@ public class MenuuPrincipal extends AppCompatActivity {
         btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent verdatos = new Intent(MenuuPrincipal.this, MostrarActividad.class);
+                Intent verdatos = new Intent(MenuuPrincipal.this, Actividad.class);
                 startActivity(verdatos);
-
             }
         });
     }

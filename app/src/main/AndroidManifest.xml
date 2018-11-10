@@ -31,7 +31,7 @@
             android:name=".ContadordePasos.IntSerBack"
             android:exported="false" />
 
-        <activity android:name=".MostrarActividad"></activity>
+        <activity android:name=".Actividad"></activity>
     </application>
 
 </manifest>

@@ -9,9 +9,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.example.christianfranco.basedatos.MenuuPrincipal;
-import com.example.christianfranco.basedatos.MostrarActividad;
-
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
@@ -135,7 +132,7 @@ public class IntSerBack extends IntentService implements SensorEventListener, St
     public void step(long timeNs) {
         numSteps++;
         try{
-           MostrarActividad.TvSteps.setText(TEXT_NUM_STEPS + numSteps);//yo aqui muestro por pantalla los pasos, actualiza autmaticamnete lo presentado por pantalla
+          // MostrarActividad.TvSteps.setText(TEXT_NUM_STEPS + numSteps);//yo aqui muestro por pantalla los pasos, actualiza autmaticamnete lo presentado por pantalla
         }catch (Exception e){
         }
     }
