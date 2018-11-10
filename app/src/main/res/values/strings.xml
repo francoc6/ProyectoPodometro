@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BaseDatos</string>
+    <string name="app_name">Integradora</string>
     <string name="bienvenido">Bienvenido</string>
     <string name="usuario">USUARIO</string>
     <string name="hintus">Ingresar Usuario</string>
