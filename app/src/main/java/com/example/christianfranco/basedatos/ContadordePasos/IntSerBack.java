@@ -1,8 +1,15 @@
 package com.example.christianfranco.basedatos.ContadordePasos;
 
+
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+
+import com.example.christianfranco.basedatos.MostrarActividad;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -11,19 +18,26 @@ import android.content.Context;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
-public class IntSerBack extends IntentService {
+public class IntSerBack extends IntentService implements SensorEventListener, StepListener {
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
-    private static final String ACTION_FOO = "com.example.christianfranco.basedatos.ContadordePasos.action.FOO";
-    private static final String ACTION_BAZ = "com.example.christianfranco.basedatos.ContadordePasos.action.BAZ";
+    private static final String ACTION_FOO = "com.example.christianfranco.podometro.action.FOO";
+    private static final String ACTION_BAZ = "com.example.christianfranco.podometro.action.BAZ";
 
     // TODO: Rename parameters
-    private static final String EXTRA_PARAM1 = "com.example.christianfranco.basedatos.ContadordePasos.extra.PARAM1";
-    private static final String EXTRA_PARAM2 = "com.example.christianfranco.basedatos.ContadordePasos.extra.PARAM2";
+    private static final String EXTRA_PARAM1 = "com.example.christianfranco.podometro.extra.PARAM1";
+    private static final String EXTRA_PARAM2 = "com.example.christianfranco.podometro.extra.PARAM2";
 
     public IntSerBack() {
-        super("IntSerBack");
+        super("MyIntentService");
     }
+
+    //parametros para el sensor
+    private StepDetector simpleStepDetector;
+    private SensorManager sensorManager;
+    private Sensor accel;
+    private static final String TEXT_NUM_STEPS = "Numero de pasos realizados: ";
+    private static int numSteps;
 
     /**
      * Starts this service to perform action Foo with the given parameters. If
@@ -69,6 +83,17 @@ public class IntSerBack extends IntentService {
                 handleActionBaz(param1, param2);
             }
         }
+
+//sensorrrrrr de  contar pasossssssssssssss
+        // Get an instance of the SensorManager
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        simpleStepDetector = new StepDetector();
+        simpleStepDetector.registerListener(this);
+
+        numSteps=0;
+        sensorManager.registerListener(IntSerBack.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
+
     }
 
     /**
@@ -88,4 +113,34 @@ public class IntSerBack extends IntentService {
         // TODO: Handle action Baz
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+
+
+    /////////////////////METODOS DEL SENSOR
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            simpleStepDetector.updateAccel(
+                    event.timestamp, event.values[0], event.values[1], event.values[2]);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//nadddddddddddddddddddddddddddd
+    }
+
+    @Override
+    public void step(long timeNs) {
+        numSteps++;
+        try{
+            MostrarActividad.TvSteps.setText(TEXT_NUM_STEPS + numSteps);//yo aqui muestro por pantalla los pasos, actualiza autmaticamnete lo presentado por pantalla
+        }catch (Exception e){
+        }
+    }
+
+    public static int getNumSteps() {//accedo al contador desde la pantalla que muestra los numeros
+        return numSteps;
+    }
 }
+

@@ -29,7 +29,9 @@
 
         <service
             android:name=".ContadordePasos.IntSerBack"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".MostrarActividad"></activity>
     </application>
 
 </manifest>

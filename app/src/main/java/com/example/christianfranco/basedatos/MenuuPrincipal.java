@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
+
 public class MenuuPrincipal extends AppCompatActivity {
     Button btnIngresar;
     Button btnEsta;
@@ -16,6 +19,11 @@ public class MenuuPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menuu_principal);
+//inicio el servicio de background
+        Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
+        startService(intentservice);
+
+
         sp = getSharedPreferences("logged",MODE_PRIVATE);
         btnLogOut =(Button)findViewById(R.id.btnLO) ;
         btnReloj =(Button)findViewById(R.id.btnrel) ;
@@ -35,6 +43,9 @@ public class MenuuPrincipal extends AppCompatActivity {
         btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent verdatos= new Intent(MenuuPrincipal.this,MostrarActividad.class);
+                startActivity(verdatos);
+
             }
         });
     }
