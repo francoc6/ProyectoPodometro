@@ -26,6 +26,10 @@
         <activity android:name=".MenuPrincipal" />
         <activity android:name=".Registro" />
         <activity android:name=".MenuuPrincipal" />
+
+        <service
+            android:name=".ContadordePasos.IntSerBack"
+            android:exported="false"></service>
     </application>
 
 </manifest>
