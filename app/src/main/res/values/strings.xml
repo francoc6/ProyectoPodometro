@@ -27,8 +27,8 @@
     <string name="MenuP">CONTROL</string>
     <string name="btnEntrada">Agregar Entrada</string>
     <string name="btnGrafico">Estadisticas</string>
-    <string name="btnReloj">Reloj</string>
-    <string name="btnDatos">Datos</string>
+    <string name="btnReloj">Opciones</string>
+    <string name="btnDatos">Pasos!</string>
     <string name="btnLo">Log Out</string>
 
 </resources>
