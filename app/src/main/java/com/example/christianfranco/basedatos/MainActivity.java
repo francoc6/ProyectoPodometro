@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         addusr = (TextView) findViewById(R.id.registarse);
         sp = getSharedPreferences("logged", MODE_PRIVATE);
 
-        if (sp.getBoolean("logged", false)) {//este metodo revisa si ya esta logueado
+        if (sp.getBoolean("logged", false)) {//este metodo revisa si ya esta logeado
             iraprincipal();
             finish();
         }
