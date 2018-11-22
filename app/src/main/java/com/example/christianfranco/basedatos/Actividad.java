@@ -1,6 +1,4 @@
 package com.example.christianfranco.basedatos;
-
-
 import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +31,7 @@ public class Actividad extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 simpleChronometer.start();
-                simpleChronometer.setFormat("Time Running %s");
+                simpleChronometer.setFormat("%s");
                 simpleChronometer.setBase(SystemClock.elapsedRealtime());
                 IntSerBack.start();
                 startService(intentservice);
