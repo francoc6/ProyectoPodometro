@@ -20,36 +20,32 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/opcionspinner"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:scrollbarSize="50dp"
-        android:spinnerMode="dialog" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <Spinner
+            android:id="@+id/opcionspinner"
+            android:layout_width="172dp"
+            android:layout_height="46dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:scrollbarSize="50dp"
+            android:spinnerMode="dialog" />
+
         <EditText
             android:id="@+id/adddato"
-            android:layout_width="112dp"
+            android:layout_width="155dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:inputType="numberDecimal" />
-
-        <TextView
-            android:id="@+id/Unidad"
-            android:layout_width="126dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Unidad" />
 
     </LinearLayout>
 
