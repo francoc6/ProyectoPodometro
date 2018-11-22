@@ -69,34 +69,15 @@ public class Registro extends AppCompatActivity {
         });
     }
 
-
-    //valido que el usuario no este ya registrado
-    public boolean apusr(String u) {
-        List<Usuario> usuarios = new ArrayList<>();
-        Usuario test = new Usuario();
-        try {
-            Statement pedir = contacto.conectarabase().createStatement();
-            ResultSet res = pedir.executeQuery("select * from DatosPersonales");
-            while (res.next()) {
-                usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Correo")));
-            }
-        } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        return test.yaexiste(u, usuarios);
-    }
-
-    Conectar contacto = new Conectar();
-    Boolean aprobo = false;
-
     //metodo para agregar usuario
+    Boolean aprobo = false;
     public void agregarusuario(String gen) {
         try {
             String res =verificarcampos(Nombre.getText().toString(),Usuario.getText().toString(),Correo.getText().toString(),Edad.getText().toString(),Pass.getText().toString());
-            if (res=="") {
+            if (res=="") {//si los campos no estan vacios, siue a  verificar que el usuario no exista
                 if (apusr(Usuario.getText().toString())) {
                     Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
-                } else {
+                } else {//si el usuario no existe se comunica a la base para el registro
                     aprobo = true;//para regresar al inicio si se agrego usuario
                     PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into DatosPersonales values(?,?,?,?,?,?)");
                     pedir.setString(1, Nombre.getText().toString());
@@ -117,7 +98,23 @@ public class Registro extends AppCompatActivity {
         }
     }
 
-
+    //metodo paravalidar que el usuario no este ya registrado
+    Conectar contacto = new Conectar();
+    public boolean apusr(String u) {
+        List<Usuario> usuarios = new ArrayList<>();
+        Usuario test = new Usuario();
+        try {
+            Statement pedir = contacto.conectarabase().createStatement();
+            ResultSet res = pedir.executeQuery("select * from DatosPersonales");
+            while (res.next()) {
+                usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Correo")));
+            }
+        } catch (SQLException e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        return test.yaexiste(u, usuarios);
+    }
+    //metodo para verificar campos vacios
     public String verificarcampos(String Nombre, String U, String Correo, String Edad, String Pass) {
         String resultado = "";
         if (Nombre.isEmpty()) { resultado += "Nombre "; }
