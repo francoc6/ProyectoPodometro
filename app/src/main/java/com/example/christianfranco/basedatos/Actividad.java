@@ -1,4 +1,5 @@
 package com.example.christianfranco.basedatos;
+
 import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
 
 public class Actividad extends AppCompatActivity {
-
     public static TextView TvSteps;
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
     Button BtnStart, BtnStop;
