@@ -26,9 +26,14 @@
 
     <string name="MenuP">CONTROL</string>
     <string name="btnEntrada">Agregar Entrada</string>
-    <string name="btnGrafico">Estadisticas</string>
-    <string name="btnReloj">Opciones</string>
+    <string name="btnConsulta">Consulta</string>
+    <string name="btnOpciones">Opciones</string>
     <string name="btnDatos">Pasos!</string>
     <string name="btnLo">Log Out</string>
+    <string name="title_activity_agregar_dato">AgregarDato</string>
+
+
+    <string name="tipodato">SELECCIONA EL TIPO DE DATO A INGRESAR</string>
+
 
 </resources>

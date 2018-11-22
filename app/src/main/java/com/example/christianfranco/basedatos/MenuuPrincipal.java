@@ -11,10 +11,9 @@ import android.widget.Button;
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
 
 public class MenuuPrincipal extends AppCompatActivity {
-    Button btnIngresar;
-    Button btnEsta;
-    Button btnReloj;
-    Button btnDatos;
+    Button btnagregar;
+    Button btnConsulta;
+    Button btnPasos;
     Button btnLogOut;
     SharedPreferences sp;
 
@@ -29,10 +28,9 @@ public class MenuuPrincipal extends AppCompatActivity {
 
         sp = getSharedPreferences("logged", MODE_PRIVATE);
         btnLogOut = (Button) findViewById(R.id.btnLO);
-        btnReloj = (Button) findViewById(R.id.btnrel);
-        btnDatos = (Button) findViewById(R.id.btnDatos);
-        btnEsta = (Button) findViewById(R.id.btnEsta);
-        btnIngresar = (Button) findViewById(R.id.btnIN);
+        btnPasos = (Button) findViewById(R.id.btnPasos);
+        btnConsulta = (Button) findViewById(R.id.btnConsulta);
+        btnagregar = (Button) findViewById(R.id.btnagregar);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +41,16 @@ public class MenuuPrincipal extends AppCompatActivity {
             }
         });
 
-        btnDatos.setOnClickListener(new View.OnClickListener() {
+        btnagregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent add = new Intent(MenuuPrincipal.this,AgregarDato.class);
+                startActivity(add);
+            }
+        });
+
+
+        btnPasos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent verdatos = new Intent(MenuuPrincipal.this, Actividad.class);

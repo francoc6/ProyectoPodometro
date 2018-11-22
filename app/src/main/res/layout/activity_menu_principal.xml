@@ -109,7 +109,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/btnGrafico"
+                    android:text="Opciones"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -151,7 +151,7 @@
                 <TextView
                     android:layout_width="63dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/btnReloj"
+                    android:text="Reloj"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"

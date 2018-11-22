@@ -18,25 +18,25 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/btnaddu"
+        android:id="@+id/btnagregar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnEntrada" />
 
     <Button
-        android:id="@+id/btnEsta"
+        android:id="@+id/btnConsulta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btnGrafico" />
+        android:text="@string/btnConsulta" />
 
     <Button
-        android:id="@+id/btnrel"
+        android:id="@+id/btnOpciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btnReloj" />
+        android:text="@string/btnOpciones" />
 
     <Button
-        android:id="@+id/btnDatos"
+        android:id="@+id/btnPasos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnDatos" />
