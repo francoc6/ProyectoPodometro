@@ -30,7 +30,7 @@ public class Usuario {
         Correo = correo;
     }
     
-    public boolean yaexiste (String u, List<Usuario> usuarios){
+    public boolean yaexiste (String u, List<Usuario> usuarios){//funcion que  utiliza  la comprobacion de usuario
         for (int i=0; i<usuarios.size(); ++i){
             if (usuarios.get(i).getNombre().equals(u)){
                 return true;
@@ -39,15 +39,29 @@ public class Usuario {
         return false;
     }
 
-    public boolean comprobar (String u,String p, List<Usuario> usuarios){
+
+    public int verificar (String u, List<Usuario> usuarios){//funcion que  utiliza  la comprobacion de usuario
+        for (int i=0; i<usuarios.size(); ++i){
+            if (usuarios.get(i).getNombre().equals(u)){
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+
+
+
+
+
+
+
+    public boolean comprobar (String u,String p, List<Usuario> usuarios){//funcion que realiza el logeo
         for (int i=0; i<usuarios.size(); ++i){
             if (usuarios.get(i).getNombre().equals(u)&&usuarios.get(i).getCorreo().equals(p)){
                 return true;
             }
         }
         return false;
-
     }
-
-
 }

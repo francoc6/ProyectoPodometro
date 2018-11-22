@@ -24,7 +24,7 @@ public class Registro extends AppCompatActivity {
 
 
     RadioButton radioH, radioM;
-    EditText Nombre, Usuario, Correo, Edad,Pass;
+    EditText Nombre, Usuario, Correo, Edad, Pass;
     Button Cancelar, Registrar;
 
     @Override
@@ -35,9 +35,9 @@ public class Registro extends AppCompatActivity {
         Usuario = (EditText) findViewById(R.id.Usuario);
         Correo = (EditText) findViewById(R.id.Correo);
         Edad = (EditText) findViewById(R.id.Edad);
-        Pass=(EditText)findViewById(R.id.pass);
-        radioH=(RadioButton)findViewById(R.id.radioH);
-        radioM=(RadioButton)findViewById(R.id.radioM);
+        Pass = (EditText) findViewById(R.id.pass);
+        radioH = (RadioButton) findViewById(R.id.radioH);
+        radioM = (RadioButton) findViewById(R.id.radioM);
         Cancelar = (Button) findViewById(R.id.BotonCancelar);
         Registrar = (Button) findViewById(R.id.BotonAgregar);
 
@@ -45,12 +45,11 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //compruebo que radioboton fue seleccionado para agregarlo
-                String gen="";
-                if (radioH.isChecked()==true) {
-                    gen="Hombre";
-                } else
-                if (radioM.isChecked()==true) {
-                    gen="Mujer";
+                String gen = "";
+                if (radioH.isChecked() == true) {
+                    gen = "Hombre";
+                } else if (radioM.isChecked() == true) {
+                    gen = "Mujer";
                 }
                 agregarusuario(gen);
                 if (aprobo) {
@@ -63,7 +62,7 @@ public class Registro extends AppCompatActivity {
         Cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cancelar = new Intent(Registro.this,MainActivity.class);
+                Intent cancelar = new Intent(Registro.this, MainActivity.class);
                 startActivity(cancelar);
                 finish();
             }
@@ -71,44 +70,73 @@ public class Registro extends AppCompatActivity {
     }
 
 
-
-//valido que el usuario no este ya registrado
-    public boolean apusr(String u){
+    //valido que el usuario no este ya registrado
+    public boolean apusr(String u) {
         List<Usuario> usuarios = new ArrayList<>();
         Usuario test = new Usuario();
-        try{
-            Statement pedir =contacto.conectarabase().createStatement();
-            ResultSet res= pedir.executeQuery("select * from DatosPersonales");
-            while (res.next()){
-                usuarios.add(new Usuario(res.getString("Usuario"),res.getString("Correo")));
+        try {
+            Statement pedir = contacto.conectarabase().createStatement();
+            ResultSet res = pedir.executeQuery("select * from DatosPersonales");
+            while (res.next()) {
+                usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Correo")));
             }
-        }catch (SQLException e){
-            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+        } catch (SQLException e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        return test.yaexiste(u,usuarios);
+        return test.yaexiste(u, usuarios);
     }
 
     Conectar contacto = new Conectar();
-    Boolean aprobo=false;
+    Boolean aprobo = false;
+
     //metodo para agregar usuario
-    public void agregarusuario(String gen){
+    public void agregarusuario(String gen) {
         try {
-            if (apusr(Usuario.getText().toString())){
-                Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
-            }else{
-                aprobo=true;//para regresar al inicio si se agrego usuario
-                PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into DatosPersonales values(?,?,?,?,?,?)");
-                pedir.setString(1,Nombre.getText().toString());
-                pedir.setString(2,Usuario.getText().toString());
-                pedir.setString(3,Pass.getText().toString());
-                pedir.setString(4,Correo.getText().toString());
-                pedir.setString(5,Edad.getText().toString());
-                pedir.setString(6,gen);
-                pedir.executeUpdate();
-                Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+            String res =verificarcampos(Nombre.getText().toString(),Usuario.getText().toString(),Correo.getText().toString(),Edad.getText().toString(),Pass.getText().toString());
+            if (res=="") {
+                if (apusr(Usuario.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
+                } else {
+                    aprobo = true;//para regresar al inicio si se agrego usuario
+                    PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into DatosPersonales values(?,?,?,?,?,?)");
+                    pedir.setString(1, Nombre.getText().toString());
+                    pedir.setString(2, Usuario.getText().toString());
+                    pedir.setString(3, Pass.getText().toString());
+                    pedir.setString(4, Correo.getText().toString());
+                    pedir.setString(5, Edad.getText().toString());
+                    pedir.setString(6, gen);
+                    pedir.executeUpdate();
+                    Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                }
             }
-        }catch (SQLException e ){
-            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(getApplicationContext(), "Los siguientes campos estan vacios "+res+"Por favor llenarlos", Toast.LENGTH_SHORT).show();
+            }
+        } catch (SQLException e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    public String verificarcampos(String Nombre, String U, String Correo, String Edad, String Pass) {
+        String resultado = "";
+        if (Nombre.isEmpty()) {
+            resultado += "Nombre ";
+        }
+        if (U.isEmpty()) {
+            resultado += "Usuario ";
+        }
+        if (Correo.isEmpty()) {
+            resultado += "Correo ";
+        }
+        if (Edad.isEmpty()) {
+            resultado += "Edad ";
+        }
+        if (Pass.isEmpty()) {
+            resultado += "Contraseña ";
+        }
+        return resultado;
+    }
+
+
 }
