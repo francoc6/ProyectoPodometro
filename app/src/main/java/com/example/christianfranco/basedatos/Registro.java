@@ -110,7 +110,7 @@ public class Registro extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(getApplicationContext(), "Los siguientes campos estan vacios "+res+"Por favor llenarlos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Los siguientes campos estan vacios "+res+"Por favor completarlos", Toast.LENGTH_SHORT).show();
             }
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -120,21 +120,11 @@ public class Registro extends AppCompatActivity {
 
     public String verificarcampos(String Nombre, String U, String Correo, String Edad, String Pass) {
         String resultado = "";
-        if (Nombre.isEmpty()) {
-            resultado += "Nombre ";
-        }
-        if (U.isEmpty()) {
-            resultado += "Usuario ";
-        }
-        if (Correo.isEmpty()) {
-            resultado += "Correo ";
-        }
-        if (Edad.isEmpty()) {
-            resultado += "Edad ";
-        }
-        if (Pass.isEmpty()) {
-            resultado += "Contraseña ";
-        }
+        if (Nombre.isEmpty()) { resultado += "Nombre "; }
+        if (U.isEmpty()) { resultado += "Usuario "; }
+        if (Correo.isEmpty()) { resultado += "Correo "; }
+        if (Edad.isEmpty()) { resultado += "Edad "; }
+        if (Pass.isEmpty()) { resultado += "Contraseña "; }
         return resultado;
     }
 
