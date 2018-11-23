@@ -34,13 +34,12 @@ public class Actividad extends AppCompatActivity {
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                dialog.show(getSupportFragmentManager(),"Mi dialogo");
-                    simpleChronometer.start();
-                    simpleChronometer.setFormat("%s");
-                    simpleChronometer.setBase(SystemClock.elapsedRealtime());
-                    IntSerBack.start();
-                    startService(intentservice);
-
+                dialog.show(getSupportFragmentManager(), "Mi dialogo");
+                simpleChronometer.start();
+                simpleChronometer.setFormat("%s");
+                simpleChronometer.setBase(SystemClock.elapsedRealtime());
+                IntSerBack.start();
+                startService(intentservice);
             }
         });
         BtnStop.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +49,9 @@ public class Actividad extends AppCompatActivity {
                 simpleChronometer.setBase(SystemClock.elapsedRealtime());
                 IntSerBack.detener();
                 stopService(intentservice);
+                dialog.show(getSupportFragmentManager(), "Mi dialogo");
             }
         });
     }
+
 }

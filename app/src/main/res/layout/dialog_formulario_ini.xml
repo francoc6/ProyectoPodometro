@@ -28,7 +28,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/Pregunta1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -86,7 +86,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/Pregunta2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -145,7 +145,7 @@
 
 
             <TextView
-                android:id="@+id/textView153"
+                android:id="@+id/Pregunta3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -204,7 +204,7 @@
 
 
             <TextView
-                android:id="@+id/textView145"
+                android:id="@+id/Pregunta4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

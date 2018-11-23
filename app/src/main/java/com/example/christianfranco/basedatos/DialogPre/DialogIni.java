@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.christianfranco.basedatos.Conectar;
 import com.example.christianfranco.basedatos.R;
+import com.example.christianfranco.basedatos.Usuario;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -26,6 +28,9 @@ public class DialogIni extends DialogFragment {
     private RadioButton p31, p32, p33, p34, p35;
     private RadioButton p41, p42, p43, p44, p45;
     private Button Aceptar;
+    public static TextView Preg1,Preg2,Preg3,Preg4;
+    public static String tabla="",toast="";
+    public static boolean selecpreg=true;
 
 
     @Nullable
@@ -54,9 +59,23 @@ public class DialogIni extends DialogFragment {
         p42 = (RadioButton) view.findViewById(R.id.i42);
         p43 = (RadioButton) view.findViewById(R.id.i43);
         p44 = (RadioButton) view.findViewById(R.id.i44);
-        p45 = (RadioButton) view.findViewById(R.id.i45);
+
+
+        Preg1=(TextView)view.findViewById(R.id.Pregunta1);
+        Preg2=(TextView)view.findViewById(R.id.Pregunta2);
+        Preg3=(TextView)view.findViewById(R.id.Pregunta3);
+        Preg4=(TextView)view.findViewById(R.id.Pregunta4);
 
         Aceptar = view.findViewById(R.id.iniAceptar);
+
+        if(!Usuario.banderaformulario){
+            preguntasiniciales();
+            Usuario.banderaformulario=true;
+        }else{
+            preguntasfinales();
+            Usuario.banderaformulario=false;
+        }
+
         Aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,9 +144,9 @@ public class DialogIni extends DialogFragment {
 
     public void agregarformularioini(String resultados) {
         String[] parts = resultados.split(" ");//separo el string por espacios
-
+        String orden="insert into "+tabla+" values(?,?,?,?)";//obtengo la base a usar
         try {
-            PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into FormularioInicio values(?,?,?,?)");
+            PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
             pedir.setString(1, (parts[0]));
             pedir.setString(2, (parts[1]));
             pedir.setString(3, (parts[2]));
@@ -136,7 +155,25 @@ public class DialogIni extends DialogFragment {
             Toast.makeText(getContext(), "Formulario agregado CORRECTAMENTE", Toast.LENGTH_SHORT).show();
 
         } catch (SQLException e) {
-            Toast.makeText(getContext(), "Revisa tu conexion", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), toast, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void preguntasiniciales() {
+        Preg1.setText("Pregunta Inicial 1");
+        Preg2.setText("Pregunta Inicial 2");
+        Preg3.setText("Pregunta Inicial 3");
+        Preg4.setText("Pregunta Inicial 4");
+        tabla = "FormularioInicio";
+        toast = "Formulario Inicial Agregado Correctamente";
+    }
+
+    public void preguntasfinales() {
+        Preg1.setText("Pregunta Final 1");
+        Preg2.setText("Pregunta Final 2");
+        Preg3.setText("Pregunta Final 3");
+        Preg4.setText("Pregunta Final 4");
+        tabla = "FormularioFinal";
+        toast = "Formulario Final Agregado Correctamente";
     }
 }

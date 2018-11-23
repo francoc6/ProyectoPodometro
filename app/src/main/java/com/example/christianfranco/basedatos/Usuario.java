@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Usuario {
     String Nombre, Correo, Edad, Usuario, Contraseña, Genero;
+    public static boolean banderaformulario=false;//uso para seleccionar las preguntas
 
     public Usuario(){
 
