@@ -36,4 +36,11 @@
     <string name="tipodato">SELECCIONA EL TIPO DE DATO A INGRESAR</string>
 
 
+    <string name="TituloPre">Contesta las siguientes preguntas, con 1 como menor y 5 como mayor </string>
+    <string name="iniP1">Pregunta 1 </string>
+    <string name="iniP2">Pregunta 2 </string>
+    <string name="iniP3">Pregunta 3 </string>
+    <string name="iniP4">Pregunta 4 </string>
+    <string name="iniP5">Pregunta 5 </string>
+
 </resources>

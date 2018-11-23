@@ -145,7 +145,7 @@
                 android:layout_gravity="center_horizontal">
 
                 <RadioButton
-                    android:id="@+id/radioH"
+                    android:id="@+id/i22"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -158,7 +158,7 @@
                     android:id="@+id/radioM"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/radioH"
+                    android:layout_below="@+id/i22"
                     android:layout_centerHorizontal="true"
                     android:checked="false"
                     android:text="Mujer" />

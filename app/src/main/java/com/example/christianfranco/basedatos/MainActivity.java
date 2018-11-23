@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
     //metodo para hacer la conexion a la base de datos
     Conectar contacto = new Conectar();
-
     //descargar lista para comprobar usuarios y contraseña
     public boolean ingreso(String u, String p) {
         List<Usuario> usuarios = new ArrayList<>();

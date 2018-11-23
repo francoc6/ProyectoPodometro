@@ -10,6 +10,7 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
+import com.example.christianfranco.basedatos.DialogPre.DialogIni;
 
 public class Actividad extends AppCompatActivity {
     public static TextView TvSteps;
@@ -27,9 +28,13 @@ public class Actividad extends AppCompatActivity {
         TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
         simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
+
+        final DialogIni dialog = new DialogIni();
+
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                dialog.show(getSupportFragmentManager(),"Mi dialogo");
                 simpleChronometer.start();
                 simpleChronometer.setFormat("%s");
                 simpleChronometer.setBase(SystemClock.elapsedRealtime());

@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.PreparedStatement;
@@ -36,7 +32,7 @@ public class Registro extends AppCompatActivity {
         Correo = (EditText) findViewById(R.id.Correo);
         Edad = (EditText) findViewById(R.id.Edad);
         Pass = (EditText) findViewById(R.id.pass);
-        radioH = (RadioButton) findViewById(R.id.radioH);
+        radioH = (RadioButton) findViewById(R.id.i22);
         radioM = (RadioButton) findViewById(R.id.radioM);
         Cancelar = (Button) findViewById(R.id.BotonCancelar);
         Registrar = (Button) findViewById(R.id.BotonAgregar);
@@ -94,12 +90,14 @@ public class Registro extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Los siguientes campos estan vacios "+res+"Por favor completarlos", Toast.LENGTH_SHORT).show();
             }
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Revisa tu conexion", Toast.LENGTH_SHORT).show();
         }
     }
 
     //metodo paravalidar que el usuario no este ya registrado
     Conectar contacto = new Conectar();
+
+
     public boolean apusr(String u) {
         List<Usuario> usuarios = new ArrayList<>();
         Usuario test = new Usuario();
@@ -124,6 +122,5 @@ public class Registro extends AppCompatActivity {
         if (Pass.isEmpty()) { resultado += "Contraseña "; }
         return resultado;
     }
-
 
 }
