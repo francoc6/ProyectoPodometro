@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editUSR, editPSW;
     TextView addusr;
     Button btnIN;
-    SharedPreferences sp;//mantener logeado
+    SharedPreferences sp,usuariognr;//mantener logeado
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         editPSW = (EditText) findViewById(R.id.editPSW);
         btnIN = (Button) findViewById(R.id.btnIN);
         addusr = (TextView) findViewById(R.id.registarse);
-        sp = getSharedPreferences("logged", MODE_PRIVATE);
+        sp = getSharedPreferences("logged", MODE_PRIVATE);//varia para mantenerse ogeado
+        usuariognr=getSharedPreferences("usuario",MODE_PRIVATE);//variable para guardar el usuario
 
         if (sp.getBoolean("logged", false)) {//este metodo revisa si ya esta logeado
             iraprincipal();
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         //Intent menuprin = new Intent(MainActivity.this, MenuPrincipal.class);
         Intent menuprin = new Intent(MainActivity.this, MenuuPrincipal.class);
         startActivity(menuprin);
+        usuariognr.getString("usuario",editUSR.getText().toString());//guardo el usuario con el que tarbajo para las tablas
     }
 
 

@@ -8,8 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
+import com.example.christianfranco.basedatos.Conectar;
 import com.example.christianfranco.basedatos.R;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 
 public class DialogIni extends DialogFragment {
@@ -31,8 +36,7 @@ public class DialogIni extends DialogFragment {
         Aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                agregarformularioini(resultados());//envio los resultado a la  base de ddatos
                 getDialog().dismiss();//salir de la pantalla
             }
         });
@@ -41,33 +45,74 @@ public class DialogIni extends DialogFragment {
     }
 
     public int[] resultados() {//se lo podria hacer con un case, pero seria casi lo mismo obteniendo los id
-        int res[]={};
+        int res[] = {};
 
         //Pregunta 1
-        if (p11.isChecked()) { res[0]=1; }
-        else if (p12.isChecked()) { res[0]=2; }
-        else if(p13.isChecked()){ res[0]=3; }
-        else if(p14.isChecked()){ res[0]=4; }
-        else if(p15.isChecked()){ res[0]=5; }
+        if (p11.isChecked()) {
+            res[0] = 1;
+        } else if (p12.isChecked()) {
+            res[0] = 2;
+        } else if (p13.isChecked()) {
+            res[0] = 3;
+        } else if (p14.isChecked()) {
+            res[0] = 4;
+        } else if (p15.isChecked()) {
+            res[0] = 5;
+        }
         //Pregunta 2
-        if (p21.isChecked()) { res[1]=1; }
-        else if (p22.isChecked()) { res[1]=2; }
-        else if(p23.isChecked()){ res[1]=3; }
-        else if(p24.isChecked()){ res[1]=4; }
-        else if(p25.isChecked()){ res[1]=5; }
+        if (p21.isChecked()) {
+            res[1] = 1;
+        } else if (p22.isChecked()) {
+            res[1] = 2;
+        } else if (p23.isChecked()) {
+            res[1] = 3;
+        } else if (p24.isChecked()) {
+            res[1] = 4;
+        } else if (p25.isChecked()) {
+            res[1] = 5;
+        }
         //Pregunta 3
-        if (p31.isChecked()) { res[2]=1; }
-        else if (p32.isChecked()) { res[2]=2; }
-        else if(p33.isChecked()){ res[2]=3; }
-        else if(p34.isChecked()){ res[2]=4; }
-        else if(p35.isChecked()){ res[2]=5; }
+        if (p31.isChecked()) {
+            res[2] = 1;
+        } else if (p32.isChecked()) {
+            res[2] = 2;
+        } else if (p33.isChecked()) {
+            res[2] = 3;
+        } else if (p34.isChecked()) {
+            res[2] = 4;
+        } else if (p35.isChecked()) {
+            res[2] = 5;
+        }
         //Pregunta 4
-        if (p41.isChecked()) { res[3]=1; }
-        else if (p42.isChecked()) { res[3]=2; }
-        else if(p43.isChecked()){ res[3]=3; }
-        else if(p44.isChecked()){ res[3]=4; }
-        else if(p45.isChecked()){ res[3]=5; }
+        if (p41.isChecked()) {
+            res[3] = 1;
+        } else if (p42.isChecked()) {
+            res[3] = 2;
+        } else if (p43.isChecked()) {
+            res[3] = 3;
+        } else if (p44.isChecked()) {
+            res[3] = 4;
+        } else if (p45.isChecked()) {
+            res[3] = 5;
+        }
         return res;
     }
+    
+    Conectar contacto = new Conectar();//agregar los datos a la base
+    public void agregarformularioini(int[] resultados) {
+        try {
+                PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into FormularioInicio values(?,?,?,?)");
+                pedir.setString(1, ((Integer.toString(resultados[0]))));
+                pedir.setString(2, ((Integer.toString(resultados[1]))));
+                pedir.setString(3, ((Integer.toString(resultados[2]))));
+                pedir.setString(4, ((Integer.toString(resultados[3]))));
+                pedir.executeUpdate();
+                Toast.makeText(getContext(), "Formulario agregado CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+
+        } catch (SQLException e) {
+            Toast.makeText(getContext(), "Revisa tu conexion", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }
