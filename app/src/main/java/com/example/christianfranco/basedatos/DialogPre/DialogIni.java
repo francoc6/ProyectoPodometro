@@ -153,7 +153,7 @@ public class DialogIni extends DialogFragment {
             Toast.makeText(getContext(),toast, Toast.LENGTH_SHORT).show();
 
         } catch (SQLException e) {
-            Toast.makeText(getContext(), toast, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Hubo un problema", Toast.LENGTH_SHORT).show();
         }
     }
 
