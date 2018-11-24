@@ -20,7 +20,7 @@ public class Actividad extends AppCompatActivity {
 
     public static boolean banderapausa;
     private long tiempopausa;
-    public static boolean yasehizo=false;//para ejecutar formulario
+    public static boolean yasehizo = false;//para ejecutar formulario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class Actividad extends AppCompatActivity {
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if(yasehizo==false){
+                if (yasehizo == false) {
                     dialog.show(getSupportFragmentManager(), "Mi dialogo");
                 }
                 IntSerBack.start();
@@ -65,7 +65,7 @@ public class Actividad extends AppCompatActivity {
                 IntSerBack.detener();
                 stopService(intentservice);
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");
-                yasehizo=false;
+                yasehizo = false;
 
             }
         });
@@ -90,9 +90,9 @@ public class Actividad extends AppCompatActivity {
 
     public void detener() {
         simpleChronometer.stop();
-        tiempopausa=0;
+        tiempopausa = 0;
         simpleChronometer.setBase(SystemClock.elapsedRealtime());
-        banderapausa=false;
+        banderapausa = false;
     }
 
 
