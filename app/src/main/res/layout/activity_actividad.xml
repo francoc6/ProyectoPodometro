@@ -21,8 +21,11 @@
     <TextView
         android:id="@+id/tv_steps"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" />
+        android:layout_height="53dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
     <Button
@@ -30,6 +33,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start Pedometer" />
+
+    <Button
+        android:id="@+id/Pausa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pausa" />
 
     <Button
         android:id="@+id/btn_stop"

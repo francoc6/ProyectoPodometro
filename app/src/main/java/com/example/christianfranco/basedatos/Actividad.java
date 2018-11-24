@@ -15,8 +15,11 @@ import com.example.christianfranco.basedatos.DialogPre.DialogIni;
 public class Actividad extends AppCompatActivity {
     public static TextView TvSteps;
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
-    Button BtnStart, BtnStop;
+    Button BtnStart, BtnPausa, BtnStop;
     Chronometer simpleChronometer;
+
+    public static boolean banderapausa;
+    private long tiempopausa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class Actividad extends AppCompatActivity {
         setContentView(R.layout.activity_actividad);
         TvSteps = (TextView) findViewById(R.id.tv_steps);
         BtnStart = (Button) findViewById(R.id.btn_start);
+        BtnPausa = (Button) findViewById(R.id.Pausa);
         BtnStop = (Button) findViewById(R.id.btn_stop);
         TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
         simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
@@ -35,23 +39,56 @@ public class Actividad extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");
-                simpleChronometer.start();
-                simpleChronometer.setFormat("%s");
-                simpleChronometer.setBase(SystemClock.elapsedRealtime());
                 IntSerBack.start();
                 startService(intentservice);
+
+                simpleChronometer.setFormat("%s");
+                start();
+
             }
         });
+
+        BtnPausa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pausa();
+            }
+        });
+
         BtnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                simpleChronometer.stop();
-                simpleChronometer.setBase(SystemClock.elapsedRealtime());
+                detener();
                 IntSerBack.detener();
                 stopService(intentservice);
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");
             }
         });
     }
+
+
+    public void start() {
+        if (!banderapausa) {
+            simpleChronometer.setBase(SystemClock.elapsedRealtime() - tiempopausa);
+            simpleChronometer.start();
+            banderapausa = true;
+        }
+    }
+
+    public void pausa() {
+        if (banderapausa) {
+            simpleChronometer.stop();
+            banderapausa = false;
+            tiempopausa = SystemClock.elapsedRealtime() - simpleChronometer.getBase();
+        }
+    }
+
+    public void detener() {
+        simpleChronometer.stop();
+        tiempopausa=0;
+        simpleChronometer.setBase(SystemClock.elapsedRealtime());
+        banderapausa=false;
+    }
+
 
 }

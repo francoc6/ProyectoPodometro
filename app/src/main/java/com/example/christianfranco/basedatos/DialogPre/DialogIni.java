@@ -30,8 +30,6 @@ public class DialogIni extends DialogFragment {
     private Button Aceptar;
     public static TextView Preg1,Preg2,Preg3,Preg4;
     public static String tabla="",toast="";
-    public static boolean selecpreg=true;
-
 
     @Nullable
     @Override
@@ -59,7 +57,7 @@ public class DialogIni extends DialogFragment {
         p42 = (RadioButton) view.findViewById(R.id.i42);
         p43 = (RadioButton) view.findViewById(R.id.i43);
         p44 = (RadioButton) view.findViewById(R.id.i44);
-
+        p45 = (RadioButton) view.findViewById(R.id.i45);
 
         Preg1=(TextView)view.findViewById(R.id.Pregunta1);
         Preg2=(TextView)view.findViewById(R.id.Pregunta2);
@@ -147,12 +145,12 @@ public class DialogIni extends DialogFragment {
         String orden="insert into "+tabla+" values(?,?,?,?)";//obtengo la base a usar
         try {
             PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
-            pedir.setString(1, (parts[0]));
-            pedir.setString(2, (parts[1]));
-            pedir.setString(3, (parts[2]));
-            pedir.setString(4, (parts[3]));
+            pedir.setString(1, parts[0]);
+            pedir.setString(2, parts[1]);
+            pedir.setString(3, parts[2]);
+            pedir.setString(4, parts[3]);
             pedir.executeUpdate();
-            Toast.makeText(getContext(), "Formulario agregado CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),toast, Toast.LENGTH_SHORT).show();
 
         } catch (SQLException e) {
             Toast.makeText(getContext(), toast, Toast.LENGTH_SHORT).show();
