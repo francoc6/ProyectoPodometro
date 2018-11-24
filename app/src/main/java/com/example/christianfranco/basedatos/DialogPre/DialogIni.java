@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.christianfranco.basedatos.Actividad;
 import com.example.christianfranco.basedatos.Conectar;
 import com.example.christianfranco.basedatos.R;
 import com.example.christianfranco.basedatos.Usuario;
@@ -65,6 +66,8 @@ public class DialogIni extends DialogFragment {
 
         Aceptar = view.findViewById(R.id.iniAceptar);
 
+
+
         if(!Usuario.banderaformulario){
             preguntasiniciales();
             Usuario.banderaformulario=true;
@@ -77,6 +80,7 @@ public class DialogIni extends DialogFragment {
             @Override
             public void onClick(View v) {
                 agregarformularioini(resultados());//envio los resultado a la  base de ddatos
+                Actividad.yasehizo=true;//cuando se lo hace por primera vez, ya no interfiere cuando se presiona el boton para pausar cronometro
                 getDialog().dismiss();//salir de la pantalla
             }
         });

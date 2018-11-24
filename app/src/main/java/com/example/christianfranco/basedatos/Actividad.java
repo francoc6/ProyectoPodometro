@@ -20,6 +20,7 @@ public class Actividad extends AppCompatActivity {
 
     public static boolean banderapausa;
     private long tiempopausa;
+    public static boolean yasehizo=false;//para ejecutar formulario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +34,17 @@ public class Actividad extends AppCompatActivity {
         simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
+
         final DialogIni dialog = new DialogIni();
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                dialog.show(getSupportFragmentManager(), "Mi dialogo");
+                if(yasehizo==false){
+                    dialog.show(getSupportFragmentManager(), "Mi dialogo");
+                }
                 IntSerBack.start();
                 startService(intentservice);
-
                 simpleChronometer.setFormat("%s");
                 start();
 
@@ -62,6 +65,8 @@ public class Actividad extends AppCompatActivity {
                 IntSerBack.detener();
                 stopService(intentservice);
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");
+                yasehizo=false;
+
             }
         });
     }
