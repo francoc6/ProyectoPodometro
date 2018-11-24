@@ -17,8 +17,7 @@ import com.example.christianfranco.basedatos.Usuario;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 public class DialogIni extends DialogFragment {
