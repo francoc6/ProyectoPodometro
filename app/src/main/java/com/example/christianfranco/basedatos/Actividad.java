@@ -14,13 +14,11 @@ import com.example.christianfranco.basedatos.DialogPre.DialogIni;
 
 public class Actividad extends AppCompatActivity {
     public static TextView TvSteps;
-    private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
+    private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ",Datoaenviar="";
     Button BtnStart, BtnPausa, BtnStop;
     Chronometer simpleChronometer;
-
-    public static boolean banderapausa;
     private long tiempopausa;
-    public static boolean yasehizo = false, pausado=false;//para ejecutar formulario-el pausado es para desactivar botones
+    public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,42 +41,34 @@ public class Actividad extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 //formulario inicial
-                if (yasehizo == false) {
-                    dialog.show(getSupportFragmentManager(), "Mi dialogo");
-                }
-                //servicio y cronometro
-                IntSerBack.start();
-                startService(intentservice);
-                simpleChronometer.setFormat("%s");
-                start();
+                if (yasehizo == false) { dialog.show(getSupportFragmentManager(), "Mi dialogo"); }
+                //servicio
+                IntSerBack.start();startService(intentservice);
+                //cronometro
+                simpleChronometer.setFormat("%s");start();
                 //botones
-                BtnStart.setEnabled(false);
-                BtnPausa.setEnabled(true);
-                BtnStop.setEnabled(true);
+                BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);
             }
         });
 
         BtnPausa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pausa();
+                pausa();//cronometro
                 //botones
-                BtnPausa.setEnabled(false);//desactivo boton
-                BtnStart.setEnabled(true);
+                BtnPausa.setEnabled(false);BtnStart.setEnabled(true);
             }
         });
 
         BtnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                detener();
-                IntSerBack.detener();
+                detener();//detener el reloj
+                IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
-                dialog.show(getSupportFragmentManager(), "Mi dialogo");
+                dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
                 //botones
-                BtnPausa.setEnabled(false);
-                BtnStop.setEnabled(false);
-                BtnStart.setEnabled(true);
+                BtnPausa.setEnabled(false);BtnStop.setEnabled(false);BtnStart.setEnabled(true);
             }
         });
     }

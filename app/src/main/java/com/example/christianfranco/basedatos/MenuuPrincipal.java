@@ -31,6 +31,7 @@ public class MenuuPrincipal extends AppCompatActivity {
         btnPasos = (Button) findViewById(R.id.btnPasos);
         btnConsulta = (Button) findViewById(R.id.btnConsulta);
         btnagregar = (Button) findViewById(R.id.btnagregar);
+
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
