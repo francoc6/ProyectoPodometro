@@ -29,6 +29,7 @@ public class DialogIni extends DialogFragment {
     private RadioButton p41, p42, p43, p44, p45;
     private Button Aceptar;
     public static TextView Preg1,Preg2,Preg3,Preg4;
+
     public static String tabla="",toast="";
 
     @Nullable
@@ -65,8 +66,6 @@ public class DialogIni extends DialogFragment {
         Preg4=(TextView)view.findViewById(R.id.Pregunta4);
 
         Aceptar = view.findViewById(R.id.iniAceptar);
-
-
 
         if(!Usuario.banderaformulario){
             preguntasiniciales();
