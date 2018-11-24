@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editUSR, editPSW;
     TextView addusr;
     Button btnIN;
-    SharedPreferences sp,usuariognr;//mantener logeado
+    SharedPreferences sp,usuariognr;//mantener logeado, y guardar usuario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         btnIN = (Button) findViewById(R.id.btnIN);
         addusr = (TextView) findViewById(R.id.registarse);
         sp = getSharedPreferences("logged", MODE_PRIVATE);//varia para mantenerse ogeado
-        usuariognr=getSharedPreferences("usuario",MODE_PRIVATE);//variable para guardar el usuario
+        usuariognr=getSharedPreferences("Guardarusuario",MODE_PRIVATE);//variable para guardar el usuario
 
         if (sp.getBoolean("logged", false)) {//este metodo revisa si ya esta logeado
             iraprincipal();
@@ -72,15 +72,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     //ir a menu principal
     public void iraprincipal() {
         //Intent menuprin = new Intent(MainActivity.this, MenuPrincipal.class);
         Intent menuprin = new Intent(MainActivity.this, MenuuPrincipal.class);
         startActivity(menuprin);
-        usuariognr.getString("usuario",editUSR.getText().toString());//guardo el usuario con el que tarbajo para las tablas
-    }
 
+        SharedPreferences.Editor editor = usuariognr.edit();
+        editor.putString("usuario",editUSR.getText().toString());//guardo el usuario con el que estoy trabajando
+        editor.commit();
+    }
 
     //metodo para hacer la conexion a la base de datos
     Conectar contacto = new Conectar();

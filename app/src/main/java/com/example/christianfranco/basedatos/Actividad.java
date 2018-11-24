@@ -83,7 +83,6 @@ public class Actividad extends AppCompatActivity {
         });
     }
 
-
     public void start() {
         if (!banderapausa) {
             simpleChronometer.setBase(SystemClock.elapsedRealtime() - tiempopausa);
@@ -91,7 +90,6 @@ public class Actividad extends AppCompatActivity {
             banderapausa = true;
         }
     }
-
     public void pausa() {
         if (banderapausa) {
             simpleChronometer.stop();
@@ -99,13 +97,10 @@ public class Actividad extends AppCompatActivity {
             tiempopausa = SystemClock.elapsedRealtime() - simpleChronometer.getBase();
         }
     }
-
     public void detener() {
         simpleChronometer.stop();
         tiempopausa = 0;
         simpleChronometer.setBase(SystemClock.elapsedRealtime());
         banderapausa = false;
     }
-
-
 }

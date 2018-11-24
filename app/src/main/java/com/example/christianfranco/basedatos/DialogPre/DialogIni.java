@@ -1,8 +1,11 @@
 package com.example.christianfranco.basedatos.DialogPre;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import com.example.christianfranco.basedatos.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class DialogIni extends DialogFragment {
@@ -31,10 +35,12 @@ public class DialogIni extends DialogFragment {
     public static TextView Preg1,Preg2,Preg3,Preg4;
 
     public static String tabla="",toast="";
+    SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.dialog_formulario_ini, container, false);
         p11 = (RadioButton) view.findViewById(R.id.i11);
         p12 = (RadioButton) view.findViewById(R.id.i12);
@@ -67,6 +73,9 @@ public class DialogIni extends DialogFragment {
 
         Aceptar = view.findViewById(R.id.iniAceptar);
 
+        usuariognr = getActivity().getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
+
+
         if(!Usuario.banderaformulario){
             preguntasiniciales();
             Usuario.banderaformulario=true;
@@ -78,8 +87,10 @@ public class DialogIni extends DialogFragment {
         Aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //String res =usuariognr.getString("usuario","  ");
                 agregarformularioini(resultados());//envio los resultado a la  base de ddatos
                 getDialog().dismiss();//salir de la pantalla
+
             }
         });
 
@@ -143,13 +154,16 @@ public class DialogIni extends DialogFragment {
 
     public void agregarformularioini(String resultados) {
         String[] parts = resultados.split(" ");//separo el string por espacios
-        String orden="insert into "+tabla+" values(?,?,?,?)";//obtengo la base a usar
+        //String orden="insert into "+tabla+" values(?,?,?,?)";//obtengo la base a usar
+       // String orden="insert into Actividad ("+"Jose"+") values(?)";//obtengo la base a usar
+        String orden="insert into Actividad ("+usuariognr.getString("usuario","  ")+") values(?)";//obtengo la base a usar
         try {
             PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
+
             pedir.setString(1, parts[0]);
-            pedir.setString(2, parts[1]);
-            pedir.setString(3, parts[2]);
-            pedir.setString(4, parts[3]);
+           // pedir.setString(2, parts[1]);
+            //pedir.setString(3, parts[2]);
+            //pedir.setString(4, parts[3]);
             pedir.executeUpdate();
             Toast.makeText(getContext(),toast, Toast.LENGTH_SHORT).show();
 
