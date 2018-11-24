@@ -80,7 +80,6 @@ public class DialogIni extends DialogFragment {
             @Override
             public void onClick(View v) {
                 agregarformularioini(resultados());//envio los resultado a la  base de ddatos
-                Actividad.yasehizo=true;//cuando se lo hace por primera vez, ya no interfiere cuando se presiona el boton para pausar cronometro
                 getDialog().dismiss();//salir de la pantalla
             }
         });
@@ -167,6 +166,7 @@ public class DialogIni extends DialogFragment {
         Preg4.setText("Pregunta Inicial 4");
         tabla = "FormularioInicio";
         toast = "Formulario Inicial Agregado Correctamente";
+        Actividad.yasehizo=true;//cuando se lo hace por primera vez, ya no interfiere cuando se presiona el boton para pausar cronometro
     }
 
     public void preguntasfinales() {
@@ -176,5 +176,6 @@ public class DialogIni extends DialogFragment {
         Preg4.setText("Pregunta Final 4");
         tabla = "FormularioFinal";
         toast = "Formulario Final Agregado Correctamente";
+        Actividad.yasehizo=false;
     }
 }

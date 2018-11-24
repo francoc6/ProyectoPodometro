@@ -20,7 +20,7 @@ public class Actividad extends AppCompatActivity {
 
     public static boolean banderapausa;
     private long tiempopausa;
-    public static boolean yasehizo = false;//para ejecutar formulario
+    public static boolean yasehizo = false, pausado=false;//para ejecutar formulario-el pausado es para desactivar botones
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +34,27 @@ public class Actividad extends AppCompatActivity {
         simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
+        BtnPausa.setEnabled(false);//para que solo se pueda presionar empezar
+        BtnStop.setEnabled(false);
 
         final DialogIni dialog = new DialogIni();
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                //formulario inicial
                 if (yasehizo == false) {
                     dialog.show(getSupportFragmentManager(), "Mi dialogo");
                 }
+                //servicio y cronometro
                 IntSerBack.start();
                 startService(intentservice);
                 simpleChronometer.setFormat("%s");
                 start();
-
+                //botones
+                BtnStart.setEnabled(false);
+                BtnPausa.setEnabled(true);
+                BtnStop.setEnabled(true);
             }
         });
 
@@ -55,6 +62,9 @@ public class Actividad extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pausa();
+                //botones
+                BtnPausa.setEnabled(false);//desactivo boton
+                BtnStart.setEnabled(true);
             }
         });
 
@@ -65,8 +75,10 @@ public class Actividad extends AppCompatActivity {
                 IntSerBack.detener();
                 stopService(intentservice);
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");
-                yasehizo = false;
-
+                //botones
+                BtnPausa.setEnabled(false);
+                BtnStop.setEnabled(false);
+                BtnStart.setEnabled(true);
             }
         });
     }
