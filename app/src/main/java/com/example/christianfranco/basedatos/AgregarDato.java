@@ -18,7 +18,7 @@ public class AgregarDato extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_dato);
         agregar = (Button) findViewById(R.id.AgregarBtn);
         cancelar = (Button) findViewById(R.id.Cancelaradd);
-        Spinner opciones = (Spinner) findViewById(R.id.opcionspinner);
+        opciones = (Spinner) findViewById(R.id.opcionspinner);
         String[] variables = {"Azucar(unidad):", "Peso(lb):", "Sangre(ml):", "algo", "algoo"};
         opciones.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
 
