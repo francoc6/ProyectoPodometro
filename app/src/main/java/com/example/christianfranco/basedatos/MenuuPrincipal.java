@@ -32,15 +32,7 @@ public class MenuuPrincipal extends AppCompatActivity {
         btnConsulta = (Button) findViewById(R.id.btnConsulta);
         btnagregar = (Button) findViewById(R.id.btnagregar);
 
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sp.edit().putBoolean("logged", false).apply();
-                Intent salir = new Intent(MenuuPrincipal.this, MainActivity.class);
-                startActivity(salir);
-                finish();//evito que regresen al presionar el boto del celular
-            }
-        });
+
 
         btnagregar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,12 +42,30 @@ public class MenuuPrincipal extends AppCompatActivity {
             }
         });
 
+        btnConsulta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ver = new Intent(MenuuPrincipal.this,Consulta.class);
+                startActivity(ver);
+            }
+        });
+
 
         btnPasos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent verdatos = new Intent(MenuuPrincipal.this, Actividad.class);
                 startActivity(verdatos);
+            }
+        });
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp.edit().putBoolean("logged", false).apply();
+                Intent salir = new Intent(MenuuPrincipal.this, MainActivity.class);
+                startActivity(salir);
+                finish();//evito que regresen al presionar el boto del celular
             }
         });
     }

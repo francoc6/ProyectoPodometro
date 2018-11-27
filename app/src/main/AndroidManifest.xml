@@ -32,7 +32,8 @@
             android:exported="false" />
 
         <activity android:name=".Actividad" />
-        <activity android:name=".AgregarDato"></activity>
+        <activity android:name=".AgregarDato" />
+        <activity android:name=".Consulta"></activity>
     </application>
 
 </manifest>

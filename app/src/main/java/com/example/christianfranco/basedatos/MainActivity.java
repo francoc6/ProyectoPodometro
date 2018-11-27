@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent newusr = new Intent(MainActivity.this, Registro.class);
                 startActivity(newusr);
-                finish();//evito que regresen al presionar el boto del celular
+                finish();//evito que regresen al presionar el boton del celular
             }
         });
     }
