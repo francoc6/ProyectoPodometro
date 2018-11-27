@@ -15,6 +15,7 @@ public class MenuuPrincipal extends AppCompatActivity {
     Button btnConsulta;
     Button btnPasos;
     Button btnLogOut;
+    Button btnLogros;
     SharedPreferences sp;
 
     @Override
@@ -31,6 +32,7 @@ public class MenuuPrincipal extends AppCompatActivity {
         btnPasos = (Button) findViewById(R.id.btnPasos);
         btnConsulta = (Button) findViewById(R.id.btnConsulta);
         btnagregar = (Button) findViewById(R.id.btnagregar);
+        btnLogros=(Button) findViewById(R.id.Logros);
 
 
 

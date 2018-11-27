@@ -46,6 +46,13 @@
         android:text="@string/btnDatos" />
 
     <Button
+        android:id="@+id/Logros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:soundEffectsEnabled="true"
+        android:text="LOGROS" />
+
+    <Button
         android:id="@+id/btnLO"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
