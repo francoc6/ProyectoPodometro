@@ -32,7 +32,7 @@
         android:text="@string/btnConsulta" />
 
     <Button
-        android:id="@+id/btnOpciones"
+        android:id="@+id/btnInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:soundEffectsEnabled="true"
@@ -50,10 +50,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:soundEffectsEnabled="true"
-        android:text="LOGROS" />
+        android:text="@string/bntLogro" />
 
     <Button
-        android:id="@+id/btnInfo"
+        android:id="@+id/btnLo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:soundEffectsEnabled="true"

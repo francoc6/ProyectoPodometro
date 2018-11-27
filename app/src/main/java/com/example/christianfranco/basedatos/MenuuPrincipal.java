@@ -28,7 +28,7 @@ public class MenuuPrincipal extends AppCompatActivity {
         startService(intentservice);
 
         sp = getSharedPreferences("logged", MODE_PRIVATE);
-        btnLogOut = (Button) findViewById(R.id.btnLO);
+        btnLogOut = (Button) findViewById(R.id.btnLo);
         btnPasos = (Button) findViewById(R.id.btnPasos);
         btnConsulta = (Button) findViewById(R.id.btnConsulta);
         btnagregar = (Button) findViewById(R.id.btnagregar);

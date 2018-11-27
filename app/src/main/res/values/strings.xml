@@ -30,7 +30,7 @@
     <string name="btnInfo">Informacion de Usuario</string>
     <string name="btnDatos">Pasos!</string>
     <string name="btnLo">Log Out</string>
-    <string name="title_activity_agregar_dato">AgregarDato</string>
+    <string name="bntLogro">Logros</string>
 
 
     <string name="tipodato">SELECCIONA EL TIPO DE DATO A INGRESAR</string>
