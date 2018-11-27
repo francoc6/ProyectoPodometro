@@ -21,30 +21,35 @@
         android:id="@+id/btnagregar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:soundEffectsEnabled="true"
         android:text="@string/btnEntrada" />
 
     <Button
         android:id="@+id/btnConsulta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:soundEffectsEnabled="true"
         android:text="@string/btnConsulta" />
 
     <Button
         android:id="@+id/btnOpciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:soundEffectsEnabled="true"
         android:text="@string/btnOpciones" />
 
     <Button
         android:id="@+id/btnPasos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:soundEffectsEnabled="true"
         android:text="@string/btnDatos" />
 
     <Button
         android:id="@+id/btnLO"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:soundEffectsEnabled="true"
         android:text="@string/btnLo" />
 
 </LinearLayout>
