@@ -74,7 +74,7 @@ public class DialogIni extends DialogFragment {
 
         usuariognr = getActivity().getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
 
-
+        //valido si es el inicio o final para mostrar las preguntas correctas
         if(!Usuario.banderaformulario){
             preguntasiniciales();
             Usuario.banderaformulario=true;
