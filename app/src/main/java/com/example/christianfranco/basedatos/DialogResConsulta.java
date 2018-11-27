@@ -21,6 +21,4 @@ public class DialogResConsulta extends DialogFragment {
     }
 
 
-
-
 }
