@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 public class DialogResConsulta extends DialogFragment {
 
     @Nullable
-    public void onCreate(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_resconsulta, container, false);
 
 
 
 
+
+        return view;
     }
 
 
