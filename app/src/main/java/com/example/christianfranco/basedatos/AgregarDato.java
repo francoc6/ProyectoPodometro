@@ -1,5 +1,6 @@
 package com.example.christianfranco.basedatos;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,7 +40,6 @@ public class AgregarDato extends AppCompatActivity {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String selec=opciones.getSelectedItem().toString();
                 String[] parts = selec.split(" ");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
 
@@ -48,8 +48,15 @@ public class AgregarDato extends AppCompatActivity {
                 }else{
                     agregardato(dato.getText().toString(),parts[0],usuario);
                     dato.setText("");
-
                 }
+            }
+        });
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent menu = new Intent(AgregarDato.this, Menu.class);
+                startActivity(menu);
+                finish();
             }
         });
 
@@ -63,6 +70,7 @@ public class AgregarDato extends AppCompatActivity {
            // pedir.setString(dato);
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Dato agregado correctamente", Toast.LENGTH_SHORT).show();
+            pedir.close();//cierro la conexion
         }catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
