@@ -1,7 +1,6 @@
 package com.example.christianfranco.basedatos.DialogPre;
 
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
