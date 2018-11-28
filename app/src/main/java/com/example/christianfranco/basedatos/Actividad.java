@@ -123,24 +123,47 @@ public class Actividad extends AppCompatActivity {
 
     public String obtenerhora(long t){
         int resmili,resseg,resmin,reshora;
+        String mili,seg,min,hora;
         long x;
-        String res;
+        String res="";
         if(t<3600000){//minutos, sin horas
             resmili=(int)(t%1000);
+            mili=String.valueOf(resmili);
             x=t/1000;
             resseg=(int)(x%100);
+            seg=String.valueOf(resseg);
+            if(resseg<10){
+                seg="0"+String.valueOf(resseg);
+            }
             x=x/100;
             resmin=(int)(x%100);
-            res="00:"+String.valueOf(resmin)+":"+String.valueOf(resseg)+":"+String.valueOf(resmili);
+            min=String.valueOf(resmin);
+            if(resmin<10){
+                min="0"+String.valueOf(resmin);
+            }
+            res="00:"+min+":"+seg+":"+mili;
         }else{//ya hay horas
             resmili=(int)(t%1000);
-            x=t-resmili;
+            mili=String.valueOf(resmili);
+            x=t/1000;
             resseg=(int)(x%100);
-            x=x-resseg;
+            seg=String.valueOf(resseg);
+            if(resseg<10){
+                seg="0"+String.valueOf(resseg);
+            }
+            x=x/100;
             resmin=(int)(x%100);
-            x=x-resmin;
+            min=String.valueOf(resmin);
+            if(resmin<10){
+                min="0"+String.valueOf(resmin);
+            }
+            x=x/100;
             reshora=(int)(x%100);
-            res=String.valueOf(reshora)+":"+String.valueOf(resmin)+":"+String.valueOf(resseg)+":"+String.valueOf(resmili);
+            hora=String.valueOf(reshora);
+            if(reshora<10){
+                hora="0"+String.valueOf(reshora);
+            }
+            res=hora+":"+min+":"+seg+":"+mili;
         }
         return res;
     }
