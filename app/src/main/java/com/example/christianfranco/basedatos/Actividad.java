@@ -32,15 +32,11 @@ public class Actividad extends AppCompatActivity {
         TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
         simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
 
-
-
         final DialogIni dialog = new DialogIni();
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
         BtnPausa.setEnabled(false);//para que solo se pueda presionar empezar
         BtnStop.setEnabled(false);
-
-
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,12 +83,17 @@ public class Actividad extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     //boton fisico
     @Override
-    public void onBackPressed() {//al presionarlo no regresa al menu principal, obligando que utilicen el btn de  la app regresar
-
+    public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
+        if(BtnStart.isEnabled()&&!BtnPausa.isEnabled()&&!BtnStop.isEnabled()){
+            Intent menu = new Intent(Actividad.this,Menu.class);
+            startActivity(menu);
+            finish();
+        }
     }
 
     public void start() {
