@@ -73,6 +73,8 @@ public class Registro extends AppCompatActivity {
             if (res=="") {//si los campos no estan vacios, siue a  verificar que el usuario no exista
                 if (apusr(Usuario.getText().toString())) {
                     Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
+                } else if(Usuario.getText().toString().contains("")){
+                    Toast.makeText(getApplicationContext(), "Usuario no acepta espacios", Toast.LENGTH_SHORT).show();
                 } else {//si el usuario no existe se comunica a la base para el registro
                     aprobo = true;//para regresar al inicio si se agrego usuario
                     PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into DatosPersonales values(?,?,?,?,?,?)");
