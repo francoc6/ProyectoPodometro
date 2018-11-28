@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,6 +22,7 @@ public class Informacion extends AppCompatActivity {
     EditText contraAnteior,contraNueva;
     Button Cambiar;
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
+    String contravieja;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +42,17 @@ public class Informacion extends AppCompatActivity {
         Cambiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(!contraAnteior.getText().toString().equals("")|!contraNueva.getText().toString().equals("")){
+                    cambiarcontra(contravieja,usuariognr.getString("usuario","vacio"));
+                    contraAnteior.setText("");
+                    contraNueva.setText("");
+                }else
+                Toast.makeText(getApplicationContext(), "No deje ningun campo vacio", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
-
     Conectar contacto = new Conectar();
-    //descargar lista para comprobar usuarios y contraseña
     public void obtenerdatos(String usuario) {
         try {
             Statement pedir = contacto.conectarabase().createStatement();
@@ -62,9 +65,30 @@ public class Informacion extends AppCompatActivity {
             resCorreo.setText(res.getString("Correo"));
             resEdad.setText(res.getString("Edad"));
             resGenero.setText(res.getString("Genero"));
-
+            contravieja=res.getString("Password");
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void cambiarcontra(String vieja,String usuario){
+        if(!vieja.equals(contraAnteior.getText().toString())){
+            Toast.makeText(getApplicationContext(), "La contraseña anterior no es la correcta", Toast.LENGTH_SHORT).show();
+            contraAnteior.setText("");
+            contraNueva.setText("");
+        } else {
+           // String orden ="select * from DatosPersonales WHERE  Usuario='"+usuario+"'";
+            String orden ="UPDATE DatosPersonales SET Password='"+contraNueva.getText().toString()+"' WHERE Usuario='"+usuario+"'";
+
+            try {
+                PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
+                pedir.executeUpdate();
+                Toast.makeText(getApplicationContext(), "Se han realizado los cambios", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
     }
 }
