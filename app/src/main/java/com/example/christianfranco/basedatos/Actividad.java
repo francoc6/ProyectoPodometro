@@ -66,12 +66,13 @@ public class Actividad extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 detener();//detener el reloj
+                Toast.makeText(getApplicationContext(),"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+String.valueOf(IntSerBack.getNumSteps()), Toast.LENGTH_SHORT).show();
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
                 //botones
                 BtnPausa.setEnabled(false);BtnStop.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(true);
-                Toast.makeText(getApplicationContext(),obtenerhora(tiempofinal), Toast.LENGTH_SHORT).show();
+
             }
         });
 
