@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
 import com.example.christianfranco.basedatos.DialogPre.DialogIni;
@@ -17,7 +18,7 @@ public class Actividad extends AppCompatActivity {
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ",Datoaenviar="";
     Button BtnStart, BtnPausa, BtnStop,BtnRegresar;
     Chronometer simpleChronometer;
-    private long tiempopausa;
+    private long tiempopausa,tiempofinal;
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
 
     @Override
@@ -70,6 +71,7 @@ public class Actividad extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
                 //botones
                 BtnPausa.setEnabled(false);BtnStop.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(true);
+                Toast.makeText(getApplicationContext(),obtenerhora(tiempofinal), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -112,9 +114,35 @@ public class Actividad extends AppCompatActivity {
     }
     public void detener() {
         simpleChronometer.stop();
+        tiempofinal=SystemClock.elapsedRealtime()-simpleChronometer.getBase();
         tiempopausa = 0;
         simpleChronometer.setBase(SystemClock.elapsedRealtime());
         banderapausa = false;
+    }
+
+
+    public String obtenerhora(long t){
+        int resmili,resseg,resmin,reshora;
+        long x;
+        String res;
+        if(t<3600000){//minutos, sin horas
+            resmili=(int)(t%1000);
+            x=t/1000;
+            resseg=(int)(x%100);
+            x=x/100;
+            resmin=(int)(x%100);
+            res="00:"+String.valueOf(resmin)+":"+String.valueOf(resseg)+":"+String.valueOf(resmili);
+        }else{//ya hay horas
+            resmili=(int)(t%1000);
+            x=t-resmili;
+            resseg=(int)(x%100);
+            x=x-resseg;
+            resmin=(int)(x%100);
+            x=x-resmin;
+            reshora=(int)(x%100);
+            res=String.valueOf(reshora)+":"+String.valueOf(resmin)+":"+String.valueOf(resseg)+":"+String.valueOf(resmili);
+        }
+        return res;
     }
 
 
