@@ -1,5 +1,6 @@
 package com.example.christianfranco.basedatos;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
@@ -25,7 +26,11 @@ public class MainActivity extends AppCompatActivity {
     EditText editUSR, editPSW;
     TextView addusr;
     Button btnIN;
-    SharedPreferences sp,usuariognr;//mantener logeado, y guardar usuario
+
+    SharedPreferences sp,keepusr;//mantener logeado, y guardar usuario
+    Context context =this;
+    String usr="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
         editPSW = (EditText) findViewById(R.id.editPSW);
         btnIN = (Button) findViewById(R.id.btnIN);
         addusr = (TextView) findViewById(R.id.registarse);
-        sp = getSharedPreferences("logged", MODE_PRIVATE);//varia para mantenerse ogeado
-        usuariognr=getSharedPreferences("Guardarusuario",MODE_PRIVATE);//variable para guardar el usuario
+        sp = getSharedPreferences("logged",MODE_PRIVATE);//varia para mantenerse logeado
 
         if (sp.getBoolean("logged", false)) {//este metodo revisa si ya esta logeado
             iraprincipal();
@@ -49,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     if (ingreso(editUSR.getText().toString(), editPSW.getText().toString())) {
+                        usr=editUSR.getText().toString();
                         sp.edit().putBoolean("logged", true).apply();//cambia el valor a que ya esta logueado
                         iraprincipal();
+                        guardarusr();//solo se guarda cundo se inicia sesion
                         finish();
                     } else {
                         Toast.makeText(getApplicationContext(), "CREDENCIALES INCORRECTAS", Toast.LENGTH_SHORT).show();
@@ -79,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
         Intent menuprin = new Intent(MainActivity.this, Menu.class);//nuevo menu con imagenes
         startActivity(menuprin);
 
-        SharedPreferences.Editor editor = usuariognr.edit();
-        editor.putString("usuario",editUSR.getText().toString());//guardo el usuario con el que estoy trabajando
-        editor.commit();
     }
 
     //metodo para hacer la conexion a la base de datos
@@ -100,5 +103,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return test.comprobar(u, p, usuarios);
+    }
+
+    //metodo para guardar usuario
+    public void guardarusr(){
+        keepusr = getSharedPreferences("Guardarusuario",context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = keepusr.edit();
+        editor.putString("usuario",usr);//guardo el usuario con el que estoy trabajando
+        editor.commit();
     }
 }

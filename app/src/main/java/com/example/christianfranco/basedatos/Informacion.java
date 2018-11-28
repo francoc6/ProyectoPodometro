@@ -1,5 +1,6 @@
 package com.example.christianfranco.basedatos;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class Informacion extends AppCompatActivity {
     EditText contraAnteior,contraNueva;
     Button Cambiar;
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
+    Context context =this;
     String contravieja;
 
     @Override
@@ -36,8 +38,11 @@ public class Informacion extends AppCompatActivity {
         contraAnteior=(EditText)findViewById(R.id.contraAnterior);
         contraNueva=(EditText)findViewById(R.id.contraNueva);
         Cambiar=(Button)findViewById(R.id.btnCambiar);
-        usuariognr = getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
+        usuariognr = getSharedPreferences("Guardarusuario",context.MODE_PRIVATE);//instancio el objeto para obtener usuario
         obtenerdatos(usuariognr.getString("usuario","vacio"));//usu el usuario para buscar los datos a mostrar
+
+        Toast.makeText(getApplicationContext(), "Usuario: "+usuariognr.getString("usuario","vacio")+" mostrado", Toast.LENGTH_SHORT).show();
+
 
         Cambiar.setOnClickListener(new View.OnClickListener() {
             @Override
