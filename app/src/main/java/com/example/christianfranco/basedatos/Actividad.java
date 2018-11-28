@@ -15,7 +15,7 @@ import com.example.christianfranco.basedatos.DialogPre.DialogIni;
 public class Actividad extends AppCompatActivity {
     public static TextView TvSteps;
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ",Datoaenviar="";
-    Button BtnStart, BtnPausa, BtnStop;
+    Button BtnStart, BtnPausa, BtnStop,BtnRegresar;
     Chronometer simpleChronometer;
     private long tiempopausa;
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
@@ -28,14 +28,19 @@ public class Actividad extends AppCompatActivity {
         BtnStart = (Button) findViewById(R.id.btn_start);
         BtnPausa = (Button) findViewById(R.id.Pausa);
         BtnStop = (Button) findViewById(R.id.btn_stop);
+        BtnRegresar=(Button)findViewById(R.id.btnRegresar);
         TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
         simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
+
+
+
+        final DialogIni dialog = new DialogIni();
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
         BtnPausa.setEnabled(false);//para que solo se pueda presionar empezar
         BtnStop.setEnabled(false);
 
-        final DialogIni dialog = new DialogIni();
+
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +52,7 @@ public class Actividad extends AppCompatActivity {
                 //cronometro
                 simpleChronometer.setFormat("%s");start();
                 //botones
-                BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);
+                BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);BtnRegresar.setEnabled(false);
             }
         });
 
@@ -56,7 +61,7 @@ public class Actividad extends AppCompatActivity {
             public void onClick(View v) {
                 pausa();//cronometro
                 //botones
-                BtnPausa.setEnabled(false);BtnStart.setEnabled(true);
+                BtnPausa.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(false);
             }
         });
 
@@ -68,9 +73,27 @@ public class Actividad extends AppCompatActivity {
                 stopService(intentservice);
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
                 //botones
-                BtnPausa.setEnabled(false);BtnStop.setEnabled(false);BtnStart.setEnabled(true);
+                BtnPausa.setEnabled(false);BtnStop.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(true);
             }
         });
+
+        BtnRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(BtnStart.isEnabled()&&!BtnPausa.isEnabled()&&!BtnStop.isEnabled()){
+                    Intent menu = new Intent(Actividad.this,Menu.class);
+                    startActivity(menu);
+                    finish();
+                }
+            }
+        });
+    }
+
+
+    //boton fisico
+    @Override
+    public void onBackPressed() {//al presionarlo no regresa al menu principal, obligando que utilicen el btn de  la app regresar
+
     }
 
     public void start() {
@@ -93,4 +116,6 @@ public class Actividad extends AppCompatActivity {
         simpleChronometer.setBase(SystemClock.elapsedRealtime());
         banderapausa = false;
     }
+
+
 }

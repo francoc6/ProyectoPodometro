@@ -27,15 +27,11 @@ public class Menu extends AppCompatActivity {
         imaLogros=(ImageButton)findViewById(R.id.imaLogros);
         imaPasos=(ImageButton)findViewById(R.id.imaPasos);
 
-
         //inicio el servicio de background
         Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
         startService(intentservice);
 
         sp = getSharedPreferences("logged", MODE_PRIVATE);
-
-
-
 
         imaAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
