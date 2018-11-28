@@ -37,7 +37,7 @@ public class Informacion extends AppCompatActivity {
         contraNueva=(EditText)findViewById(R.id.contraNueva);
         Cambiar=(Button)findViewById(R.id.btnCambiar);
         usuariognr = getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
-        obtenerdatos(usuariognr.getString("usuario","vacio"));//lleno los campos con los datos dela base del usuario
+        obtenerdatos(usuariognr.getString("usuario","vacio"));//usu el usuario para buscar los datos a mostrar
 
         Cambiar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +79,6 @@ public class Informacion extends AppCompatActivity {
         } else {
            // String orden ="select * from DatosPersonales WHERE  Usuario='"+usuario+"'";
             String orden ="UPDATE DatosPersonales SET Password='"+contraNueva.getText().toString()+"' WHERE Usuario='"+usuario+"'";
-
             try {
                 PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
                 pedir.executeUpdate();
@@ -87,8 +86,6 @@ public class Informacion extends AppCompatActivity {
             } catch (SQLException e) {
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-
         }
-
     }
 }
