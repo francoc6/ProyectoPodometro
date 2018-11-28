@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     android:orientation="vertical"
     tools:context=".Menu">
 
@@ -32,7 +33,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton7"
+                android:id="@+id/imaConsulta"
                 android:layout_width="wrap_content"
                 android:layout_height="81dp"
                 android:layout_marginStart="10dp"
@@ -64,7 +65,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/imaAgregar"
                 android:layout_width="wrap_content"
                 android:layout_height="81dp"
                 android:layout_marginStart="10dp"
@@ -100,7 +101,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/imaPasos"
                 android:layout_width="wrap_content"
                 android:layout_height="81dp"
                 android:layout_marginStart="10dp"
@@ -129,7 +130,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/imaLogros"
                 android:layout_width="wrap_content"
                 android:layout_height="81dp"
                 android:layout_marginStart="10dp"
@@ -165,7 +166,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/imaInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="81dp"
                 android:layout_marginStart="10dp"
@@ -194,7 +195,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton6"
+                android:id="@+id/imaLO"
                 android:layout_width="wrap_content"
                 android:layout_height="81dp"
                 android:layout_marginStart="10dp"

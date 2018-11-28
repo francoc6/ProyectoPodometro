@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
     //ir a menu principal
     public void iraprincipal() {
 
-        Intent menuprin = new Intent(MainActivity.this, MenuuPrincipal.class);
+       // Intent menuprin = new Intent(MainActivity.this, MenuuPrincipal.class); //menu solo con botones
+        Intent menuprin = new Intent(MainActivity.this, Menu.class);//nuevo menu con imagenes
         startActivity(menuprin);
 
         SharedPreferences.Editor editor = usuariognr.edit();

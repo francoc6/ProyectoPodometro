@@ -47,8 +47,8 @@ public class MenuuPrincipal extends AppCompatActivity {
         btnConsulta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Intent ver = new Intent(MenuuPrincipal.this,Consulta.class);
-                Intent ver = new Intent(MenuuPrincipal.this,Menu.class);
+                Intent ver = new Intent(MenuuPrincipal.this,Consulta.class);
+               // Intent ver = new Intent(MenuuPrincipal.this,Menu.class);
                 startActivity(ver);
             }
         });
