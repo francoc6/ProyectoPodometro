@@ -77,7 +77,6 @@ public class Informacion extends AppCompatActivity {
             contraAnteior.setText("");
             contraNueva.setText("");
         } else {
-           // String orden ="select * from DatosPersonales WHERE  Usuario='"+usuario+"'";
             String orden ="UPDATE DatosPersonales SET Password='"+contraNueva.getText().toString()+"' WHERE Usuario='"+usuario+"'";
             try {
                 PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
