@@ -89,7 +89,6 @@ public class Actividad extends AppCompatActivity {
         });
     }
 
-
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo no regresa al menu principal, obligando que utilicen el btn de  la app regresar
