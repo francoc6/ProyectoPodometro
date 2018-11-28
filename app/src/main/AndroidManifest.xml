@@ -33,7 +33,8 @@
         <activity android:name=".Actividad" />
         <activity android:name=".AgregarDato" />
         <activity android:name=".Consulta" />
-        <activity android:name=".Menu"></activity>
+        <activity android:name=".Menu" />
+        <activity android:name=".Informacion"></activity>
     </application>
 
 </manifest>

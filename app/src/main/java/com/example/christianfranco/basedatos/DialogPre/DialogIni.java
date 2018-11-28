@@ -190,4 +190,7 @@ public class DialogIni extends DialogFragment {
         toast = "Formulario Final Agregado Correctamente";
         Actividad.yasehizo=false;
     }
+
+
+
 }

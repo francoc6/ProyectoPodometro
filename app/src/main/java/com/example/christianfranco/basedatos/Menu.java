@@ -70,6 +70,14 @@ public class Menu extends AppCompatActivity {
             }
         });
 
+        imaInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(Menu.this,Informacion.class);
+                startActivity(go);
+            }
+        });
+
 
     }
 }
