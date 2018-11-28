@@ -22,9 +22,11 @@ public class Informacion extends AppCompatActivity {
     TextView resNombre, resUsuario, resEdad, resCorreo,resGenero;
     EditText contraAnteior,contraNueva;
     Button Cambiar;
+    String contravieja;
+
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
     Context context =this;
-    String contravieja;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,9 @@ public class Informacion extends AppCompatActivity {
         contraAnteior=(EditText)findViewById(R.id.contraAnterior);
         contraNueva=(EditText)findViewById(R.id.contraNueva);
         Cambiar=(Button)findViewById(R.id.btnCambiar);
-        usuariognr = getSharedPreferences("Guardarusuario",context.MODE_PRIVATE);//instancio el objeto para obtener usuario
-        obtenerdatos(usuariognr.getString("usuario","vacio"));//usu el usuario para buscar los datos a mostrar
 
-        Toast.makeText(getApplicationContext(), "Usuario: "+usuariognr.getString("usuario","vacio")+" mostrado", Toast.LENGTH_SHORT).show();
+        usuariognr = getSharedPreferences("Guardarusuario",context.MODE_PRIVATE);//instancio el objeto para obtener usuario
+        obtenerdatos(usuariognr.getString("usuario","vacio"));//uso el usuario para buscar los datos a mostrar
 
 
         Cambiar.setOnClickListener(new View.OnClickListener() {

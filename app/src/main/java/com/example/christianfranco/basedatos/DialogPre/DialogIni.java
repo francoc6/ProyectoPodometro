@@ -1,6 +1,7 @@
 package com.example.christianfranco.basedatos.DialogPre;
 
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -149,23 +150,19 @@ public class DialogIni extends DialogFragment {
         return res;
     }
 
-    Conectar contacto = new Conectar();//agregar los datos a la base
 
+    Conectar contacto = new Conectar();//agregar los datos a la base
     public void agregarformularioini(String resultados) {
         String[] parts = resultados.split(" ");//separo el string por espacios
-        //String orden="insert into "+tabla+" values(?,?,?,?)";//obtengo la base a usar
-       // String orden="insert into Actividad ("+"Jose"+") values(?)";//obtengo la base a usar
         String orden="insert into Actividad ("+usuariognr.getString("usuario","  ")+") values(?)";//obtengo la base a usar
         try {
             PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
-
             pedir.setString(1, parts[0]);
            // pedir.setString(2, parts[1]);
             //pedir.setString(3, parts[2]);
             //pedir.setString(4, parts[3]);
             pedir.executeUpdate();
             Toast.makeText(getContext(),toast, Toast.LENGTH_SHORT).show();
-
         } catch (SQLException e) {
             Toast.makeText(getContext(),"Hubo un problema", Toast.LENGTH_SHORT).show();
         }
@@ -190,7 +187,5 @@ public class DialogIni extends DialogFragment {
         toast = "Formulario Final Agregado Correctamente";
         Actividad.yasehizo=false;
     }
-
-
 
 }
