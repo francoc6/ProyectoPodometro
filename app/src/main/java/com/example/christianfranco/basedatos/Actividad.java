@@ -13,6 +13,10 @@ import android.widget.Toast;
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
 import com.example.christianfranco.basedatos.DialogPre.DialogIni;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 public class Actividad extends AppCompatActivity {
     public static TextView TvSteps;
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ",Datoaenviar="";
@@ -20,6 +24,11 @@ public class Actividad extends AppCompatActivity {
     Chronometer simpleChronometer;
     private long tiempopausa,tiempofinal;
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
+
+    public static String datoasubir;
+    Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
+    int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
+    int mes = calendarNow.get(Calendar.MONTH);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,7 @@ public class Actividad extends AppCompatActivity {
                 simpleChronometer.setFormat("%s");start();
                 //botones
                 BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);BtnRegresar.setEnabled(false);
+                datoasubir="";
             }
         });
 
@@ -66,10 +76,11 @@ public class Actividad extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 detener();//detener el reloj
-                Toast.makeText(getApplicationContext(),"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+String.valueOf(IntSerBack.getNumSteps()), Toast.LENGTH_SHORT).show();
+                dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
+                Toast.makeText(getApplicationContext(),"Mes: "+ mes+"Dia: "+dia+"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+String.valueOf(IntSerBack.getNumSteps())+" Datos: "+datoasubir, Toast.LENGTH_SHORT).show();
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
-                dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
+
                 //botones
                 BtnPausa.setEnabled(false);BtnStop.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(true);
 

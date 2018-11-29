@@ -88,6 +88,7 @@ public class DialogIni extends DialogFragment {
             public void onClick(View v) {
                 //String res =usuariognr.getString("usuario","  ");
                 agregarformularioini(resultados());//envio los resultado a la  base de ddatos
+                Actividad.datoasubir +=resultados()+" ";
                 getDialog().dismiss();//salir de la pantalla
 
             }
