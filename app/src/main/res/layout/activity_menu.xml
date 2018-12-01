@@ -227,7 +227,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/logout" />
+                app:srcCompat="@drawable/status" />
 
             <TextView
                 android:id="@+id/textView22"
