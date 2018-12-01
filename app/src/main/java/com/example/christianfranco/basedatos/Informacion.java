@@ -48,12 +48,17 @@ public class Informacion extends AppCompatActivity {
         Cambiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!contraAnteior.getText().toString().equals("")|!contraNueva.getText().toString().equals("")){
-                    cambiarcontra(contravieja,usuariognr.getString("usuario","vacio"));
-                    contraAnteior.setText("");
-                    contraNueva.setText("");
-                }else
-                Toast.makeText(getApplicationContext(), "No deje ningun campo vacio", Toast.LENGTH_SHORT).show();
+                if(!contraAnteior.getText().toString().equals("")){
+                    if(!contraNueva.getText().toString().equals("")){
+                        cambiarcontra(contravieja,usuariognr.getString("usuario","vacio"));
+                        contraAnteior.setText("");
+                        contraNueva.setText("");
+                    }else {
+                        Toast.makeText(getApplicationContext(), "No ha  ingresado una contraseña nueva", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(getApplicationContext(), "Ingrese la contraseña anterior", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
