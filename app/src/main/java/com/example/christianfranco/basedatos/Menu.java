@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
 
 public class Menu extends AppCompatActivity {
-    ImageButton imaInfo,imaLo,imaAgregar,imaPasos,imaConsulta,imaLogros;
+    ImageButton imaInfo,imaLOut,imaAgregar,imaPasos,imaConsulta,imaLogros,imaStatus;
     SharedPreferences sp;
 
 
@@ -23,9 +23,11 @@ public class Menu extends AppCompatActivity {
         imaInfo=(ImageButton)findViewById(R.id.imaInfo);
         imaAgregar=(ImageButton)findViewById(R.id.imaAgregar);
         imaConsulta=(ImageButton)findViewById(R.id.imaConsulta);
-        imaLo=(ImageButton)findViewById(R.id.imaLO);
+        imaLOut=(ImageButton)findViewById(R.id.imaLOut);
         imaLogros=(ImageButton)findViewById(R.id.imaLogros);
         imaPasos=(ImageButton)findViewById(R.id.imaPasos);
+        imaStatus=(ImageButton)findViewById(R.id.imaStatus);
+
 
         //inicio el servicio de background
         Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
@@ -60,7 +62,7 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        imaLo.setOnClickListener(new View.OnClickListener() {
+        imaLOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sp.edit().putBoolean("logged", false).apply();
@@ -75,6 +77,13 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent go = new Intent(Menu.this,Informacion.class);
                 startActivity(go);
+            }
+        });
+
+        imaStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
