@@ -33,9 +33,6 @@ public class Consulta extends AppCompatActivity {
         usuariognr = getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
         final String usuario = usuariognr.getString("usuario", "vacio");
 
-
-
-
         final DialogResConsulta dialog = new DialogResConsulta();
 
         consultar=(Button)findViewById(R.id.consultar);
@@ -43,25 +40,24 @@ public class Consulta extends AppCompatActivity {
         String[] variables = {"Azucar:", "Peso:", "Sangre:", "algo: ", "algoo: "};
         datoaconsultar.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
 
-
         consultar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //se despliega el dialogo con el resultado
+                //veo la seleccion del usuario
                 String selec=datoaconsultar.getSelectedItem().toString();
                 String[] parts = selec.split(":");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
-                var =parts[0];
-                datos=respuesta( AgregarDato.obtenerindice(var),usuario);
-                if(datos.isEmpty()){
+                var =parts[0];//asigno la seleccion a una variable
+                datos=respuesta( AgregarDato.obtenerindice(var),usuario);//obtengo el indice con una funcion preexistente, hago la busqueda en la base
+                if(datos.isEmpty()){//si no hay elementos que presentar, no se muestra el dialogo
                     Toast.makeText(getApplicationContext(), "No hay datos por presentar", Toast.LENGTH_SHORT).show();
-                }else{
+                }else{//por el contrario, se muestra el dialogo con todos los resultados
                     dialog.show(getSupportFragmentManager(), "dialogo");
                 }
             }
         });
     }
 
-
+//descargo los datos requeridos por el usuario desded la base de datos y devuelvo un arraylist
     Conectar contacto = new Conectar();
     public ArrayList<String> respuesta(Integer i, String u){
 
