@@ -80,10 +80,10 @@ public class DialogIni extends DialogFragment {
 
         //valido si es el inicio o final para mostrar las preguntas correctas
         if(!Usuario.banderaformulario){
-            preguntasiniciales();
-            Usuario.banderaformulario=true;
+            Actividad.yasehizo=true;//cuando se lo hace por primera vez, ya no presenta el formulario interfiere cuando se presiona el boton para pausar cronometro
+            Usuario.banderaformulario=true;//para ver si se presentan las preguntas iniciales o finales
         }else{
-            preguntasfinales();
+            Actividad.yasehizo=false;
             Usuario.banderaformulario=false;
         }
 
@@ -93,8 +93,6 @@ public class DialogIni extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //String res =usuariognr.getString("usuario","  ");
-                agregarformularioini(resultados());//envio los resultado a la  base de ddatos
-                Actividad.datoasubir +=resultados()+" ";
                 getDialog().dismiss();//salir de la pantalla
 
             }
@@ -103,7 +101,7 @@ public class DialogIni extends DialogFragment {
         return view;
     }
 
-    public String resultados() {//se lo podria hacer con un case, pero seria casi lo mismo obteniendo los id
+    public void resultados() {//se lo podria hacer con un case, pero seria casi lo mismo obteniendo los id
         String res="";//creo un string que se concatenara con las respuestas
         //Pregunta 1
         if (p11.isChecked()) {
@@ -153,28 +151,14 @@ public class DialogIni extends DialogFragment {
         } else if (p45.isChecked()) {
             res+="5 ";
         }
-        return res;
-    }
-
-
-    Conectar contacto = new Conectar();//agregar los datos a la base
-    public void agregarformularioini(String resultados) {
-        String[] parts = resultados.split(" ");//separo el string por espacios
-        String orden="insert into Actividad ("+usuariognr.getString("usuario","  ")+") values(?)";//obtengo la base a usar
-        try {
-            PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
-            pedir.setString(1, parts[0]);
-           // pedir.setString(2, parts[1]);
-            //pedir.setString(3, parts[2]);
-            //pedir.setString(4, parts[3]);
-            pedir.executeUpdate();
-            Toast.makeText(getContext(),toast, Toast.LENGTH_SHORT).show();
-        } catch (SQLException e) {
-            Toast.makeText(getContext(),"Hubo un problema", Toast.LENGTH_SHORT).show();
+        if(Usuario.banderaformulario)
+        Actividad.Preguntas_I=res;//agrego a la variable correspondiente
+        else {
+            Actividad.Preguntas_F=res;
         }
     }
 
-
+//obtengo las preguntas a presentar desde la base de datos
     Conectar conectar = new Conectar();
     public void obtenerPreguntas() {
         List<String> preg = new ArrayList<>();
@@ -197,19 +181,6 @@ public class DialogIni extends DialogFragment {
         Preg2.setText(preg.get(1));
         Preg3.setText(preg.get(2));
         Preg4.setText(preg.get(3));
-    }
-
-    public void preguntasiniciales() {
-        tabla = "FormularioInicio";
-        toast = "Formulario Inicial Agregado Correctamente";
-        Actividad.yasehizo=true;//cuando se lo hace por primera vez, ya no interfiere cuando se presiona el boton para pausar cronometro
-    }
-
-    public void preguntasfinales() {
-
-        tabla = "FormularioFinal";
-        toast = "Formulario Final Agregado Correctamente";
-        Actividad.yasehizo=false;
     }
 
 }

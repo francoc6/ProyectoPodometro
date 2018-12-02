@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Registro" />
-        <activity android:name=".MenuuPrincipal" />
 
         <service
             android:name=".ContadordePasos.IntSerBack"

@@ -25,7 +25,9 @@ public class Actividad extends AppCompatActivity {
     private long tiempopausa,tiempofinal;
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
 
-    public static String datoasubir;
+
+
+    public static String Preguntas_I,Preguntas_F;
 
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
     int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
@@ -53,14 +55,17 @@ public class Actividad extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 //formulario inicial
-                if (yasehizo == false) { dialog.show(getSupportFragmentManager(), "Mi dialogo"); }
+                if (yasehizo == false) {
+
+                        dialog.show(getSupportFragmentManager(), "Mi dialogo");
+
+                }
                 //servicio
                 IntSerBack.start();startService(intentservice);
                 //cronometro
                 simpleChronometer.setFormat("%s");start();
                 //botones
                 BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);BtnRegresar.setEnabled(false);
-                datoasubir="";
             }
         });
 
@@ -78,7 +83,7 @@ public class Actividad extends AppCompatActivity {
             public void onClick(View arg0) {
                 detener();//detener el reloj
                 dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
-                Toast.makeText(getApplicationContext(),"Mes: "+ mes+"Dia: "+dia+"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+String.valueOf(IntSerBack.getNumSteps())+" Datos: "+datoasubir, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Mes: "+ mes+"Dia: "+dia+"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+String.valueOf(IntSerBack.getNumSteps())+" Datos: ", Toast.LENGTH_SHORT).show();
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
 
