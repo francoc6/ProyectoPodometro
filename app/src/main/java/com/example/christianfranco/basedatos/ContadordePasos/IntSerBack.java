@@ -40,7 +40,13 @@ public class IntSerBack extends IntentService implements SensorEventListener, St
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
-        numSteps = 0;
+
+        if (Actividad.yasehizo) {//para cambiar el valor de pasos si se presiona pausa
+            numSteps = Actividad.pasos;
+        } else {
+            numSteps = 0;
+        }
+        //numSteps = 0;
         sensorManager.registerListener(IntSerBack.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
@@ -102,5 +108,6 @@ public class IntSerBack extends IntentService implements SensorEventListener, St
     public static void start() {//accedo al contador desde la pantalla que muestra los numero
         band = true;
     }
+
 }
 

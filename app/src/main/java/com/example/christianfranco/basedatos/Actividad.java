@@ -34,6 +34,8 @@ public class Actividad extends AppCompatActivity {
     int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
     int mes = calendarNow.get(Calendar.MONTH);
 
+    public static int pasos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +56,8 @@ public class Actividad extends AppCompatActivity {
 
         if(yasehizo){
             BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);BtnRegresar.setEnabled(false);
-            //onPostResume();
             simpleChronometer.start();
+            IntSerBack.start();startService(intentservice);
         }else {
             detener();//empieza detenido el reloj de pantalla
             //para que solo se pueda presionar empezar
@@ -69,17 +71,17 @@ public class Actividad extends AppCompatActivity {
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                //servicio
-                IntSerBack.start();startService(intentservice);
                 //cronometro
                 start();
-                BtnPausa.setEnabled(true);
-                BtnStart.setEnabled(false);
-                //formulario inicial
+
                 if (yasehizo == false) {
-                    //onPause();
                     Intent preg = new Intent(Actividad.this,Preguntas.class);
                     startActivity(preg);
+                    pasos=0;
+                }else{
+                    BtnPausa.setEnabled(true);
+                    BtnStart.setEnabled(false);
+                    IntSerBack.start();startService(intentservice);
                 }
 
             }
@@ -91,18 +93,27 @@ public class Actividad extends AppCompatActivity {
                 pausa();//cronometro
                 //botones
                 BtnPausa.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(false);
+
+                pasos=IntSerBack.getNumSteps();
+                IntSerBack.detener();//detener el servicio
+                stopService(intentservice);
+
+
             }
         });
 
         BtnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                if(banderapausa){
+                    pasos=IntSerBack.getNumSteps();
+                }
                 detener();//detener el reloj
                 //dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
                 Intent preg = new Intent(Actividad.this,Preguntas.class);
                 startActivity(preg);
 
-                Toast.makeText(getApplicationContext(),"Mes: "+ mes+"Dia: "+dia+"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+String.valueOf(IntSerBack.getNumSteps())+" Datos: ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Mes: "+ mes+"Dia: "+dia+"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+pasos+" Datos: ", Toast.LENGTH_SHORT).show();
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
 
