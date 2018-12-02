@@ -90,7 +90,7 @@ public class AgregarDato extends AppCompatActivity {
         }
     }
 
-    public int obtenerindice(String d){
+    public static int obtenerindice(String d){
         int r=0;
         if(d.equals("Azucar")){
             r=1;
