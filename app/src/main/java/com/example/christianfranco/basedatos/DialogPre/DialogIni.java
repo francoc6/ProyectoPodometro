@@ -12,13 +12,10 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.christianfranco.basedatos.Actividad;
 import com.example.christianfranco.basedatos.Conectar;
 import com.example.christianfranco.basedatos.R;
 import com.example.christianfranco.basedatos.Usuario;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

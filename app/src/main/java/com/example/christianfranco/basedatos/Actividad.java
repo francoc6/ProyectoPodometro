@@ -18,15 +18,16 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class Actividad extends AppCompatActivity {
+
     public static TextView TvSteps;
-    private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ",Datoaenviar="";
     Button BtnStart, BtnPausa, BtnStop,BtnRegresar;
     Chronometer simpleChronometer;
+
+    private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
+
     private long tiempopausa,tiempofinal;
+
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
-
-
-
     public static String Preguntas_I,Preguntas_F;
 
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
@@ -42,30 +43,45 @@ public class Actividad extends AppCompatActivity {
         BtnPausa = (Button) findViewById(R.id.Pausa);
         BtnStop = (Button) findViewById(R.id.btn_stop);
         BtnRegresar=(Button)findViewById(R.id.btnRegresar);
-        TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
-        simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
 
-        final DialogIni dialog = new DialogIni();
+        TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
+
+        simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
+        simpleChronometer.setFormat("%s");
+
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
-        BtnPausa.setEnabled(false);//para que solo se pueda presionar empezar
-        BtnStop.setEnabled(false);
+
+        if(yasehizo){
+            BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);BtnRegresar.setEnabled(false);
+            //onPostResume();
+            simpleChronometer.start();
+        }else {
+            detener();//empieza detenido el reloj de pantalla
+            //para que solo se pueda presionar empezar
+            BtnPausa.setEnabled(false);
+            BtnStop.setEnabled(false);
+            IntSerBack.detener();//detener el servicio
+            stopService(intentservice);
+        }
+
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                //formulario inicial
-                if (yasehizo == false) {
-
-                        dialog.show(getSupportFragmentManager(), "Mi dialogo");
-
-                }
                 //servicio
                 IntSerBack.start();startService(intentservice);
                 //cronometro
-                simpleChronometer.setFormat("%s");start();
-                //botones
-                BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);BtnRegresar.setEnabled(false);
+                start();
+                BtnPausa.setEnabled(true);
+                BtnStart.setEnabled(false);
+                //formulario inicial
+                if (yasehizo == false) {
+                    //onPause();
+                    Intent preg = new Intent(Actividad.this,Preguntas.class);
+                    startActivity(preg);
+                }
+
             }
         });
 
@@ -82,7 +98,10 @@ public class Actividad extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 detener();//detener el reloj
-                dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
+                //dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
+                Intent preg = new Intent(Actividad.this,Preguntas.class);
+                startActivity(preg);
+
                 Toast.makeText(getApplicationContext(),"Mes: "+ mes+"Dia: "+dia+"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+String.valueOf(IntSerBack.getNumSteps())+" Datos: ", Toast.LENGTH_SHORT).show();
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
@@ -103,7 +122,6 @@ public class Actividad extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     //boton fisico
@@ -132,7 +150,11 @@ public class Actividad extends AppCompatActivity {
     }
     public void detener() {
         simpleChronometer.stop();
-        tiempofinal=SystemClock.elapsedRealtime()-simpleChronometer.getBase();
+        if(!banderapausa){
+            tiempofinal=tiempopausa;
+        }else{
+            tiempofinal=SystemClock.elapsedRealtime()-simpleChronometer.getBase();//tiempo final
+        }
         tiempopausa = 0;
         simpleChronometer.setBase(SystemClock.elapsedRealtime());
         banderapausa = false;
