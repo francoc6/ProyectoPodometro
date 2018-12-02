@@ -11,7 +11,8 @@
     <string name="Registrate">Crea una cuenta</string>
 
     <string name="tituloform">Ingresa los siguientes datos:</string>
-    <string name="nombreform">Nombres:</string>
+    <string name="nombreform">Nombre:</string>
+    <string name="apellidoform">Apellido:</string>
     <string name="edadform">Edad:</string>
     <string name="usrform">Usuario:</string>
     <string name="generoform">Selecciona tu genero:</string>

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Informacion extends AppCompatActivity {
-    TextView resNombre, resUsuario, resEdad, resCorreo,resGenero;
+    TextView resNombre,resApellido, resUsuario, resEdad, resCorreo,resGenero;
     EditText contraAnteior,contraNueva;
     Button Cambiar;
     String contravieja;
@@ -33,6 +33,7 @@ public class Informacion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacion);
         resNombre=(TextView)findViewById(R.id.resNombre);
+        resApellido=(TextView)findViewById(R.id.resApellido);
         resUsuario=(TextView)findViewById(R.id.resUsuario);
         resCorreo=(TextView)findViewById(R.id.resCorreo);
         resEdad=(TextView)findViewById(R.id.resEdad);
@@ -67,16 +68,17 @@ public class Informacion extends AppCompatActivity {
     public void obtenerdatos(String usuario) {
         try {
             Statement pedir = contacto.conectarabase().createStatement();
-            String orden ="select * from DatosPersonales WHERE  Usuario='"+usuario+"'";
+            String orden ="select * from RegistroUsuarios_db WHERE  Usuario='"+usuario+"'";
             ResultSet res=null;
             res = pedir.executeQuery(orden);
             res.next();
             resNombre.setText(res.getString("Nombre"));
+            resApellido.setText(res.getString("Apellido"));
             resUsuario.setText(res.getString("Usuario"));
             resCorreo.setText(res.getString("Correo"));
             resEdad.setText(res.getString("Edad"));
             resGenero.setText(res.getString("Genero"));
-            contravieja=res.getString("Password");
+            contravieja=res.getString("Pass");
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -89,7 +91,7 @@ public class Informacion extends AppCompatActivity {
             contraNueva.setText("");
         } else {
             contravieja=contraNueva.getText().toString();
-            String orden ="UPDATE DatosPersonales SET Password='"+contraNueva.getText().toString()+"' WHERE Usuario='"+usuario+"'";
+            String orden ="UPDATE DatosPersonales SET Pass='"+contraNueva.getText().toString()+"' WHERE Usuario='"+usuario+"'";
             try {
                 PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
                 pedir.executeUpdate();

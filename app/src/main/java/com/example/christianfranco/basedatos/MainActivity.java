@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
         Usuario test = new Usuario();
         try {
             Statement pedir = contacto.conectarabase().createStatement();
-            ResultSet res = pedir.executeQuery("select * from DatosPersonales");
+            ResultSet res = pedir.executeQuery("select * from RegistroUsuarios_db");
             while (res.next()) {
-                usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Password")));
+                usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Pass")));
             }
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();

@@ -19,7 +19,11 @@ import com.example.christianfranco.basedatos.R;
 import com.example.christianfranco.basedatos.Usuario;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -82,6 +86,8 @@ public class DialogIni extends DialogFragment {
             preguntasfinales();
             Usuario.banderaformulario=false;
         }
+
+        obtenerPreguntas();
 
         Aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,21 +174,39 @@ public class DialogIni extends DialogFragment {
         }
     }
 
+
+    Conectar conectar = new Conectar();
+    public void obtenerPreguntas() {
+        List<String> preg = new ArrayList<>();
+        try {
+            String tipo;
+            if (Usuario.banderaformulario){ tipo="Inicio"; }else{ tipo="Fin";}
+            Statement pedir = conectar.conectarabase().createStatement();
+            String orden ="SELECT Texto FROM Preguntas_db WHERE TIPO='"+tipo+"'";
+            ResultSet res=null;
+            res = pedir.executeQuery(orden);
+           // res.next();
+            while (res.next()) {
+                preg.add(res.getString("Texto"));
+            }
+            res.close();
+        } catch (SQLException e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        Preg1.setText(preg.get(0));
+        Preg2.setText(preg.get(1));
+        Preg3.setText(preg.get(2));
+        Preg4.setText(preg.get(3));
+    }
+
     public void preguntasiniciales() {
-        Preg1.setText("Pregunta Inicial 1");
-        Preg2.setText("Pregunta Inicial 2");
-        Preg3.setText("Pregunta Inicial 3");
-        Preg4.setText("Pregunta Inicial 4");
         tabla = "FormularioInicio";
         toast = "Formulario Inicial Agregado Correctamente";
         Actividad.yasehizo=true;//cuando se lo hace por primera vez, ya no interfiere cuando se presiona el boton para pausar cronometro
     }
 
     public void preguntasfinales() {
-        Preg1.setText("Pregunta Final 1");
-        Preg2.setText("Pregunta Final 2");
-        Preg3.setText("Pregunta Final 3");
-        Preg4.setText("Pregunta Final 4");
+
         tabla = "FormularioFinal";
         toast = "Formulario Final Agregado Correctamente";
         Actividad.yasehizo=false;

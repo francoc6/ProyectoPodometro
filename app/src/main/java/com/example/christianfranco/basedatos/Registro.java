@@ -20,7 +20,7 @@ public class Registro extends AppCompatActivity {
 
 
     RadioButton radioH, radioM;
-    EditText Nombre, Usuario, Correo, Edad, Pass;
+    EditText Nombre,Apellido, Usuario, Correo, Edad, Pass;
     Button Cancelar, Registrar;
 
     @Override
@@ -28,6 +28,7 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         Nombre = (EditText) findViewById(R.id.Nombre);
+        Apellido=(EditText)findViewById(R.id.Apellido);
         Usuario = (EditText) findViewById(R.id.Usuario);
         Correo = (EditText) findViewById(R.id.Correo);
         Edad = (EditText) findViewById(R.id.Edad);
@@ -69,21 +70,22 @@ public class Registro extends AppCompatActivity {
     Boolean aprobo = false;
     public void agregarusuario(String gen) {
         try {
-            String res =verificarcampos(Nombre.getText().toString(),Usuario.getText().toString(),Correo.getText().toString(),Edad.getText().toString(),Pass.getText().toString());
+            String res =verificarcampos(Nombre.getText().toString(),Apellido.getText().toString(),Usuario.getText().toString(),Correo.getText().toString(),Edad.getText().toString(),Pass.getText().toString());
             if (res=="") {//si los campos no estan vacios, siue a  verificar que el usuario no exista
                 if (apusr(Usuario.getText().toString())) {
                     Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
-                } else if(Usuario.getText().toString().contains("")){
+                } else if(Usuario.getText().toString().contains(" ")){
                     Toast.makeText(getApplicationContext(), "Usuario no acepta espacios", Toast.LENGTH_SHORT).show();
                 } else {//si el usuario no existe se comunica a la base para el registro
                     aprobo = true;//para regresar al inicio si se agrego usuario
-                    PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into DatosPersonales values(?,?,?,?,?,?)");
+                    PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into RegistroUsuarios_db values(?,?,?,?,?,?,?)");
                     pedir.setString(1, Nombre.getText().toString());
-                    pedir.setString(2, Usuario.getText().toString());
-                    pedir.setString(3, Pass.getText().toString());
-                    pedir.setString(4, Correo.getText().toString());
-                    pedir.setString(5, Edad.getText().toString());
-                    pedir.setString(6, gen);
+                    pedir.setString(2,Apellido.getText().toString());
+                    pedir.setString(3, Usuario.getText().toString());
+                    pedir.setString(4, Pass.getText().toString());
+                    pedir.setString(5, Correo.getText().toString());
+                    pedir.setString(6, Edad.getText().toString());
+                    pedir.setString(7, gen);
                     pedir.executeUpdate();
                     Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                 }
@@ -105,7 +107,7 @@ public class Registro extends AppCompatActivity {
         Usuario test = new Usuario();
         try {
             Statement pedir = contacto.conectarabase().createStatement();
-            ResultSet res = pedir.executeQuery("select * from DatosPersonales");
+            ResultSet res = pedir.executeQuery("select * from RegistroUsuarios_db");
             while (res.next()) {
                 usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Correo")));
             }
@@ -115,9 +117,10 @@ public class Registro extends AppCompatActivity {
         return test.yaexiste(u, usuarios);
     }
     //metodo para verificar campos vacios
-    public String verificarcampos(String Nombre, String U, String Correo, String Edad, String Pass) {
+    public String verificarcampos(String Nombre,String A, String U, String Correo, String Edad, String Pass) {
         String resultado = "";
         if (Nombre.isEmpty()) { resultado += "Nombre "; }
+        if (A.isEmpty()) { resultado += "Apellido "; }
         if (U.isEmpty()) { resultado += "Usuario "; }
         if (Correo.isEmpty()) { resultado += "Correo "; }
         if (Edad.isEmpty()) { resultado += "Edad "; }
