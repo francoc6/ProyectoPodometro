@@ -26,6 +26,7 @@ public class Actividad extends AppCompatActivity {
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
 
     public static String datoasubir;
+
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
     int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
     int mes = calendarNow.get(Calendar.MONTH);
