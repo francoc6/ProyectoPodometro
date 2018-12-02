@@ -26,47 +26,21 @@ public class DialogResConsulta extends DialogFragment {
     private TextView Var;
     private ListView resultado;
 
-    SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_resconsulta, container, false);
-        usuariognr = getActivity().getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
-        final String usuario = usuariognr.getString("usuario", "vacio");
 
         Var = (TextView) view.findViewById(R.id.VAR);
-        resultado=(ListView)view.findViewById(R.id.listview);
+        resultado = (ListView) view.findViewById(R.id.listview);
 
         Var.setText(Consulta.var);
 
-        ArrayList<String> datos=respuesta( AgregarDato.obtenerindice(Consulta.var),usuario);
-        ArrayAdapter<String> pantalla= new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1,datos);
+        ArrayAdapter<String> pantalla = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, Consulta.datos);
 
         resultado.setAdapter(pantalla);
+
         return view;
-    }
-
-
-    Conectar contacto = new Conectar();
-    public ArrayList<String> respuesta(Integer i,String u){
-
-        //conexion y descarga de datos
-        String orden ="select * from Variables_db WHERE ID='"+i+"' AND "+"Usuario='"+u+"'";
-        ArrayList<String> ans = new ArrayList<>();
-        try {
-            Statement pedir = contacto.conectarabase().createStatement();
-            ResultSet res=null;
-            res = pedir.executeQuery(orden);
-            // res.next();
-            while (res.next()) {
-                ans.add(res.getString("Fecha")+"    "+res.getString("Valor"));
-            }
-            res.close();
-        }catch (SQLException e) {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-        return ans;
     }
 
 

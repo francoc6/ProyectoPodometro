@@ -1,12 +1,19 @@
 package com.example.christianfranco.basedatos;
 
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Consulta extends AppCompatActivity {
     Spinner datoaconsultar;
@@ -14,10 +21,20 @@ public class Consulta extends AppCompatActivity {
 
     static String var;
 
+    SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
+
+    static ArrayList<String> datos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta);
+
+        usuariognr = getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
+        final String usuario = usuariognr.getString("usuario", "vacio");
+
+
+
 
         final DialogResConsulta dialog = new DialogResConsulta();
 
@@ -34,8 +51,36 @@ public class Consulta extends AppCompatActivity {
                 String selec=datoaconsultar.getSelectedItem().toString();
                 String[] parts = selec.split(":");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
                 var =parts[0];
-                dialog.show(getSupportFragmentManager(), "dialogo");
+                datos=respuesta( AgregarDato.obtenerindice(var),usuario);
+                if(datos.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "No hay datos por presentar", Toast.LENGTH_SHORT).show();
+                }else{
+                    dialog.show(getSupportFragmentManager(), "dialogo");
+                }
             }
         });
+    }
+
+
+    Conectar contacto = new Conectar();
+    public ArrayList<String> respuesta(Integer i, String u){
+
+        //conexion y descarga de datos
+        String orden ="select * from Variables_db WHERE ID='"+i+"' AND "+"Usuario='"+u+"'";
+        ArrayList<String> ans = new ArrayList<>();
+        try {
+            Statement pedir = contacto.conectarabase().createStatement();
+            ResultSet res=null;
+            res = pedir.executeQuery(orden);
+            // res.next();
+            while (res.next()) {
+                ans.add(res.getString("Fecha")+"    "+res.getString("Valor"));
+            }
+            res.close();
+        }catch (SQLException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        return ans;
     }
 }
