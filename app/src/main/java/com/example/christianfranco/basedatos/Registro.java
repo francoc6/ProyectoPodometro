@@ -87,6 +87,7 @@ public class Registro extends AppCompatActivity {
                     pedir.setString(6, Edad.getText().toString());
                     pedir.setString(7, gen);
                     pedir.executeUpdate();
+                    pedir.close();
                     Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                 }
             }

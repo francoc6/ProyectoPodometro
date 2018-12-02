@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             while (res.next()) {
                 usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Pass")));
             }
+            res.close();
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
