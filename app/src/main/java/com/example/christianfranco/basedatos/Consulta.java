@@ -12,6 +12,8 @@ public class Consulta extends AppCompatActivity {
     Spinner datoaconsultar;
     Button consultar;
 
+    static String var;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +31,11 @@ public class Consulta extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //se despliega el dialogo con el resultado
+                String selec=datoaconsultar.getSelectedItem().toString();
+                String[] parts = selec.split(":");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
+                var =parts[0];
                 dialog.show(getSupportFragmentManager(), "dialogo");
             }
         });
-
     }
 }
