@@ -45,19 +45,7 @@ public class Status extends AppCompatActivity {
 
         res=obtenerdatos(usuario);
 
-        if (!(res.get(0).equals("Sin Registro"))){
-            if (Integer.valueOf(res.get(0)) > 200) {//si es mayor a 200 es DIABETES
-                Integer.valueOf(res.get(0));
-                TG.setBackgroundResource(R.color.ROJO);
-                respuestaG="Diabetes";
-            } else if (144 < Integer.valueOf(res.get(0)) && Integer.valueOf(res.get(0)) < 149) {//entre 144 y 149 es PREDIABETES
-                TG.setBackgroundResource(R.color.AMARILLO);
-                respuestaG="PRE-DIABETES";
-            } else {//Normal
-                TG.setBackgroundResource(R.color.VERDE);
-                respuestaG="Normal";
-            }
-        }
+        color();
 
         TG.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +53,6 @@ public class Status extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "dialogo");
             }
         });
-
 
     }
 
@@ -103,5 +90,21 @@ public class Status extends AppCompatActivity {
     }
     public void referencias (){
 
+    }
+//seteo el color del background y el mensaje del dialogo
+    public void color (){
+        if (!(res.get(0).equals("Sin Registro"))){
+            if (Integer.valueOf(res.get(0)) > 200) {//si es mayor a 200 es DIABETES
+                Integer.valueOf(res.get(0));
+                TG.setBackgroundResource(R.color.ROJO);
+                respuestaG="Diabetes";
+            } else if (144 < Integer.valueOf(res.get(0)) && Integer.valueOf(res.get(0)) < 149) {//entre 144 y 149 es PREDIABETES
+                TG.setBackgroundResource(R.color.AMARILLO);
+                respuestaG="PRE-DIABETES";
+            } else {//Normal
+                TG.setBackgroundResource(R.color.VERDE);
+                respuestaG="Normal";
+            }
+        }
     }
 }
