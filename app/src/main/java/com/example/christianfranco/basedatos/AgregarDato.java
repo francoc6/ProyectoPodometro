@@ -44,7 +44,7 @@ public class AgregarDato extends AppCompatActivity {
         cancelar = (Button) findViewById(R.id.Cancelaradd);
         dato=(EditText)findViewById(R.id.adddato);
         opciones = (Spinner) findViewById(R.id.opcionspinner);
-        String[] variables = {"Glucosa (mg/db):", "Globulos Rojos (ml):", "Presion ():","Peso (lb):"};
+        String[] variables = {"Glucosa (mg/db):", "GlobulosRojos (ml):", "Presion ():","Peso (lb):"};
         opciones.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
 
         usuariognr = getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
@@ -97,7 +97,7 @@ public class AgregarDato extends AppCompatActivity {
         if(d.equals("Glucosa")){
             r=1;
         }
-        if(d.equals("Globulos Rojos")){
+        if(d.equals("GlobulosRojos")){
             r=2;
         }
         if(d.equals("Presion")){
