@@ -1,6 +1,6 @@
 package com.example.christianfranco.basedatos;
 
-//se van a agregar los datos con id segun el tipo: Azucar 1, Sangre 2,Peso 3,  ...
+//se van a agregar los datos con id segun el tipo: Azucar 1, GlobulosRojos 2,Presion 3,peso 4  ...
 
 
 import android.content.Intent;
@@ -26,6 +26,8 @@ public class AgregarDato extends AppCompatActivity {
     Spinner opciones;
     EditText dato;
 
+
+
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
     int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
     int mes = calendarNow.get(Calendar.MONTH);
@@ -42,7 +44,7 @@ public class AgregarDato extends AppCompatActivity {
         cancelar = (Button) findViewById(R.id.Cancelaradd);
         dato=(EditText)findViewById(R.id.adddato);
         opciones = (Spinner) findViewById(R.id.opcionspinner);
-        String[] variables = {"Azucar (unidad):", "Peso (lb):", "Sangre (ml):", "algo :", "algoo :"};
+        String[] variables = {"Glucosa (mg/db):", "Globulos Rojos (ml):", "Presion ():","Peso (lb):"};
         opciones.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
 
         usuariognr = getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
@@ -92,14 +94,17 @@ public class AgregarDato extends AppCompatActivity {
 
     public static int obtenerindice(String d){
         int r=0;
-        if(d.equals("Azucar")){
+        if(d.equals("Glucosa")){
             r=1;
         }
-        if(d.equals("Sangre")){
+        if(d.equals("Globulos Rojos")){
             r=2;
         }
-        if(d.equals("Peso")){
+        if(d.equals("Presion")){
             r=3;
+        }
+        if(d.equals("Peso")){
+            r=4;
         }
         return r;
     }

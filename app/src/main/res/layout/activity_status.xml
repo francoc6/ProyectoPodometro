@@ -11,9 +11,10 @@
         android:id="@+id/textView36"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_margin="15dp"
+        android:text="STATUS"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <ScrollView
@@ -31,20 +32,24 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/Tsangre"
+                    android:id="@+id/TGR"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:text="Sangre:"
-                    android:textSize="20sp" />
+                    android:text="Globulos Rojos:"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/Tazucar"
+                    android:id="@+id/TG"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:text="Azucar:"
-                    android:textSize="20sp" />
+                    android:text="Glucosa(mg/dl):"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/Tpresion"
@@ -52,7 +57,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:text="Presion:"
-                    android:textSize="20sp" />
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/Tpeso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="Peso(lb):"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -61,21 +78,21 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/Psangre"
+                    android:id="@+id/PGR"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="15dp"
                     android:text="TextView"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <TextView
-                    android:id="@+id/Pazucar"
+                    android:id="@+id/PG"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:text="TextView"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/Ppresion"
@@ -83,7 +100,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:text="TextView"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/Ppeso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="TextView"
+                    android:textSize="25sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

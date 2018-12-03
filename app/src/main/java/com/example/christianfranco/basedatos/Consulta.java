@@ -37,7 +37,7 @@ public class Consulta extends AppCompatActivity {
 
         consultar=(Button)findViewById(R.id.consultar);
         datoaconsultar = (Spinner) findViewById(R.id.spinnerconsulta);
-        String[] variables = {"Azucar:", "Peso:", "Sangre:", "algo: ", "algoo: "};
+        String[] variables = {"Glucosa:", "Globulos Rojos:","Presion:","Peso:"};
         datoaconsultar.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
 
         consultar.setOnClickListener(new View.OnClickListener() {
