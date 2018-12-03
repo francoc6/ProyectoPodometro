@@ -30,7 +30,7 @@ public class AgregarDato extends AppCompatActivity {
 
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
     int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
-    int mes = calendarNow.get(Calendar.MONTH);
+    int mes =1+ calendarNow.get(Calendar.MONTH);
     int anio = calendarNow.get(Calendar.YEAR);
     String fecha=dia+"/"+mes+"/"+anio;
 
