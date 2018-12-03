@@ -82,7 +82,8 @@ public class Menu extends AppCompatActivity {
         imaStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent go = new Intent(Menu.this,Status.class);
+                startActivity(go);
             }
         });
 

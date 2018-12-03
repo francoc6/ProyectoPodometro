@@ -24,14 +24,9 @@ public class Actividad extends AppCompatActivity {
     Chronometer simpleChronometer;
 
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
-
     public static long tiempopausa,tiempofinal;
-
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
-    public static String Preguntas_I,Preguntas_F;
-
-
-
+    public static String Preguntas_I;
     public static int pasos;
 
     @Override

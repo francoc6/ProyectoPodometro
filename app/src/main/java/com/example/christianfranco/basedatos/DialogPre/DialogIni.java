@@ -151,7 +151,7 @@ public class DialogIni extends DialogFragment {
         if(Usuario.banderaformulario)
         Actividad.Preguntas_I=res;//agrego a la variable correspondiente
         else {
-            Actividad.Preguntas_F=res;
+            //Actividad.Preguntas_F=res;
         }
     }
 

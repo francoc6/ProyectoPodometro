@@ -34,7 +34,8 @@
         <activity android:name=".Consulta" />
         <activity android:name=".Menu" />
         <activity android:name=".Informacion" />
-        <activity android:name=".Preguntas"></activity>
+        <activity android:name=".Preguntas" />
+        <activity android:name=".Status"></activity>
     </application>
 
 </manifest>

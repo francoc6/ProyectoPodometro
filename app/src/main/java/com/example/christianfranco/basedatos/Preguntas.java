@@ -37,8 +37,8 @@ public class Preguntas extends AppCompatActivity {
     boolean confirmar=false;
 
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
-    int dia =1+calendarNow.get(Calendar.DAY_OF_MONTH);
-    int mes = calendarNow.get(Calendar.MONTH);
+    int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
+    int mes =1+calendarNow.get(Calendar.MONTH);
     int anio =calendarNow.get(Calendar.YEAR);
 
     @Override
@@ -62,6 +62,7 @@ public class Preguntas extends AppCompatActivity {
             Usuario.banderaformulario = false;
         }
 
+        //cargo las preguntas correspondientes a presentar
         obtenerPreguntas();
 
         Aceptar.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +175,7 @@ public class Preguntas extends AppCompatActivity {
         Preg4.setText(preg.get(3));
     }
 
-
+//metodo para agregar datos a la base
     public void agregaractividad(String u,String t,String f, String p,String PI,String PF){
         String orden ="insert into ACTIVIDAD values(?,?,?,?,?,?)";
         try {
