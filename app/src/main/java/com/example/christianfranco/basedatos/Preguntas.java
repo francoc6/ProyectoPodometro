@@ -12,11 +12,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 
 public class Preguntas extends AppCompatActivity {
@@ -30,46 +34,27 @@ public class Preguntas extends AppCompatActivity {
     public static TextView Preg1, Preg2, Preg3, Preg4;
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
 
+    public String PF;
+
     boolean confirmar=false;
+
+    Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
+    int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
+    int mes = calendarNow.get(Calendar.MONTH);
+    int anio =calendarNow.get(Calendar.YEAR);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preguntas);
-
-
-        p11 = (RadioButton) findViewById(R.id.i11);
-        p12 = (RadioButton) findViewById(R.id.i12);
-        p13 = (RadioButton) findViewById(R.id.i13);
-        p14 = (RadioButton) findViewById(R.id.i14);
-        p15 = (RadioButton) findViewById(R.id.i15);
-
-        p21 = (RadioButton) findViewById(R.id.i21);
-        p22 = (RadioButton) findViewById(R.id.i22);
-        p23 = (RadioButton) findViewById(R.id.i23);
-        p24 = (RadioButton) findViewById(R.id.i24);
-        p25 = (RadioButton) findViewById(R.id.i25);
-
-        p31 = (RadioButton) findViewById(R.id.i31);
-        p32 = (RadioButton) findViewById(R.id.i32);
-        p33 = (RadioButton) findViewById(R.id.i33);
-        p34 = (RadioButton) findViewById(R.id.i34);
-        p35 = (RadioButton) findViewById(R.id.i35);
-
-        p41 = (RadioButton) findViewById(R.id.i41);
-        p42 = (RadioButton) findViewById(R.id.i42);
-        p43 = (RadioButton) findViewById(R.id.i43);
-        p44 = (RadioButton) findViewById(R.id.i44);
-        p45 = (RadioButton) findViewById(R.id.i45);
-
-        Preg1 = (TextView) findViewById(R.id.Pregunta1);
-        Preg2 = (TextView) findViewById(R.id.Pregunta2);
-        Preg3 = (TextView) findViewById(R.id.Pregunta3);
-        Preg4 = (TextView) findViewById(R.id.Pregunta4);
+        p11 = (RadioButton) findViewById(R.id.i11);p12 = (RadioButton) findViewById(R.id.i12);p13 = (RadioButton) findViewById(R.id.i13);p14 = (RadioButton) findViewById(R.id.i14);p15 = (RadioButton) findViewById(R.id.i15);
+        p21 = (RadioButton) findViewById(R.id.i21);p22 = (RadioButton) findViewById(R.id.i22);p23 = (RadioButton) findViewById(R.id.i23);p24 = (RadioButton) findViewById(R.id.i24);p25 = (RadioButton) findViewById(R.id.i25);
+        p31 = (RadioButton) findViewById(R.id.i31);p32 = (RadioButton) findViewById(R.id.i32);p33 = (RadioButton) findViewById(R.id.i33);p34 = (RadioButton) findViewById(R.id.i34);p35 = (RadioButton) findViewById(R.id.i35);
+        p41 = (RadioButton) findViewById(R.id.i41);p42 = (RadioButton) findViewById(R.id.i42);p43 = (RadioButton) findViewById(R.id.i43);p44 = (RadioButton) findViewById(R.id.i44);p45 = (RadioButton) findViewById(R.id.i45);
+        Preg1 = (TextView) findViewById(R.id.Pregunta1);Preg2 = (TextView) findViewById(R.id.Pregunta2);Preg3 = (TextView) findViewById(R.id.Pregunta3);Preg4 = (TextView) findViewById(R.id.Pregunta4);
         Aceptar = findViewById(R.id.iniAceptar);
-
         usuariognr = getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
-
+        final String usuario =usuariognr.getString("usuario","vacio");
         //valido si es el inicio o final para mostrar las preguntas correctas
         if (!Usuario.banderaformulario) {
             Actividad.yasehizo = true;//cuando se lo hace por primera vez, ya no presenta el formulario interfiere cuando se presiona el boton para pausar cronometro
@@ -86,6 +71,9 @@ public class Preguntas extends AppCompatActivity {
             public void onClick(View v) {
                 resultados();
                 if (confirmar==true){
+                    if(!Usuario.banderaformulario){
+                        agregaractividad(usuario, String.valueOf(Actividad.obtenertiempo(Actividad.tiempofinal)),dia+"/"+mes+"/"+anio,String.valueOf(Actividad.pasos),Actividad.Preguntas_I,PF);
+                    }
                     Intent salir = new Intent(Preguntas.this, Actividad.class);
                     startActivity(salir);
                     finish();
@@ -96,6 +84,7 @@ public class Preguntas extends AppCompatActivity {
         });
     }
 
+    //obtengo las respuestas de las preguntas en un string
     public void resultados() {//se lo podria hacer con un case, pero seria casi lo mismo obteniendo los id
         String res = "";//creo un string que se concatenara con las respuestas
         //Pregunta 1
@@ -152,14 +141,14 @@ public class Preguntas extends AppCompatActivity {
             if (Usuario.banderaformulario)
                 Actividad.Preguntas_I = res;//agrego a la variable correspondiente
             else {
-                Actividad.Preguntas_F = res;
+                PF=res;
+                //Actividad.Preguntas_F = res;
             }
         }
     }
 
     //obtengo las preguntas a presentar desde la base de datos
     Conectar conectar = new Conectar();
-
     public void obtenerPreguntas() {
         List<String> preg = new ArrayList<>();
         try {
@@ -186,4 +175,25 @@ public class Preguntas extends AppCompatActivity {
         Preg3.setText(preg.get(2));
         Preg4.setText(preg.get(3));
     }
+
+
+    public void agregaractividad(String u,String t,String f, String p,String PI,String PF){
+        String orden ="insert into ACTIVIDAD values(?,?,?,?,?,?)";
+        try {
+            PreparedStatement pedir = conectar.conectarabase().prepareStatement(orden);
+            pedir.setString(1,u);
+            pedir.setString(2,t);
+            pedir.setString(3,f);
+            pedir.setString(4,p);
+            pedir.setString(5,PI);
+            pedir.setString(6,PF);
+            pedir.executeUpdate();
+            Toast.makeText(getApplicationContext(), "Se agrego a la base", Toast.LENGTH_SHORT).show();
+            pedir.close();//cierro la conexion
+        }catch (SQLException e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }

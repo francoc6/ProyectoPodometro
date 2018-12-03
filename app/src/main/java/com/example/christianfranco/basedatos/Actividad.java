@@ -25,14 +25,12 @@ public class Actividad extends AppCompatActivity {
 
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
 
-    private long tiempopausa,tiempofinal;
+    public static long tiempopausa,tiempofinal;
 
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
     public static String Preguntas_I,Preguntas_F;
 
-    Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
-    int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
-    int mes = calendarNow.get(Calendar.MONTH);
+
 
     public static int pasos;
 
@@ -97,8 +95,6 @@ public class Actividad extends AppCompatActivity {
                 pasos=IntSerBack.getNumSteps();
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
-
-
             }
         });
 
@@ -108,18 +104,17 @@ public class Actividad extends AppCompatActivity {
                 if(banderapausa){
                     pasos=IntSerBack.getNumSteps();
                 }
-                detener();//detener el reloj
-                //dialog.show(getSupportFragmentManager(), "Mi dialogo");//formulario final
+                //detener el reloj
+                detener();
+                //empiezo activity
                 Intent preg = new Intent(Actividad.this,Preguntas.class);
                 startActivity(preg);
 
-                Toast.makeText(getApplicationContext(),"Mes: "+ mes+"Dia: "+dia+"Tiempo: "+obtenerhora(tiempofinal)+" Pasos: "+pasos+" Datos: ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),obtenertiempo(tiempofinal)+" Pasos: "+pasos+" Datos: ", Toast.LENGTH_SHORT).show();
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
-
                 //botones
                 BtnPausa.setEnabled(false);BtnStop.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(true);
-
             }
         });
 
@@ -171,8 +166,7 @@ public class Actividad extends AppCompatActivity {
         banderapausa = false;
     }
 
-
-    public String obtenerhora(long t){
+    public static String obtenertiempo(long t){
         int resmili,resseg,resmin,reshora;
         String mili,seg,min,hora;
         long x;
@@ -218,6 +212,5 @@ public class Actividad extends AppCompatActivity {
         }
         return res;
     }
-
 
 }
