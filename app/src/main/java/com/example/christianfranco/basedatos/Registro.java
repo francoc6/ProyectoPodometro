@@ -147,6 +147,7 @@ public class Registro extends AppCompatActivity {
         return resultado;
     }
 
+    //metodo para verficar tamaño y edad
     public String tamanio(String Nombre, String A, String U, String Correo, String Edad, String Pass) {
         String resultado = "";
         if (Nombre.length() > 40) {
