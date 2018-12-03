@@ -86,6 +86,13 @@ public class Menu extends AppCompatActivity {
                 startActivity(go);
             }
         });
+        imaLogros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(Menu.this,Logros.class);
+                startActivity(go);
+            }
+        });
 
 
     }
