@@ -51,7 +51,6 @@ public class Actividad extends AppCompatActivity {
 
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
-
         if(yasehizo){
             BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);BtnRegresar.setEnabled(false);
             simpleChronometer.start();
@@ -65,13 +64,11 @@ public class Actividad extends AppCompatActivity {
             stopService(intentservice);
         }
 
-
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 //cronometro
                 start();
-
                 if (yasehizo == false) {
                     Intent preg = new Intent(Actividad.this,Preguntas.class);
                     startActivity(preg);
@@ -81,7 +78,6 @@ public class Actividad extends AppCompatActivity {
                     BtnStart.setEnabled(false);
                     IntSerBack.start();startService(intentservice);
                 }
-
             }
         });
 
@@ -140,6 +136,7 @@ public class Actividad extends AppCompatActivity {
         }
     }
 
+    //metodos para el reloj
     public void start() {
         if (!banderapausa) {
             simpleChronometer.setBase(SystemClock.elapsedRealtime() - tiempopausa);
@@ -166,6 +163,7 @@ public class Actividad extends AppCompatActivity {
         banderapausa = false;
     }
 
+    //lo transformo a un valor H:M:S:MS
     public static String obtenertiempo(long t){
         int resmili,resseg,resmin,reshora;
         String mili,seg,min,hora;

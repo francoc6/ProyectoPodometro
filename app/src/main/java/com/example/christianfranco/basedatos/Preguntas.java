@@ -2,10 +2,8 @@ package com.example.christianfranco.basedatos;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -39,7 +37,7 @@ public class Preguntas extends AppCompatActivity {
     boolean confirmar=false;
 
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
-    int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
+    int dia =1+calendarNow.get(Calendar.DAY_OF_MONTH);
     int mes = calendarNow.get(Calendar.MONTH);
     int anio =calendarNow.get(Calendar.YEAR);
 
@@ -194,6 +192,5 @@ public class Preguntas extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
 
 }
