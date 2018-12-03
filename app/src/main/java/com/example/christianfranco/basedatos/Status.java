@@ -44,9 +44,7 @@ public class Status extends AppCompatActivity {
         Tpeso=(TextView)findViewById(R.id.Tpeso);
 
         res=obtenerdatos(usuario);
-
         color();
-
         TG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
