@@ -68,7 +68,6 @@ public class Registro extends AppCompatActivity {
 
     //metodo para agregar usuario
     Boolean aprobo = false;
-
     public void agregarusuario(String gen) {
         try {
             String res = verificarcampos(Nombre.getText().toString(), Apellido.getText().toString(), Usuario.getText().toString(), Correo.getText().toString(), Edad.getText().toString(), Pass.getText().toString());
