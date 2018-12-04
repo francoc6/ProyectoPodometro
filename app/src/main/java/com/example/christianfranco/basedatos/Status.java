@@ -86,9 +86,13 @@ public class Status extends AppCompatActivity {
         }
         return resul;
     }
+
+    //comparar los datos del usuario con referencias       FALTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     public void referencias (){
 
     }
+
+
 //seteo el color del background y el mensaje del dialogo
     public void color (){
         if (!(res.get(0).equals("Sin Registro"))){

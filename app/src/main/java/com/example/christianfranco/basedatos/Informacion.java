@@ -108,7 +108,6 @@ public class Informacion extends AppCompatActivity {
         }
     }
 
-
     public  Integer obtenerpasos(String u){
         Integer total=0;
         //conexion y descarga de datos

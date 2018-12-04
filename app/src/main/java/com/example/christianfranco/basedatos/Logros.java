@@ -44,7 +44,6 @@ public class Logros extends AppCompatActivity {
         Retos.retos(pasos);//funcion para encender los trofeos
     }
 
-
     //metodo para obtener los pasos totales realizados ingresados a la base de datos
     Conectar contacto = new Conectar();
     public  Integer obtenerpasos(String u){
