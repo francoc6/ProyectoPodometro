@@ -50,7 +50,7 @@ public class Logros extends AppCompatActivity {
     }
 
     Conectar contacto = new Conectar();
-    public Integer obtenerpasos(String u){
+    public  Integer obtenerpasos(String u){
         Integer total=0;
         //conexion y descarga de datos
         String orden ="select Pasos from ACTIVIDAD WHERE Usuario='"+u+"'";

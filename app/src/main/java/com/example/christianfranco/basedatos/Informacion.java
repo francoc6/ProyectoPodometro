@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Informacion extends AppCompatActivity {
-    TextView resNombre,resApellido, resUsuario, resEdad, resCorreo,resGenero;
+    TextView resNombre,resApellido, resUsuario, resEdad, resCorreo,resGenero,resPasos;
     EditText contraAnteior,contraNueva;
     Button Cambiar;
     String contravieja;
@@ -38,12 +38,16 @@ public class Informacion extends AppCompatActivity {
         resCorreo=(TextView)findViewById(R.id.resCorreo);
         resEdad=(TextView)findViewById(R.id.resEdad);
         resGenero=(TextView)findViewById(R.id.resGenero);
+        resPasos=(TextView)findViewById(R.id.resPasos);
         contraAnteior=(EditText)findViewById(R.id.contraAnterior);
         contraNueva=(EditText)findViewById(R.id.contraNueva);
         Cambiar=(Button)findViewById(R.id.btnCambiar);
 
         usuariognr = getSharedPreferences("Guardarusuario",context.MODE_PRIVATE);//instancio el objeto para obtener usuario
-        obtenerdatos(usuariognr.getString("usuario","vacio"));//uso el usuario para buscar los datos a mostrar
+        String usuario=usuariognr.getString("usuario","vacio");
+        obtenerdatos(usuario);//uso el usuario para buscar los datos a mostrar
+
+        resPasos.setText(obtenerpasos(usuario).toString());
 
 
         Cambiar.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +83,7 @@ public class Informacion extends AppCompatActivity {
             resEdad.setText(res.getString("Edad"));
             resGenero.setText(res.getString("Genero"));
             contravieja=res.getString("Pass");
+            res.close();
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -95,10 +100,37 @@ public class Informacion extends AppCompatActivity {
             try {
                 PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
                 pedir.executeUpdate();
+                pedir.close();
                 Toast.makeText(getApplicationContext(), "Se han realizado los cambios", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+
+    public  Integer obtenerpasos(String u){
+        Integer total=0;
+        //conexion y descarga de datos
+        String orden ="select Pasos from ACTIVIDAD WHERE Usuario='"+u+"'";
+        ArrayList<String> ans = new ArrayList<>();
+        try {
+            Statement pedir = contacto.conectarabase().createStatement();
+            ResultSet res=null;
+            res = pedir.executeQuery(orden);
+            // res.next();
+            while (res.next()) {
+                ans.add(res.getString("Pasos"));
+            }
+            res.close();
+        }catch (SQLException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        ans.size();
+
+        for(int i=0;i<ans.size();i++){
+            total+=Integer.valueOf(ans.get(i));
+        }
+        return total;
     }
 }
