@@ -45,10 +45,7 @@ public class Logros extends AppCompatActivity {
     }
 
 
-    public void cambiarimagen(ImageView x){
-        x.setImageResource(R.drawable.copaon);
-    }
-
+    //metodo para obtener los pasos totales realizados ingresados a la base de datos
     Conectar contacto = new Conectar();
     public  Integer obtenerpasos(String u){
         Integer total=0;
