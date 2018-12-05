@@ -7,7 +7,7 @@ public class StepDetector {
 
     // change this threshold according to your sensitivity preferences
     //private static final float STEP_THRESHOLD = 50f;//original
-    private static final float STEP_THRESHOLD = 150f;
+    private static final float STEP_THRESHOLD = 90f;
 
     private static final int STEP_DELAY_NS = 250000000;
 

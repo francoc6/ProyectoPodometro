@@ -45,6 +45,7 @@ public class Preguntas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preguntas);
+
         p11 = (RadioButton) findViewById(R.id.i11);p12 = (RadioButton) findViewById(R.id.i12);p13 = (RadioButton) findViewById(R.id.i13);p14 = (RadioButton) findViewById(R.id.i14);p15 = (RadioButton) findViewById(R.id.i15);
         p21 = (RadioButton) findViewById(R.id.i21);p22 = (RadioButton) findViewById(R.id.i22);p23 = (RadioButton) findViewById(R.id.i23);p24 = (RadioButton) findViewById(R.id.i24);p25 = (RadioButton) findViewById(R.id.i25);
         p31 = (RadioButton) findViewById(R.id.i31);p32 = (RadioButton) findViewById(R.id.i32);p33 = (RadioButton) findViewById(R.id.i33);p34 = (RadioButton) findViewById(R.id.i34);p35 = (RadioButton) findViewById(R.id.i35);
@@ -192,6 +193,11 @@ public class Preguntas extends AppCompatActivity {
         }catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    //boton fisico
+    @Override
+    public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
     }
 
 }

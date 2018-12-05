@@ -110,4 +110,14 @@ public class AgregarDato extends AppCompatActivity {
     }
 
 
+    //boton fisico
+    @Override
+    public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
+            Intent menu = new Intent(AgregarDato.this,Menu.class);
+            startActivity(menu);
+            finish();
+
+    }
+
+
 }

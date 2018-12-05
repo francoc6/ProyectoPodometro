@@ -1,6 +1,7 @@
 package com.example.christianfranco.basedatos;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,5 +79,13 @@ public class Consulta extends AppCompatActivity {
         }
 
         return ans;
+    }
+
+    //boton fisico
+    @Override
+    public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
+            Intent menu = new Intent(Consulta.this,Menu.class);
+            startActivity(menu);
+            finish();
     }
 }

@@ -13,6 +13,12 @@ public class Retos {
         if(p>49){//50 pasos
             Logros.copa2.setImageResource(R.drawable.copaon);
         }
+        if(p>100){//100 pasos
+            Logros.copa3.setImageResource(R.drawable.copaon);
+        }
+        if(p>500){//500 pasos
+            Logros.copa4.setImageResource(R.drawable.copaon);
+        }
     }
 
 

@@ -170,4 +170,11 @@ public class Registro extends AppCompatActivity {
         return resultado;
     }
 
+    //boton fisico
+    @Override
+    public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
+      Intent go = new Intent(Registro.this,MainActivity.class);
+      startActivity(go);
+        finish();
+    }
 }

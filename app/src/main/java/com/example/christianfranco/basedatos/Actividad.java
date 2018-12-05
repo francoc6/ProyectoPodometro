@@ -1,6 +1,7 @@
 package com.example.christianfranco.basedatos;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,15 +25,21 @@ public class Actividad extends AppCompatActivity {
     Chronometer simpleChronometer;
 
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
+
     public static long tiempopausa,tiempofinal;
+
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
+
     public static String Preguntas_I;
+
+
     public static int pasos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad);
+
         TvSteps = (TextView) findViewById(R.id.tv_steps);
         BtnStart = (Button) findViewById(R.id.btn_start);
         BtnPausa = (Button) findViewById(R.id.Pausa);
@@ -65,13 +72,17 @@ public class Actividad extends AppCompatActivity {
                 //cronometro
                 start();
                 if (yasehizo == false) {
+
                     Intent preg = new Intent(Actividad.this,Preguntas.class);
                     startActivity(preg);
+                    finish();
                     pasos=0;
                 }else{
                     BtnPausa.setEnabled(true);
                     BtnStart.setEnabled(false);
-                    IntSerBack.start();startService(intentservice);
+                    //intentservice
+                    IntSerBack.start();
+                    startService(intentservice);
                 }
             }
         });
@@ -84,6 +95,7 @@ public class Actividad extends AppCompatActivity {
                 BtnPausa.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(false);
 
                 pasos=IntSerBack.getNumSteps();
+                //intent service
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
             }
@@ -102,6 +114,7 @@ public class Actividad extends AppCompatActivity {
                 startActivity(preg);
 
                 Toast.makeText(getApplicationContext(),obtenertiempo(tiempofinal)+" Pasos: "+pasos+" Datos: ", Toast.LENGTH_SHORT).show();
+                //IntentService
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
                 //botones
@@ -124,7 +137,7 @@ public class Actividad extends AppCompatActivity {
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
-        if(BtnStart.isEnabled()&&!BtnPausa.isEnabled()&&!BtnStop.isEnabled()){
+        if(BtnStart.isEnabled()&&!BtnPausa.isEnabled()&&!BtnStop.isEnabled()&&BtnRegresar.isEnabled()){
             Intent menu = new Intent(Actividad.this,Menu.class);
             startActivity(menu);
             finish();

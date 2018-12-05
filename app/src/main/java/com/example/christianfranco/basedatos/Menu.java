@@ -39,6 +39,7 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent add = new Intent(Menu.this,AgregarDato.class);
                 startActivity(add);
+                finish();
             }
         });
 
@@ -48,6 +49,7 @@ public class Menu extends AppCompatActivity {
                 Intent ver = new Intent(Menu.this,Consulta.class);
                 //Intent ver = new Intent(Menu.this,Menu.class);//prueba borrarrrrrrrrrrrrrr
                 startActivity(ver);
+                finish();
             }
         });
 
@@ -76,6 +78,7 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent go = new Intent(Menu.this,Informacion.class);
                 startActivity(go);
+                finish();
             }
         });
 
@@ -84,6 +87,7 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent go = new Intent(Menu.this,Status.class);
                 startActivity(go);
+                finish();
             }
         });
         imaLogros.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +95,13 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent go = new Intent(Menu.this,Logros.class);
                 startActivity(go);
+                finish();
             }
         });
-
-
+    }
+    //boton fisico
+    @Override
+    public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
+        finish();
     }
 }

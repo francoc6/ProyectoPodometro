@@ -1,6 +1,7 @@
 package com.example.christianfranco.basedatos;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -108,5 +109,14 @@ public class Status extends AppCompatActivity {
                 respuestaG="Normal";
             }
         }
+    }
+
+
+    //boton fisico
+    @Override
+    public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
+        Intent menu = new Intent(Status.this,Menu.class);
+        startActivity(menu);
+        finish();
     }
 }

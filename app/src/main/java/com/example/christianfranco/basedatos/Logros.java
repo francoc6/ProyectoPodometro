@@ -1,5 +1,6 @@
 package com.example.christianfranco.basedatos;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,7 @@ public class Logros extends AppCompatActivity {
 
     private ProgressBar mProgressBar1,mProgressBar2;
     private TextView mLoadingText;
-    public static ImageView copa1,copa2;
+    public static ImageView copa1,copa2,copa3,copa4;
 
     private int mProgressStatus = 0;
     private int pasos=0;
@@ -39,6 +40,8 @@ public class Logros extends AppCompatActivity {
         mProgressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
         copa1=(ImageView) findViewById(R.id.copa1);
         copa2=(ImageView)findViewById(R.id.copa2);
+        copa3=(ImageView)findViewById(R.id.copa3);
+        copa4=(ImageView)findViewById(R.id.copa4);
 
     pasos=obtenerpasos(usuario);//obtengo todos los pasos que ha realizado el usuario
         Retos.retos(pasos);//funcion para encender los trofeos
@@ -71,7 +74,13 @@ public class Logros extends AppCompatActivity {
         return total;
     }
 
-
+    //boton fisico
+    @Override
+    public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
+        Intent menu = new Intent(Logros.this,Menu.class);
+        startActivity(menu);
+        finish();
+    }
 
 
 
