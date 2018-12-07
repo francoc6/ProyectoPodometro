@@ -38,7 +38,7 @@ public class Consulta extends AppCompatActivity {
 
         consultar=(Button)findViewById(R.id.consultar);
         datoaconsultar = (Spinner) findViewById(R.id.spinnerconsulta);
-        String[] variables = {"Glucosa:", "Globulos Rojos:","Presion:","Peso:"};
+        String[] variables = {"Glucosa:", "GlobulosRojos:","Presion:","Peso:"};
         datoaconsultar.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
 
         consultar.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +63,7 @@ public class Consulta extends AppCompatActivity {
     public ArrayList<String> respuesta(Integer i, String u){
 
         //conexion y descarga de datos
-        String orden ="select * from Variables_db WHERE ID='"+i+"' AND "+"Usuario='"+u+"'";
+        String orden ="select * from Variables_db WHERE Tipo='"+i+"' AND "+"Usuario='"+u+"'";
         ArrayList<String> ans = new ArrayList<>();
         try {
             Statement pedir = contacto.conectarabase().createStatement();

@@ -106,20 +106,18 @@ public class Registro extends AppCompatActivity {
 
     //metodo paravalidar que el usuario no este ya registrado
     Conectar contacto = new Conectar();
-
     public boolean apusr(String u) {
-        List<Usuario> usuarios = new ArrayList<>();
-        Usuario test = new Usuario();
+        List<String> usr = new ArrayList<>();
         try {
             Statement pedir = contacto.conectarabase().createStatement();
             ResultSet res = pedir.executeQuery("select * from RegistroUsuarios_db");
             while (res.next()) {
-                usuarios.add(new Usuario(res.getString("Usuario"), res.getString("Correo")));
+                usr.add(res.getString("Usuario"));
             }
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        return test.yaexiste(u, usuarios);
+        return yaexiste(u, usr);
     }
 
     //metodo para verificar campos vacios
@@ -177,4 +175,15 @@ public class Registro extends AppCompatActivity {
       startActivity(go);
         finish();
     }
+    //metodo para comprobar si el usuario existe
+    public boolean yaexiste (String u, List<String> usuarios){
+        for (int i=0; i<usuarios.size(); ++i){
+            if (usuarios.get(i).equals(u)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
