@@ -8,22 +8,10 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.example.christianfranco.basedatos.Actividad;
-import com.example.christianfranco.basedatos.Conectar;
+
 import com.example.christianfranco.basedatos.R;
 import com.example.christianfranco.basedatos.Status;
-import com.example.christianfranco.basedatos.Usuario;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class DialogIni extends DialogFragment {

@@ -34,33 +34,53 @@ public class Preguntas extends AppCompatActivity {
 
     public String PF;
 
-    boolean confirmar=false;
+    boolean confirmar = false;
 
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
-    int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
-    int mes =1+calendarNow.get(Calendar.MONTH);
-    int anio =calendarNow.get(Calendar.YEAR);
+    int dia = calendarNow.get(Calendar.DAY_OF_MONTH);
+    int mes = 1 + calendarNow.get(Calendar.MONTH);
+    int anio = calendarNow.get(Calendar.YEAR);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preguntas);
 
-        p11 = (RadioButton) findViewById(R.id.i11);p12 = (RadioButton) findViewById(R.id.i12);p13 = (RadioButton) findViewById(R.id.i13);p14 = (RadioButton) findViewById(R.id.i14);p15 = (RadioButton) findViewById(R.id.i15);
-        p21 = (RadioButton) findViewById(R.id.i21);p22 = (RadioButton) findViewById(R.id.i22);p23 = (RadioButton) findViewById(R.id.i23);p24 = (RadioButton) findViewById(R.id.i24);p25 = (RadioButton) findViewById(R.id.i25);
-        p31 = (RadioButton) findViewById(R.id.i31);p32 = (RadioButton) findViewById(R.id.i32);p33 = (RadioButton) findViewById(R.id.i33);p34 = (RadioButton) findViewById(R.id.i34);p35 = (RadioButton) findViewById(R.id.i35);
-        p41 = (RadioButton) findViewById(R.id.i41);p42 = (RadioButton) findViewById(R.id.i42);p43 = (RadioButton) findViewById(R.id.i43);p44 = (RadioButton) findViewById(R.id.i44);p45 = (RadioButton) findViewById(R.id.i45);
-        Preg1 = (TextView) findViewById(R.id.Pregunta1);Preg2 = (TextView) findViewById(R.id.Pregunta2);Preg3 = (TextView) findViewById(R.id.Pregunta3);Preg4 = (TextView) findViewById(R.id.Pregunta4);
+        p11 = (RadioButton) findViewById(R.id.i11);
+        p12 = (RadioButton) findViewById(R.id.i12);
+        p13 = (RadioButton) findViewById(R.id.i13);
+        p14 = (RadioButton) findViewById(R.id.i14);
+        p15 = (RadioButton) findViewById(R.id.i15);
+        p21 = (RadioButton) findViewById(R.id.i21);
+        p22 = (RadioButton) findViewById(R.id.i22);
+        p23 = (RadioButton) findViewById(R.id.i23);
+        p24 = (RadioButton) findViewById(R.id.i24);
+        p25 = (RadioButton) findViewById(R.id.i25);
+        p31 = (RadioButton) findViewById(R.id.i31);
+        p32 = (RadioButton) findViewById(R.id.i32);
+        p33 = (RadioButton) findViewById(R.id.i33);
+        p34 = (RadioButton) findViewById(R.id.i34);
+        p35 = (RadioButton) findViewById(R.id.i35);
+        p41 = (RadioButton) findViewById(R.id.i41);
+        p42 = (RadioButton) findViewById(R.id.i42);
+        p43 = (RadioButton) findViewById(R.id.i43);
+        p44 = (RadioButton) findViewById(R.id.i44);
+        p45 = (RadioButton) findViewById(R.id.i45);
+        Preg1 = (TextView) findViewById(R.id.Pregunta1);
+        Preg2 = (TextView) findViewById(R.id.Pregunta2);
+        Preg3 = (TextView) findViewById(R.id.Pregunta3);
+        Preg4 = (TextView) findViewById(R.id.Pregunta4);
         Aceptar = findViewById(R.id.iniAceptar);
         usuariognr = getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
-        final String usuario =usuariognr.getString("usuario","vacio");
+        final String usuario = usuariognr.getString("usuario", "vacio");
         //valido si es el inicio o final para mostrar las preguntas correctas
-        if (!Usuario.banderaformulario) {
+
+        if (!Conectar.banderaformulario) {
             Actividad.yasehizo = true;//cuando se lo hace por primera vez, ya no presenta el formulario interfiere cuando se presiona el boton para pausar cronometro
-            Usuario.banderaformulario = true;//para ver si se presentan las preguntas iniciales o finales
+            Conectar.banderaformulario = true;//para ver si se presentan las preguntas iniciales o finales
         } else {
             Actividad.yasehizo = false;
-            Usuario.banderaformulario = false;
+            Conectar.banderaformulario = false;
         }
 
         //cargo las preguntas correspondientes a presentar
@@ -70,14 +90,14 @@ public class Preguntas extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resultados();
-                if (confirmar==true){
-                    if(!Usuario.banderaformulario){
-                        agregaractividad(usuario, String.valueOf(Actividad.obtenertiempo(Actividad.tiempofinal)),dia+"/"+mes+"/"+anio,String.valueOf(Actividad.pasos),Actividad.Preguntas_I,PF);
+                if (confirmar == true) {
+                    if (!Conectar.banderaformulario) {
+                        agregaractividad(usuario, String.valueOf(Actividad.obtenertiempo(Actividad.tiempofinal)), dia + "/" + mes + "/" + anio, String.valueOf(Actividad.pasos), Actividad.Preguntas_I, PF);
                     }
                     Intent salir = new Intent(Preguntas.this, Actividad.class);
                     startActivity(salir);
                     finish();
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Por favor responda el formulario", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -136,13 +156,12 @@ public class Preguntas extends AppCompatActivity {
             res += "5 ";
         }
 
-        if(res.length()==8){
-            confirmar =true;
-            if (Usuario.banderaformulario)
+        if (res.length() == 8) {
+            confirmar = true;
+            if (Conectar.banderaformulario) {
                 Actividad.Preguntas_I = res;//agrego a la variable correspondiente
-            else {
-                PF=res;
-                //Actividad.Preguntas_F = res;
+            } else {
+                PF = res;
             }
         }
     }
@@ -153,7 +172,7 @@ public class Preguntas extends AppCompatActivity {
         List<String> preg = new ArrayList<>();
         try {
             String tipo;
-            if (Usuario.banderaformulario) {
+            if (Conectar.banderaformulario) {
                 tipo = "Inicio";
             } else {
                 tipo = "Fin";
@@ -176,21 +195,21 @@ public class Preguntas extends AppCompatActivity {
         Preg4.setText(preg.get(3));
     }
 
-//metodo para agregar datos a la base
-    public void agregaractividad(String u,String t,String f, String p,String PI,String PF){
-        String orden ="insert into ACTIVIDAD values(?,?,?,?,?,?)";
+    //metodo para agregar datos a la base
+    public void agregaractividad(String u, String t, String f, String p, String PI, String PF) {
+        String orden = "insert into ACTIVIDAD values(?,?,?,?,?,?)";
         try {
             PreparedStatement pedir = conectar.conectarabase().prepareStatement(orden);
-            pedir.setString(1,u);
-            pedir.setString(2,t);
-            pedir.setString(3,f);
-            pedir.setString(4,p);
-            pedir.setString(5,PI);
-            pedir.setString(6,PF);
+            pedir.setString(1, u);
+            pedir.setString(2, t);
+            pedir.setString(3, f);
+            pedir.setString(4, p);
+            pedir.setString(5, PI);
+            pedir.setString(6, PF);
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Se agrego a la base", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
