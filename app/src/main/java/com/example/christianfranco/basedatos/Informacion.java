@@ -85,8 +85,11 @@ public class Informacion extends AppCompatActivity {
             resGenero.setText(res.getString("Genero"));
             contravieja=res.getString("Pass");
             res.close();
-        } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"Error de conexion", Toast.LENGTH_SHORT).show();
+            Intent men = new Intent(Informacion.this,Menu.class);
+            startActivity(men);
+            finish();
         }
     }
 
@@ -103,8 +106,8 @@ public class Informacion extends AppCompatActivity {
                 pedir.executeUpdate();
                 pedir.close();
                 Toast.makeText(getApplicationContext(), "Se han realizado los cambios", Toast.LENGTH_SHORT).show();
-            } catch (SQLException e) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error de red.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -123,8 +126,8 @@ public class Informacion extends AppCompatActivity {
                 ans.add(res.getString("Pasos"));
             }
             res.close();
-        }catch (SQLException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }catch (Exception e) {
+            Toast.makeText(this,"Intentelo luego.", Toast.LENGTH_SHORT).show();
         }
         ans.size();
 

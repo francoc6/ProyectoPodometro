@@ -68,17 +68,22 @@ public class Registro extends AppCompatActivity {
 
     //metodo para agregar usuario
     Boolean aprobo = false;
+
     public void agregarusuario(String gen) {
-        try {
-            String res = verificarcampos(Nombre.getText().toString(), Apellido.getText().toString(), Usuario.getText().toString(), Correo.getText().toString(), Edad.getText().toString(), Pass.getText().toString());
+        //try {
+        String res = verificarcampos(Nombre.getText().toString(), Apellido.getText().toString(), Usuario.getText().toString(), Correo.getText().toString(), Edad.getText().toString(), Pass.getText().toString());
+        if (res == "") {//si los campos no estan vacios, siue a  verificar que el usuario no exista
             String campos = tamanio(Nombre.getText().toString(), Apellido.getText().toString(), Usuario.getText().toString(), Correo.getText().toString(), Edad.getText().toString(), Pass.getText().toString());
-            if (res == "") {//si los campos no estan vacios, siue a  verificar que el usuario no exista
-                if (campos == "") {
-                    if (apusr(Usuario.getText().toString())) {
-                        Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
-                    } else if (Usuario.getText().toString().contains(" ")) {
-                        Toast.makeText(getApplicationContext(), "Usuario no acepta espacios", Toast.LENGTH_SHORT).show();
-                    } else {//si el usuario no existe se comunica a la base para el registro
+            if (campos == "") {
+                if (Usuario.getText().toString().contains(" ")) {
+                    Toast.makeText(getApplicationContext(), "Usuario no acepta espacios", Toast.LENGTH_SHORT).show();
+                } else if (apusr(Usuario.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "EL USUARIO YA EXISTE", Toast.LENGTH_SHORT).show();
+                } else {//si el usuario no existe se comunica a la base para el registro
+
+                    try {
+
+
                         aprobo = true;//para regresar al inicio si se agrego usuario
                         PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into RegistroUsuarios_db values(?,?,?,?,?,?,?)");
                         pedir.setString(1, Nombre.getText().toString());
@@ -91,21 +96,30 @@ public class Registro extends AppCompatActivity {
                         pedir.executeUpdate();
                         pedir.close();
                         Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), campos, Toast.LENGTH_SHORT).show();
-                }
 
+
+                   // } catch (SQLException e) {
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Revisa tu conexion", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
             } else {
-                Toast.makeText(getApplicationContext(), "Los siguientes campos estan vacios " + res + "Por favor completarlos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), campos, Toast.LENGTH_SHORT).show();
             }
-        } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), "Revisa tu conexion", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Los siguientes campos estan vacios " + res + "Por favor completarlos", Toast.LENGTH_SHORT).show();
         }
+        // } catch (SQLException e) {
+        // Toast.makeText(getApplicationContext(), "Revisa tu conexion", Toast.LENGTH_SHORT).show();
+        //  }
     }
 
     //metodo paravalidar que el usuario no este ya registrado
     Conectar contacto = new Conectar();
+
     public boolean apusr(String u) {
         List<String> usr = new ArrayList<>();
         try {
@@ -114,9 +128,14 @@ public class Registro extends AppCompatActivity {
             while (res.next()) {
                 usr.add(res.getString("Usuario"));
             }
-        } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Revisa tu conexion", Toast.LENGTH_SHORT).show();
         }
+        // } catch (SQLException e) {
+        //     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        //  }
         return yaexiste(u, usr);
     }
 
@@ -171,14 +190,15 @@ public class Registro extends AppCompatActivity {
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
-      Intent go = new Intent(Registro.this,MainActivity.class);
-      startActivity(go);
+        Intent go = new Intent(Registro.this, MainActivity.class);
+        startActivity(go);
         finish();
     }
+
     //metodo para comprobar si el usuario existe
-    public boolean yaexiste (String u, List<String> usuarios){
-        for (int i=0; i<usuarios.size(); ++i){
-            if (usuarios.get(i).equals(u)){
+    public boolean yaexiste(String u, List<String> usuarios) {
+        for (int i = 0; i < usuarios.size(); ++i) {
+            if (usuarios.get(i).equals(u)) {
                 return true;
             }
         }

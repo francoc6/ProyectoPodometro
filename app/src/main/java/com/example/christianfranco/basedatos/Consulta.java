@@ -25,6 +25,7 @@ public class Consulta extends AppCompatActivity {
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
 
     static ArrayList<String> datos;
+    Boolean ban=false;//bandera para desplegar el fragment, si es que hay conexion a la base
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,12 @@ public class Consulta extends AppCompatActivity {
                 String[] parts = selec.split(":");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
                 var =parts[0];//asigno la seleccion a una variable
                 datos=respuesta( AgregarDato.obtenerindice(var),usuario);//obtengo el indice con una funcion preexistente, hago la busqueda en la base
-                if(datos.isEmpty()){//si no hay elementos que presentar, no se muestra el dialogo
-                    Toast.makeText(getApplicationContext(), "No hay datos por presentar", Toast.LENGTH_SHORT).show();
-                }else{//por el contrario, se muestra el dialogo con todos los resultados
-                    dialog.show(getSupportFragmentManager(), "dialogo");
+                if(ban==false) {
+                    if (datos.isEmpty()) {//si no hay elementos que presentar, no se muestra el dialogo
+                        Toast.makeText(getApplicationContext(), "No hay datos por presentar", Toast.LENGTH_SHORT).show();
+                    } else {//por el contrario, se muestra el dialogo con todos los resultados
+                        dialog.show(getSupportFragmentManager(), "dialogo");
+                    }
                 }
             }
         });
@@ -74,8 +77,9 @@ public class Consulta extends AppCompatActivity {
                 ans.add(res.getString("Fecha")+"    "+res.getString("Valor"));
             }
             res.close();
-        }catch (SQLException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }catch (Exception e) {
+            Toast.makeText(this,"Problema de Red. Intentalo luego.", Toast.LENGTH_SHORT).show();
+            ban=true;
         }
 
         return ans;

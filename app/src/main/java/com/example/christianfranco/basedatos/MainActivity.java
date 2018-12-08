@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (sp.getBoolean("logged", false)) {//este metodo revisa si ya esta logeado
             registrodeentrada(usuario, parts[2]+"/"+parts[1]+"/"+parts[5],parts[3]);
-            iraprincipal();
+           // iraprincipal();
             finish();
-            Toast.makeText(getApplicationContext(), hora, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), hora, Toast.LENGTH_SHORT).show();
         }
 
         btnIN.setOnClickListener(new View.OnClickListener() {
@@ -130,8 +130,9 @@ public class MainActivity extends AppCompatActivity {
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Se ha registrado ingreso a la base", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
-        }catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            iraprincipal();
+        }catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Problemas de conexion. Intentalo luego.", Toast.LENGTH_SHORT).show();
         }
     }
 

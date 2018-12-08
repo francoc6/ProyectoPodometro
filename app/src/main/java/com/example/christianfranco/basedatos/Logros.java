@@ -63,8 +63,11 @@ public class Logros extends AppCompatActivity {
                 ans.add(res.getString("Pasos"));
             }
             res.close();
-        }catch (SQLException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }catch (Exception e) {
+            Toast.makeText(this, "Error en la red.", Toast.LENGTH_SHORT).show();
+            Intent go = new Intent(Logros.this,Menu.class);
+            startActivity(go);
+            finish();
         }
         ans.size();
 

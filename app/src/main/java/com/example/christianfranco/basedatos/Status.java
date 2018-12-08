@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class Status extends AppCompatActivity {
     TextView PGR,PG,Ppresion,Ppeso,TGR,TG,Tpresion,Tpeso;
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
+    Boolean ban=false;
 
     ArrayList<String> res = new ArrayList<String>();
 
@@ -45,7 +46,10 @@ public class Status extends AppCompatActivity {
         Tpeso=(TextView)findViewById(R.id.Tpeso);
 
         res=obtenerdatos(usuario);
-        color();
+        if(ban==false) {
+            color();
+        }
+
         TG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,8 +86,12 @@ public class Status extends AppCompatActivity {
             PGR.setText(resul.get(1));
             Ppresion.setText(resul.get(2));
             Ppeso.setText(resul.get(3));
-        } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            ban=true;
+            Toast.makeText(getApplicationContext(),"Error de red.", Toast.LENGTH_SHORT).show();
+            Intent go= new Intent(Status.this, Menu.class);
+            startActivity(go);
+            finish();
         }
         return resul;
     }

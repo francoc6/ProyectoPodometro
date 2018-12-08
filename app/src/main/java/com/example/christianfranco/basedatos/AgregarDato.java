@@ -87,9 +87,13 @@ public class AgregarDato extends AppCompatActivity {
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Dato agregado correctamente", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
-        }catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"Problemas de conexion, intentelo luego.", Toast.LENGTH_SHORT).show();
         }
+       // }catch (SQLException e) {
+       //     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+      //  }
     }
 
     public static int obtenerindice(String d){
