@@ -130,7 +130,6 @@ public class Informacion extends AppCompatActivity {
             Toast.makeText(this,"Intentelo luego.", Toast.LENGTH_SHORT).show();
         }
         ans.size();
-
         for(int i=0;i<ans.size();i++){
             total+=Integer.valueOf(ans.get(i));
         }
@@ -140,7 +139,6 @@ public class Informacion extends AppCompatActivity {
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
-
         Intent menu = new Intent(Informacion.this,Menu.class);
         startActivity(menu);
         finish();

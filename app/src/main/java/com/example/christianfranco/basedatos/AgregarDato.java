@@ -25,15 +25,11 @@ public class AgregarDato extends AppCompatActivity {
     Button agregar, cancelar;
     Spinner opciones;
     EditText dato;
-
-
-
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
     int dia =calendarNow.get(Calendar.DAY_OF_MONTH);
     int mes =1+ calendarNow.get(Calendar.MONTH);
     int anio = calendarNow.get(Calendar.YEAR);
     String fecha=dia+"/"+mes+"/"+anio;
-
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
 
     @Override
@@ -46,11 +42,8 @@ public class AgregarDato extends AppCompatActivity {
         opciones = (Spinner) findViewById(R.id.opcionspinner);
         String[] variables = {"Glucosa (mg/db):", "GlobulosRojos (ml):", "Presion ():","Peso (lb):"};
         opciones.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
-
         usuariognr = getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
         final String usuario =usuariognr.getString("usuario","vacio");
-
-
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +65,6 @@ public class AgregarDato extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     Conectar contacto = new Conectar();
@@ -87,13 +79,9 @@ public class AgregarDato extends AppCompatActivity {
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Dato agregado correctamente", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
-
         }catch (Exception e) {
             Toast.makeText(getApplicationContext(),"Problemas de conexion, intentelo luego.", Toast.LENGTH_SHORT).show();
         }
-       // }catch (SQLException e) {
-       //     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-      //  }
     }
 
     public static int obtenerindice(String d){
@@ -112,16 +100,11 @@ public class AgregarDato extends AppCompatActivity {
         }
         return r;
     }
-
-
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
             Intent menu = new Intent(AgregarDato.this,Menu.class);
             startActivity(menu);
             finish();
-
     }
-
-
 }

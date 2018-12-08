@@ -19,11 +19,8 @@ import java.util.ArrayList;
 public class Consulta extends AppCompatActivity {
     Spinner datoaconsultar;
     Button consultar;
-
     static String var;
-
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
-
     static ArrayList<String> datos;
     Boolean ban=false;//bandera para desplegar el fragment, si es que hay conexion a la base
 
@@ -64,7 +61,6 @@ public class Consulta extends AppCompatActivity {
 //descargo los datos requeridos por el usuario desded la base de datos y devuelvo un arraylist
     Conectar contacto = new Conectar();
     public ArrayList<String> respuesta(Integer i, String u){
-
         //conexion y descarga de datos
         String orden ="select * from Variables_db WHERE Tipo='"+i+"' AND "+"Usuario='"+u+"'";
         ArrayList<String> ans = new ArrayList<>();
@@ -81,7 +77,6 @@ public class Consulta extends AppCompatActivity {
             Toast.makeText(this,"Problema de Red. Intentalo luego.", Toast.LENGTH_SHORT).show();
             ban=true;
         }
-
         return ans;
     }
 

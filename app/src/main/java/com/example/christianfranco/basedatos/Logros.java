@@ -84,10 +84,4 @@ public class Logros extends AppCompatActivity {
         startActivity(menu);
         finish();
     }
-
-
-
-
-
-
 }
