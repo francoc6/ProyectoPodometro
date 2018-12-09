@@ -221,7 +221,6 @@ public class Preguntas extends AppCompatActivity {
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
     }
 
-
     //metodo para almacenar datos en memoria del dispositivo, si no hay conexion a la base
     public void guardarluego(String u, String t, String f, String p, String PI, String PF) {
         SharedPreferences keepdata = getSharedPreferences("GuardarDatos", getApplicationContext().MODE_PRIVATE);
@@ -234,6 +233,4 @@ public class Preguntas extends AppCompatActivity {
         editor.putString("PregFin",PF);
         editor.commit();
     }
-
-
 }
