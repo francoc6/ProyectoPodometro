@@ -1,7 +1,6 @@
 package com.example.christianfranco.basedatos;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,40 +9,26 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
-import com.example.christianfranco.basedatos.DialogPre.DialogIni;
-
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TimeZone;
 
 public class Actividad extends AppCompatActivity {
-
     public static TextView TvSteps;
     Button BtnStart, BtnPausa, BtnStop,BtnRegresar;
     Chronometer simpleChronometer;
-
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
-
     public static long tiempopausa,tiempofinal;
-
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
-
     public static String Preguntas_I;
-
-
     public static int pasos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad);
-
         TvSteps = (TextView) findViewById(R.id.tv_steps);
         BtnStart = (Button) findViewById(R.id.btn_start);
         BtnPausa = (Button) findViewById(R.id.Pausa);
@@ -221,7 +206,6 @@ public class Actividad extends AppCompatActivity {
         }
         return res;
     }
-
 
     Conectar conectar = new Conectar();
     public void prueba() {
