@@ -1,7 +1,12 @@
 package com.example.christianfranco.basedatos;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,12 +17,13 @@ import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
 public class Menu extends AppCompatActivity {
     ImageButton imaInfo,imaLOut,imaAgregar,imaPasos,imaConsulta,imaLogros,imaStatus;
     SharedPreferences sp;
-
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);//para que no bote error
 
         imaInfo=(ImageButton)findViewById(R.id.imaInfo);
         imaAgregar=(ImageButton)findViewById(R.id.imaAgregar);
@@ -57,9 +63,10 @@ public class Menu extends AppCompatActivity {
         imaPasos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent verdatos = new Intent(Menu.this, Actividad.class);
-                startActivity(verdatos);
-                finish();
+               // Intent verdatos = new Intent(Menu.this, Actividad.class);
+                //startActivity(verdatos);
+                //finish();
+                comprobar();
             }
         });
 
@@ -104,4 +111,47 @@ public class Menu extends AppCompatActivity {
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
         finish();
     }
+
+    public void comprobar(){
+        if(!checkLocation()){
+            return;
+        }else{
+            Intent op = new Intent(Menu.this,Actividad.class);
+            startActivity(op);
+            finish();
+        }
+
+    }
+
+    public boolean checkLocation() {
+        if (!isLocationEnabled())
+            alerta();
+        return isLocationEnabled();
+    }
+
+    public void alerta() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Configurar Ubicacion")
+                .setMessage("Se necesita que Ubicacion este encendido.\npor favor active su ubicación " +
+                        "usa esta app")
+                .setPositiveButton("Configuración de ubicación", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
+    }
+
+    public boolean isLocationEnabled() {
+        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
 }
