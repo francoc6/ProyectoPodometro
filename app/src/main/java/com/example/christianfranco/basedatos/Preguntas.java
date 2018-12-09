@@ -2,6 +2,7 @@ package com.example.christianfranco.basedatos;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,11 +32,8 @@ public class Preguntas extends AppCompatActivity {
     private Button Aceptar;
     public static TextView Preg1, Preg2, Preg3, Preg4;
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
-
     public String PF;
-
     boolean confirmar = false;
-
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
     int dia = calendarNow.get(Calendar.DAY_OF_MONTH);
     int mes = 1 + calendarNow.get(Calendar.MONTH);
@@ -73,8 +71,8 @@ public class Preguntas extends AppCompatActivity {
         Aceptar = findViewById(R.id.iniAceptar);
         usuariognr = getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
         final String usuario = usuariognr.getString("usuario", "vacio");
-        //valido si es el inicio o final para mostrar las preguntas correctas
 
+        //valido si es el inicio o final para mostrar las preguntas correctas
         if (!Conectar.banderaformulario) {
             Actividad.yasehizo = true;//cuando se lo hace por primera vez, ya no presenta el formulario interfiere cuando se presiona el boton para pausar cronometro
             Conectar.banderaformulario = true;//para ver si se presentan las preguntas iniciales o finales
@@ -186,8 +184,8 @@ public class Preguntas extends AppCompatActivity {
                 preg.add(res.getString("Texto"));
             }
             res.close();
-        } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"No se puede obtener preguntas.", Toast.LENGTH_SHORT).show();
         }
         Preg1.setText(preg.get(0));
         Preg2.setText(preg.get(1));
@@ -209,8 +207,12 @@ public class Preguntas extends AppCompatActivity {
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Se agrego a la base", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
-        } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"Hubo un problema, se agregara a la base luego", Toast.LENGTH_SHORT).show();
+            Intent go = new Intent(Preguntas.this,Menu.class);
+            startActivity(go);
+            finish();
+            //guardarluego(u,t,f,p,PI,PF);//los almaceno para luego subirlos a la base
         }
     }
 
@@ -218,5 +220,20 @@ public class Preguntas extends AppCompatActivity {
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
     }
+
+
+    //metodo para almacenar datos en memoria del dispositivo, si no hay conexion a la base
+    public void guardarluego(String u, String t, String f, String p, String PI, String PF) {
+        SharedPreferences keepdata = getSharedPreferences("GuardarDatos", getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = keepdata.edit();
+        editor.putString("Usuario", u);
+        editor.putString("Tiempo",t);
+        editor.putString("Fecha",f);
+        editor.putString("Pasos",p);
+        editor.putString("PregIni",PI);
+        editor.putString("PregFin",PF);
+        editor.commit();
+    }
+
 
 }
