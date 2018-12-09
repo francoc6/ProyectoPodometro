@@ -17,7 +17,16 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import cz.msebera.android.httpclient.Header;
+
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
+
+import org.json.JSONObject;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -25,10 +34,10 @@ import java.util.List;
 
 public class Actividad extends AppCompatActivity implements LocationListener {
     public static TextView TvSteps;
-    Button BtnStart, BtnPausa, BtnStop,BtnRegresar;
+    Button BtnStart, BtnPausa, BtnStop, BtnRegresar;
     Chronometer simpleChronometer;
     private static final String TEXT_NUM_STEPS = "Numero de pasos  realizados: ";
-    public static long tiempopausa,tiempofinal;
+    public static long tiempopausa, tiempofinal;
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
     public static String Preguntas_I;
     public static int pasos;
@@ -38,6 +47,11 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     public static String tvLati;
     LocationManager locationManager;
 
+    //clima
+    final String APP_ID = "b13f14be7c0909550f568e788748a9b8";
+    final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
+    public String temperatura,ciudad;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +60,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         BtnStart = (Button) findViewById(R.id.btn_start);
         BtnPausa = (Button) findViewById(R.id.Pausa);
         BtnStop = (Button) findViewById(R.id.btn_stop);
-        BtnRegresar=(Button)findViewById(R.id.btnRegresar);
+        BtnRegresar = (Button) findViewById(R.id.btnRegresar);
 
         TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
 
@@ -58,11 +72,15 @@ public class Actividad extends AppCompatActivity implements LocationListener {
 
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
-        if(yasehizo){
-            BtnStart.setEnabled(false);BtnPausa.setEnabled(true);BtnStop.setEnabled(true);BtnRegresar.setEnabled(false);
+        if (yasehizo) {
+            BtnStart.setEnabled(false);
+            BtnPausa.setEnabled(true);
+            BtnStop.setEnabled(true);
+            BtnRegresar.setEnabled(false);
             simpleChronometer.start();
-            IntSerBack.start();startService(intentservice);
-        }else {
+            IntSerBack.start();
+            startService(intentservice);
+        } else {
             detener();//empieza detenido el reloj de pantalla
             //para que solo se pueda presionar empezar
             BtnPausa.setEnabled(false);
@@ -78,11 +96,11 @@ public class Actividad extends AppCompatActivity implements LocationListener {
                 //cronometro
                 start();
                 if (yasehizo == false) {
-                    Intent preg = new Intent(Actividad.this,Preguntas.class);
+                    Intent preg = new Intent(Actividad.this, Preguntas.class);
                     startActivity(preg);
                     finish();
-                    pasos=0;
-                }else{
+                    pasos = 0;
+                } else {
                     BtnPausa.setEnabled(true);
                     BtnStart.setEnabled(false);
                     //intentservice
@@ -97,8 +115,10 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             public void onClick(View v) {
                 pausa();//cronometro
                 //botones
-                BtnPausa.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(false);
-                pasos=IntSerBack.getNumSteps();
+                BtnPausa.setEnabled(false);
+                BtnStart.setEnabled(true);
+                BtnRegresar.setEnabled(false);
+                pasos = IntSerBack.getNumSteps();
                 //intent service
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
@@ -108,28 +128,31 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         BtnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if(banderapausa){
-                    pasos=IntSerBack.getNumSteps();
+                if (banderapausa) {
+                    pasos = IntSerBack.getNumSteps();
                 }
                 //detener el reloj
                 detener();
                 //empiezo activity
-                Intent preg = new Intent(Actividad.this,Preguntas.class);
+                Intent preg = new Intent(Actividad.this, Preguntas.class);
                 startActivity(preg);
                 //Toast.makeText(getApplicationContext(),obtenertiempo(tiempofinal)+" Pasos: "+pasos+" Datos: ", Toast.LENGTH_SHORT).show();
                 //IntentService
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
                 //botones
-                BtnPausa.setEnabled(false);BtnStop.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(true);
+                BtnPausa.setEnabled(false);
+                BtnStop.setEnabled(false);
+                BtnStart.setEnabled(true);
+                BtnRegresar.setEnabled(true);
             }
         });
 
         BtnRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(BtnStart.isEnabled()&&!BtnPausa.isEnabled()&&!BtnStop.isEnabled()){
-                    Intent menu = new Intent(Actividad.this,Menu.class);
+                if (BtnStart.isEnabled() && !BtnPausa.isEnabled() && !BtnStop.isEnabled()) {
+                    Intent menu = new Intent(Actividad.this, Menu.class);
                     startActivity(menu);
                     finish();
                     onPause();//listener del gps
@@ -141,8 +164,8 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
-        if(BtnStart.isEnabled()&&!BtnPausa.isEnabled()&&!BtnStop.isEnabled()&&BtnRegresar.isEnabled()){
-            Intent menu = new Intent(Actividad.this,Menu.class);
+        if (BtnStart.isEnabled() && !BtnPausa.isEnabled() && !BtnStop.isEnabled() && BtnRegresar.isEnabled()) {
+            Intent menu = new Intent(Actividad.this, Menu.class);
             startActivity(menu);
             finish();
         }
@@ -156,6 +179,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             banderapausa = true;
         }
     }
+
     public void pausa() {
         if (banderapausa) {
             simpleChronometer.stop();
@@ -163,12 +187,13 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             tiempopausa = SystemClock.elapsedRealtime() - simpleChronometer.getBase();
         }
     }
+
     public void detener() {
         simpleChronometer.stop();
-        if(!banderapausa){
-            tiempofinal=tiempopausa;
-        }else{
-            tiempofinal=SystemClock.elapsedRealtime()-simpleChronometer.getBase();//tiempo final
+        if (!banderapausa) {
+            tiempofinal = tiempopausa;
+        } else {
+            tiempofinal = SystemClock.elapsedRealtime() - simpleChronometer.getBase();//tiempo final
         }
         tiempopausa = 0;
         simpleChronometer.setBase(SystemClock.elapsedRealtime());
@@ -176,54 +201,55 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     }
 
     //lo transformo a un valor H:M:S:MS
-    public static String obtenertiempo(long t){
-        int resmili,resseg,resmin,reshora;
-        String mili,seg,min,hora;
+    public static String obtenertiempo(long t) {
+        int resmili, resseg, resmin, reshora;
+        String mili, seg, min, hora;
         long x;
-        String res="";
-        if(t<3600000){//minutos, sin horas
-            resmili=(int)(t%1000);
-            mili=String.valueOf(resmili);
-            x=t/1000;
-            resseg=(int)(x%100);
-            seg=String.valueOf(resseg);
-            if(resseg<10){
-                seg="0"+String.valueOf(resseg);
+        String res = "";
+        if (t < 3600000) {//minutos, sin horas
+            resmili = (int) (t % 1000);
+            mili = String.valueOf(resmili);
+            x = t / 1000;
+            resseg = (int) (x % 100);
+            seg = String.valueOf(resseg);
+            if (resseg < 10) {
+                seg = "0" + String.valueOf(resseg);
             }
-            x=x/100;
-            resmin=(int)(x%100);
-            min=String.valueOf(resmin);
-            if(resmin<10){
-                min="0"+String.valueOf(resmin);
+            x = x / 100;
+            resmin = (int) (x % 100);
+            min = String.valueOf(resmin);
+            if (resmin < 10) {
+                min = "0" + String.valueOf(resmin);
             }
-            res="00:"+min+":"+seg+":"+mili;
-        }else{//ya hay horas
-            resmili=(int)(t%1000);
-            mili=String.valueOf(resmili);
-            x=t/1000;
-            resseg=(int)(x%100);
-            seg=String.valueOf(resseg);
-            if(resseg<10){
-                seg="0"+String.valueOf(resseg);
+            res = "00:" + min + ":" + seg + ":" + mili;
+        } else {//ya hay horas
+            resmili = (int) (t % 1000);
+            mili = String.valueOf(resmili);
+            x = t / 1000;
+            resseg = (int) (x % 100);
+            seg = String.valueOf(resseg);
+            if (resseg < 10) {
+                seg = "0" + String.valueOf(resseg);
             }
-            x=x/100;
-            resmin=(int)(x%100);
-            min=String.valueOf(resmin);
-            if(resmin<10){
-                min="0"+String.valueOf(resmin);
+            x = x / 100;
+            resmin = (int) (x % 100);
+            min = String.valueOf(resmin);
+            if (resmin < 10) {
+                min = "0" + String.valueOf(resmin);
             }
-            x=x/100;
-            reshora=(int)(x%100);
-            hora=String.valueOf(reshora);
-            if(reshora<10){
-                hora="0"+String.valueOf(reshora);
+            x = x / 100;
+            reshora = (int) (x % 100);
+            hora = String.valueOf(reshora);
+            if (reshora < 10) {
+                hora = "0" + String.valueOf(reshora);
             }
-            res=hora+":"+min+":"+seg+":"+mili;
+            res = hora + ":" + min + ":" + seg + ":" + mili;
         }
         return res;
     }
 
     Conectar conectar = new Conectar();
+
     public void prueba() {
         List<String> preg = new ArrayList<>();
         try {
@@ -237,17 +263,17 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             }
             res.close();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(),"No hay conexion.", Toast.LENGTH_SHORT).show();
-            Intent go = new Intent(Actividad.this,Menu.class);
+            Toast.makeText(getApplicationContext(), "No hay conexion.", Toast.LENGTH_SHORT).show();
+            Intent go = new Intent(Actividad.this, Menu.class);
             startActivity(go);
             finish();
         }
     }
 
-    //POSICION///////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////POSICION///////////////////////////////////////////////////////////////////////////////////////
 
     //metodo para almacenar datos en memoria del dispositivo
-    public void guardatos(String Latitud,String Longitud) {
+    public void guardatos(String Latitud, String Longitud) {
         SharedPreferences keepdata = getSharedPreferences("Ubicacion", getApplicationContext().MODE_PRIVATE);
         SharedPreferences.Editor editor = keepdata.edit();
         editor.putString("Latitud", Latitud);
@@ -288,9 +314,10 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     public void onLocationChanged(Location location) {
         tvLongi = String.valueOf(location.getLongitude());
         tvLati = String.valueOf(location.getLatitude());
-        if(location.getLongitude()!=0 && location.getLatitude()!=0){
-            guardatos(tvLati,tvLongi);
-            Toast.makeText(getApplicationContext(),"Se obtuvo posicion "+tvLati+" "+tvLongi, Toast.LENGTH_SHORT).show();
+        if (location.getLongitude() != 0 && location.getLatitude() != 0) {
+            guardatos(tvLati, tvLongi);
+            Toast.makeText(getApplicationContext(), "Se obtuvo posicion " + tvLati + " " + tvLongi, Toast.LENGTH_SHORT).show();
+            getWeatherForCurrentLocation(tvLati, tvLongi);//inicio metodo para obtener clima con la posicion
             //onDestroy();
         }
     }
@@ -315,4 +342,48 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         super.onDestroy();
         locationManager.removeUpdates(this);
     }
+
+///////////////////////////////////////CLIMA////////////////////////////////////////////////////////////////////
+
+    //se utiliza la version gratuita de un api de OPENWEATHER.ORG el cual solo permite 60 consultas por minuto
+    //Con onLocationChanged de la posicion, se llama al metodo para que obtenga el clima y la ciudad
+
+    //en este metodo se envia la latitud y longitud, con la key para acceder al OPENWEATHER, a letsDoSomeNetworking
+    public void getWeatherForCurrentLocation(String latitud, String longitud) {
+        String Longitude = longitud;
+        String Latitude = latitud;
+        RequestParams params = new RequestParams();
+        params.put("lat", Latitude);
+        params.put("lon", Longitude);
+        params.put("appid", APP_ID);
+        letsDoSomeNetworking(params);
+    }
+
+    //se crea instancia AsyncHttpClient el cual envia los datos a la clase WeatherDataModel y a su vez recibe el resultado de  la misma en ObtenerDatos
+    public void letsDoSomeNetworking(final RequestParams params) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(WEATHER_URL, params, new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] header, JSONObject response) {
+               // Log.d("Clima", "Success" + response.toString());
+                WeatherDataModel weatherdata = WeatherDataModel.fromJSON(response);
+                ObtenerDatos(weatherdata);
+            }
+
+            public void onFailure(int statuscode, Header[] header, Throwable e, JSONObject response) {
+                //Log.d("Clima", "Status code" + statuscode);
+                //Log.d("Clima", "Fail" + e.toString());
+                Toast.makeText(Actividad.this, "Invalid Location", Toast.LENGTH_SHORT).show();
+              //  getWeatherForCurrentLocation();
+            }
+
+        });
+    }
+
+    //los asigna a las variables temperatura y ciudad
+    public void ObtenerDatos(WeatherDataModel data){
+        temperatura=data.getTemperature();
+        ciudad=data.getCity();
+        Toast.makeText(getApplicationContext(),temperatura+" y "+ciudad, Toast.LENGTH_SHORT).show();
+    }
 }
+
