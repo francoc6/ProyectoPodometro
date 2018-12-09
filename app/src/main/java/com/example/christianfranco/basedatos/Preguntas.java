@@ -21,7 +21,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
-
 public class Preguntas extends AppCompatActivity {
 
     //widgets
@@ -31,13 +30,17 @@ public class Preguntas extends AppCompatActivity {
     private RadioButton p41, p42, p43, p44, p45;
     private Button Aceptar;
     public static TextView Preg1, Preg2, Preg3, Preg4;
-    SharedPreferences usuariognr, posicion;//lo uso para obtener el usuario almacenado
+    SharedPreferences usuariognr, posicion,temp;//lo uso para obtener el usuario almacenado
     public String PF;
     boolean confirmar = false;
-    Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
-    int dia = calendarNow.get(Calendar.DAY_OF_MONTH);
-    int mes = 1 + calendarNow.get(Calendar.MONTH);
-    int anio = calendarNow.get(Calendar.YEAR);
+
+///////////////////////Obtengo la fecha y la hora////////////////////////////////////////////////
+    java.util.Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
+    String time= calendarNow.getTime().toString();
+    String[] parts = time.split(" ");//Thu Dec 06 21:06:21 GMT-05:00 2018
+    String fecha=parts[2]+"/"+parts[1]+"/"+parts[5];
+    String hora=parts[3];
+//////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +72,17 @@ public class Preguntas extends AppCompatActivity {
         Preg3 = (TextView) findViewById(R.id.Pregunta3);
         Preg4 = (TextView) findViewById(R.id.Pregunta4);
         Aceptar = findViewById(R.id.iniAceptar);
+
+///////////////////////////////////////////////////////DATOS GUARDADOS EN EL DISPOSITIVO//////////////////////////////////////////////////////////////////////////////////
         usuariognr = getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
         final String usuario = usuariognr.getString("usuario", "vacio");
-        posicion = getSharedPreferences("Ubicacion", MODE_PRIVATE);//instancio el objeto para obtener usuario
+        posicion = getSharedPreferences("Ubicacion", MODE_PRIVATE);//instancio para obtener latitud y longitud
         final String Lati = posicion.getString("Latitud", "vacio");
         final String Longi = posicion.getString("Longitud", "vacio");
-
+        temp=getSharedPreferences("Clima", MODE_PRIVATE);//instancio el objeto para obtener las vaiables el clima
+        final String Temperatura = temp.getString("Temperatura", "vacio");
+        final String Ciudad = temp.getString("Ciudad", "vacio");
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //valido si es el inicio o final para mostrar las preguntas correctas
         if (!Conectar.banderaformulario) {
@@ -94,7 +102,7 @@ public class Preguntas extends AppCompatActivity {
                 resultados();
                 if (confirmar == true) {
                     if (!Conectar.banderaformulario) {
-                        agregaractividad(usuario, String.valueOf(Actividad.obtenertiempo(Actividad.tiempofinal)), dia + "/" + mes + "/" + anio, String.valueOf(Actividad.pasos), Actividad.Preguntas_I, PF,Lati,Longi);
+                        agregaractividad(usuario, fecha, hora, String.valueOf(Actividad.obtenertiempo(Actividad.tiempofinal)), String.valueOf(Actividad.pasos), Actividad.Preguntas_I, PF,Lati,Longi,Temperatura,Ciudad);
                     }
                     Intent salir = new Intent(Preguntas.this, Actividad.class);
                     startActivity(salir);
@@ -202,22 +210,25 @@ public class Preguntas extends AppCompatActivity {
     }
 
     //metodo para agregar datos a la base
-    public void agregaractividad(String u, String t, String f, String p, String PI, String PF, String Lat,String Long) {
-        String orden = "insert into ACTIVIDAD values(?,?,?,?,?,?,?)";
+    public void agregaractividad(String u,  String f, String h ,String t,String p, String PI, String PF, String Lat,String Long,String temp,String Ciudad) {
+        String orden = "insert into ACTIVIDAD values(?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pedir = conectar.conectarabase().prepareStatement(orden);
             pedir.setString(1, u);
-            pedir.setString(2, t);
-            pedir.setString(3, f);
-            pedir.setString(4, p);
-            pedir.setString(5, PI);
-            pedir.setString(6, PF);
-            pedir.setString(7, Lat+"_"+Long);
+            pedir.setString(2, f);
+            pedir.setString(3, h);
+            pedir.setString(4, t);
+            pedir.setString(5, p);
+            pedir.setString(6, PI);
+            pedir.setString(7, PF);
+            pedir.setString(8, Lat+","+Long);
+            pedir.setString(9, temp);
+            pedir.setString(10,Ciudad);
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Se agrego a la base", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(),"Hubo un problema, se agregara a la base luego", Toast.LENGTH_SHORT).show();
+        } catch (SQLException e) {
+            Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
             Intent go = new Intent(Preguntas.this,Menu.class);
             startActivity(go);
             finish();

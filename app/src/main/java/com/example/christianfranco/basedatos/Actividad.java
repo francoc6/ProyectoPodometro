@@ -270,7 +270,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         }
     }
 
-    //////////////////////////////////////////POSICION///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////POSICION///////////////////////////////////////////////////////////////////////////////////////
 
     //metodo para almacenar datos en memoria del dispositivo
     public void guardatos(String Latitud, String Longitud) {
@@ -314,11 +314,13 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     public void onLocationChanged(Location location) {
         tvLongi = String.valueOf(location.getLongitude());
         tvLati = String.valueOf(location.getLatitude());
-        if (location.getLongitude() != 0 && location.getLatitude() != 0) {
-            guardatos(tvLati, tvLongi);
-            Toast.makeText(getApplicationContext(), "Se obtuvo posicion " + tvLati + " " + tvLongi, Toast.LENGTH_SHORT).show();
-            getWeatherForCurrentLocation(tvLati, tvLongi);//inicio metodo para obtener clima con la posicion
-            //onDestroy();
+        if(!yasehizo) {//para que solo lo haga al iniciar la pantalla
+            if (location.getLongitude() != 0 && location.getLatitude() != 0) {
+                guardatos(tvLati, tvLongi);
+                Toast.makeText(getApplicationContext(), "Se obtuvo posicion " + tvLati + " " + tvLongi, Toast.LENGTH_SHORT).show();
+                getWeatherForCurrentLocation(tvLati, tvLongi);//inicio metodo para obtener clima con la posicion
+                //onDestroy();
+            }
         }
     }
 
@@ -343,9 +345,11 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         locationManager.removeUpdates(this);
     }
 
-///////////////////////////////////////CLIMA////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //se utiliza la version gratuita de un api de OPENWEATHER.ORG el cual solo permite 60 consultas por minuto
+///////////////////////////////////////CLIMA///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //se utiliza la version gratuita de un api de OPENWEATHERMAP.ORG el cual solo permite 60 consultas por minuto
     //Con onLocationChanged de la posicion, se llama al metodo para que obtenga el clima y la ciudad
 
     //en este metodo se envia la latitud y longitud, con la key para acceder al OPENWEATHER, a letsDoSomeNetworking
@@ -384,6 +388,15 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         temperatura=data.getTemperature();
         ciudad=data.getCity();
         Toast.makeText(getApplicationContext(),temperatura+" y "+ciudad, Toast.LENGTH_SHORT).show();
+        SharedPreferences keepdata = getSharedPreferences("Clima", getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = keepdata.edit();
+        editor.putString("Temperatura", temperatura);
+        editor.putString("Ciudad", ciudad);
+        editor.commit();
+
+
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
