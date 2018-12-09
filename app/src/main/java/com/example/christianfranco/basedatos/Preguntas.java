@@ -168,13 +168,13 @@ public class Preguntas extends AppCompatActivity {
     Conectar conectar = new Conectar();
     public void obtenerPreguntas() {
         List<String> preg = new ArrayList<>();
+        String tipo;
+        if (Conectar.banderaformulario) {
+            tipo = "Inicio";
+        } else {
+            tipo = "Fin";
+        }
         try {
-            String tipo;
-            if (Conectar.banderaformulario) {
-                tipo = "Inicio";
-            } else {
-                tipo = "Fin";
-            }
             Statement pedir = conectar.conectarabase().createStatement();
             String orden = "SELECT Texto FROM Preguntas_db WHERE TIPO='" + tipo + "'";
             ResultSet res = null;
@@ -184,13 +184,17 @@ public class Preguntas extends AppCompatActivity {
                 preg.add(res.getString("Texto"));
             }
             res.close();
+            //agrego las preguntas para mostrar
+            Preg1.setText(preg.get(0));
+            Preg2.setText(preg.get(1));
+            Preg3.setText(preg.get(2));
+            Preg4.setText(preg.get(3));
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(),"No se puede obtener preguntas.", Toast.LENGTH_SHORT).show();
+            Intent go = new Intent(Preguntas.this,Menu.class);
+            startActivity(go);
+            finish();
         }
-        Preg1.setText(preg.get(0));
-        Preg2.setText(preg.get(1));
-        Preg3.setText(preg.get(2));
-        Preg4.setText(preg.get(3));
     }
 
     //metodo para agregar datos a la base

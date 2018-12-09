@@ -14,8 +14,12 @@ import android.widget.Toast;
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
 import com.example.christianfranco.basedatos.DialogPre.DialogIni;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 
 public class Actividad extends AppCompatActivity {
@@ -65,6 +69,7 @@ public class Actividad extends AppCompatActivity {
             IntSerBack.detener();//detener el servicio
             stopService(intentservice);
         }
+        prueba();//para probar conexion
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +77,6 @@ public class Actividad extends AppCompatActivity {
                 //cronometro
                 start();
                 if (yasehizo == false) {
-
                     Intent preg = new Intent(Actividad.this,Preguntas.class);
                     startActivity(preg);
                     finish();
@@ -112,8 +116,7 @@ public class Actividad extends AppCompatActivity {
                 //empiezo activity
                 Intent preg = new Intent(Actividad.this,Preguntas.class);
                 startActivity(preg);
-
-                Toast.makeText(getApplicationContext(),obtenertiempo(tiempofinal)+" Pasos: "+pasos+" Datos: ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),obtenertiempo(tiempofinal)+" Pasos: "+pasos+" Datos: ", Toast.LENGTH_SHORT).show();
                 //IntentService
                 IntSerBack.detener();//detener el servicio
                 stopService(intentservice);
@@ -217,6 +220,28 @@ public class Actividad extends AppCompatActivity {
             res=hora+":"+min+":"+seg+":"+mili;
         }
         return res;
+    }
+
+
+    Conectar conectar = new Conectar();
+    public void prueba() {
+        List<String> preg = new ArrayList<>();
+        try {
+            Statement pedir = conectar.conectarabase().createStatement();
+            String orden = "SELECT Texto FROM Preguntas_db WHERE TIPO='Inicio'";
+            ResultSet res = null;
+            res = pedir.executeQuery(orden);
+            // res.next();
+            while (res.next()) {
+                preg.add(res.getString("Texto"));
+            }
+            res.close();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"No hay conexion.", Toast.LENGTH_SHORT).show();
+            Intent go = new Intent(Actividad.this,Menu.class);
+            startActivity(go);
+            finish();
+        }
     }
 
 }
