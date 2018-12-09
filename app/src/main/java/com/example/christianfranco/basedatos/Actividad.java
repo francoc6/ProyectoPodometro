@@ -82,7 +82,6 @@ public class Actividad extends AppCompatActivity {
                 pausa();//cronometro
                 //botones
                 BtnPausa.setEnabled(false);BtnStart.setEnabled(true);BtnRegresar.setEnabled(false);
-
                 pasos=IntSerBack.getNumSteps();
                 //intent service
                 IntSerBack.detener();//detener el servicio
@@ -227,8 +226,5 @@ public class Actividad extends AppCompatActivity {
             finish();
         }
     }
-
-
-
 
 }
