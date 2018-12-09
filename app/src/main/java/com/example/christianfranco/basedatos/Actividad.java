@@ -132,6 +132,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
                     Intent menu = new Intent(Actividad.this,Menu.class);
                     startActivity(menu);
                     finish();
+                    onPause();//listener del gps
                 }
             }
         });
