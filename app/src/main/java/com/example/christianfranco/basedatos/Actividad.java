@@ -1,7 +1,15 @@
 package com.example.christianfranco.basedatos;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +23,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Actividad extends AppCompatActivity {
+public class Actividad extends AppCompatActivity implements LocationListener {
     public static TextView TvSteps;
     Button BtnStart, BtnPausa, BtnStop,BtnRegresar;
     Chronometer simpleChronometer;
@@ -24,6 +32,11 @@ public class Actividad extends AppCompatActivity {
     public static boolean yasehizo = false, banderapausa;//para ejecutar formulario
     public static String Preguntas_I;
     public static int pasos;
+
+    //ubicacion
+    public static String tvLongi;
+    public static String tvLati;
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +52,9 @@ public class Actividad extends AppCompatActivity {
 
         simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
         simpleChronometer.setFormat("%s");
+
+        //posicion
+        CheckPermission();
 
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
@@ -227,4 +243,75 @@ public class Actividad extends AppCompatActivity {
         }
     }
 
+    //POSICION///////////////////////////////////////////////////////////////////////////////////////
+
+    //metodo para almacenar datos en memoria del dispositivo
+    public void guardatos(String Latitud,String Longitud) {
+        SharedPreferences keepdata = getSharedPreferences("Ubicacion", getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = keepdata.edit();
+        editor.putString("Latitud", Latitud);
+        editor.putString("Longitud", Longitud);
+        editor.commit();
+    }
+
+    /* Request updates at startup */
+    @Override
+    public void onResume() {
+        super.onResume();
+        getLocation();
+    }
+
+    /* Remove the locationlistener updates when Activity is paused */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    public void getLocation() {
+        try {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void CheckPermission() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        tvLongi = String.valueOf(location.getLongitude());
+        tvLati = String.valueOf(location.getLatitude());
+        if(location.getLongitude()!=0 && location.getLatitude()!=0){
+            guardatos(tvLati,tvLongi);
+            Toast.makeText(getApplicationContext(),"Se obtuvo posicion "+tvLati+" "+tvLongi, Toast.LENGTH_SHORT).show();
+            //onDestroy();
+        }
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Toast.makeText(getApplicationContext(), "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Toast.makeText(this, "Enabled new provider!" + provider, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationManager.removeUpdates(this);
+    }
 }

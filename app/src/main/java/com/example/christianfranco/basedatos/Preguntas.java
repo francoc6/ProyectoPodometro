@@ -31,7 +31,7 @@ public class Preguntas extends AppCompatActivity {
     private RadioButton p41, p42, p43, p44, p45;
     private Button Aceptar;
     public static TextView Preg1, Preg2, Preg3, Preg4;
-    SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
+    SharedPreferences usuariognr, posicion;//lo uso para obtener el usuario almacenado
     public String PF;
     boolean confirmar = false;
     Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
@@ -71,6 +71,10 @@ public class Preguntas extends AppCompatActivity {
         Aceptar = findViewById(R.id.iniAceptar);
         usuariognr = getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
         final String usuario = usuariognr.getString("usuario", "vacio");
+        posicion = getSharedPreferences("Ubicacion", MODE_PRIVATE);//instancio el objeto para obtener usuario
+        final String Lati = posicion.getString("Latitud", "vacio");
+        final String Longi = posicion.getString("Longitud", "vacio");
+
 
         //valido si es el inicio o final para mostrar las preguntas correctas
         if (!Conectar.banderaformulario) {
@@ -90,7 +94,7 @@ public class Preguntas extends AppCompatActivity {
                 resultados();
                 if (confirmar == true) {
                     if (!Conectar.banderaformulario) {
-                        agregaractividad(usuario, String.valueOf(Actividad.obtenertiempo(Actividad.tiempofinal)), dia + "/" + mes + "/" + anio, String.valueOf(Actividad.pasos), Actividad.Preguntas_I, PF);
+                        agregaractividad(usuario, String.valueOf(Actividad.obtenertiempo(Actividad.tiempofinal)), dia + "/" + mes + "/" + anio, String.valueOf(Actividad.pasos), Actividad.Preguntas_I, PF,Lati,Longi);
                     }
                     Intent salir = new Intent(Preguntas.this, Actividad.class);
                     startActivity(salir);
@@ -198,8 +202,8 @@ public class Preguntas extends AppCompatActivity {
     }
 
     //metodo para agregar datos a la base
-    public void agregaractividad(String u, String t, String f, String p, String PI, String PF) {
-        String orden = "insert into ACTIVIDAD values(?,?,?,?,?,?)";
+    public void agregaractividad(String u, String t, String f, String p, String PI, String PF, String Lat,String Long) {
+        String orden = "insert into ACTIVIDAD values(?,?,?,?,?,?,?)";
         try {
             PreparedStatement pedir = conectar.conectarabase().prepareStatement(orden);
             pedir.setString(1, u);
@@ -208,6 +212,7 @@ public class Preguntas extends AppCompatActivity {
             pedir.setString(4, p);
             pedir.setString(5, PI);
             pedir.setString(6, PF);
+            pedir.setString(7, Lat+"_"+Long);
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Se agrego a la base", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
