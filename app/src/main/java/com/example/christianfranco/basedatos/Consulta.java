@@ -60,6 +60,11 @@ public class Consulta extends AppCompatActivity {
         grafico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //veo la seleccion del usuario
+                String selec=datoaconsultar.getSelectedItem().toString();
+                String[] parts = selec.split(":");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
+                var =parts[0];//asigno la seleccion a una variable
+                datos=respuesta( AgregarDato.obtenerindice(var),usuario);
                 Intent go = new Intent(Consulta.this,Grafica.class);
                 startActivity(go);
             }
@@ -78,7 +83,7 @@ public class Consulta extends AppCompatActivity {
             res = pedir.executeQuery(orden);
             // res.next();
             while (res.next()) {
-                ans.add(res.getString("Fecha")+"    "+res.getString("Valor"));
+                ans.add(res.getString("Fecha")+" "+res.getString("Valor"));
             }
             res.close();
         }catch (Exception e) {
