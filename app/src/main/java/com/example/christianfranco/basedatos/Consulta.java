@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Consulta extends AppCompatActivity {
     Spinner datoaconsultar;
-    Button consultar;
+    Button consultar,grafico;
     static String var;
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
     static ArrayList<String> datos;
@@ -35,6 +35,7 @@ public class Consulta extends AppCompatActivity {
         final DialogResConsulta dialog = new DialogResConsulta();
 
         consultar=(Button)findViewById(R.id.consultar);
+        grafico=(Button)findViewById(R.id.Grafico);
         datoaconsultar = (Spinner) findViewById(R.id.spinnerconsulta);
         String[] variables = {"Glucosa:", "GlobulosRojos:","Presion:","Peso:"};
         datoaconsultar.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
@@ -54,6 +55,13 @@ public class Consulta extends AppCompatActivity {
                         dialog.show(getSupportFragmentManager(), "dialogo");
                     }
                 }
+            }
+        });
+        grafico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(Consulta.this,Grafica.class);
+                startActivity(go);
             }
         });
     }

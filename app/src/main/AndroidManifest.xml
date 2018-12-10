@@ -16,38 +16,48 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Registro"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Registro"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".ContadordePasos.IntSerBack"
             android:exported="false" />
 
-        <activity android:name=".Actividad"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AgregarDato"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Consulta"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Menu"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Informacion"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Preguntas"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Status"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Logros"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Actividad"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AgregarDato"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Consulta"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Menu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Informacion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Preguntas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Status"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Logros"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Grafica"></activity>
     </application>
 
 </manifest>
