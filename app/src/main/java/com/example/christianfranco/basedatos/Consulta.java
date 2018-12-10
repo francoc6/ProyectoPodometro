@@ -65,8 +65,15 @@ public class Consulta extends AppCompatActivity {
                 String[] parts = selec.split(":");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
                 var =parts[0];//asigno la seleccion a una variable
                 datos=respuesta( AgregarDato.obtenerindice(var),usuario);
-                Intent go = new Intent(Consulta.this,Grafica.class);
-                startActivity(go);
+                if(ban==false) {
+                    if (datos.isEmpty()) {//si no hay elementos que presentar, no se muestra el dialogo
+                        Toast.makeText(getApplicationContext(), "No hay datos por presentar", Toast.LENGTH_SHORT).show();
+                    } else {//por el contrario, se muestra el dialogo con todos los resultados
+                        Intent go = new Intent(Consulta.this, Grafica.class);
+                        startActivity(go);
+                    }
+                }
+
             }
         });
     }
@@ -83,7 +90,7 @@ public class Consulta extends AppCompatActivity {
             res = pedir.executeQuery(orden);
             // res.next();
             while (res.next()) {
-                ans.add(res.getString("Fecha")+" "+res.getString("Valor"));
+                ans.add(res.getString("Fecha")+"     "+res.getString("Valor"));
             }
             res.close();
         }catch (Exception e) {

@@ -32,7 +32,7 @@ public class Grafica extends AppCompatActivity {
 
         Datos=Consulta.datos;//obtengo los datos de la base
         for(int i=0;i<Datos.size();i++){
-            String[] parts = Datos.get(i).split(" ");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
+            String[] parts = Datos.get(i).split("     ");
             axisData.add(parts[0]);
             yAxisData.add(Integer.valueOf(parts[1]));
         }
