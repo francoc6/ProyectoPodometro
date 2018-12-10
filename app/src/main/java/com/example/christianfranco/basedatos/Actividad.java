@@ -180,6 +180,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         }
     }
 
+
     public void pausa() {
         if (banderapausa) {
             simpleChronometer.stop();
