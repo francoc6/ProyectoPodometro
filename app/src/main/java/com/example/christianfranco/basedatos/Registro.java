@@ -70,9 +70,9 @@ public class Registro extends AppCompatActivity {
     //metodo para agregar usuario
     Boolean aprobo = false;
     public void agregarusuario(String gen) {
-        String res = verificarcampos(Nombre.getText().toString(), Apellido.getText().toString(), Usuario.getText().toString(), Correo.getText().toString(), Edad.getText().toString(), Pass.getText().toString());
+        String res = verificarcampos(Nombre.getText().toString(), Apellido.getText().toString(), Usuario.getText().toString(), Correo.getText().toString(), Edad.getText().toString(), Pass.getText().toString(),Talla.getText().toString());
         if (res == "") {//si los campos no estan vacios, siue a  verificar que el usuario no exista
-            String campos = tamanio(Nombre.getText().toString(), Apellido.getText().toString(), Usuario.getText().toString(), Correo.getText().toString(), Edad.getText().toString(), Pass.getText().toString());
+            String campos = tamanio(Nombre.getText().toString(), Apellido.getText().toString(), Usuario.getText().toString(), Correo.getText().toString(), Edad.getText().toString(), Pass.getText().toString(),Talla.getText().toString());
             if (campos == "") {
                 if (Usuario.getText().toString().contains(" ")) {
                     Toast.makeText(getApplicationContext(), "Usuario no acepta espacios", Toast.LENGTH_SHORT).show();
@@ -81,14 +81,15 @@ public class Registro extends AppCompatActivity {
                 } else {//si el usuario no existe se comunica a la base para el registro
                     try {
                         aprobo = true;//para regresar al inicio si se agrego usuario
-                        PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into RegistroUsuarios_db values(?,?,?,?,?,?,?)");
+                        PreparedStatement pedir = contacto.conectarabase().prepareStatement("insert into RegistroUsuarios_db values(?,?,?,?,?,?,?,?)");
                         pedir.setString(1, Nombre.getText().toString());
                         pedir.setString(2, Apellido.getText().toString());
                         pedir.setString(3, Usuario.getText().toString());
                         pedir.setString(4, Pass.getText().toString());
                         pedir.setString(5, Correo.getText().toString());
                         pedir.setString(6, Edad.getText().toString());
-                        pedir.setString(7, gen);
+                        pedir.setString(7, Talla.getText().toString());
+                        pedir.setString(8, gen);
                         pedir.executeUpdate();
                         pedir.close();
                         Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
@@ -127,7 +128,7 @@ public class Registro extends AppCompatActivity {
     }
 
     //metodo para verificar campos vacios
-    public String verificarcampos(String Nombre, String A, String U, String Correo, String Edad, String Pass) {
+    public String verificarcampos(String Nombre, String A, String U, String Correo, String Edad, String Pass, String Tall) {
         String resultado = "";
         if (Nombre.isEmpty()) {
             resultado += "Nombre ";
@@ -147,11 +148,14 @@ public class Registro extends AppCompatActivity {
         if (Pass.isEmpty()) {
             resultado += "Contraseña ";
         }
+        if (Tall.isEmpty()) {
+            resultado += "Talla ";
+        }
         return resultado;
     }
 
     //metodo para verficar tamaño y edad
-    public String tamanio(String Nombre, String A, String U, String Correo, String Edad, String Pass) {
+    public String tamanio(String Nombre, String A, String U, String Correo, String Edad, String Pass, String Tall) {
         String resultado = "";
         if (Nombre.length() > 40) {
             resultado += "Ingrese su nombre correctamente.-";
@@ -170,6 +174,9 @@ public class Registro extends AppCompatActivity {
         }
         if (Pass.length() > 15) {
             resultado += "Ingrese una contraseña mas corta.-";
+        }
+        if (Tall.length() > 15) {
+            resultado += "Talla incorrecta.-";
         }
         return resultado;
     }
