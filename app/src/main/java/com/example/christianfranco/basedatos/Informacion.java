@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Informacion extends AppCompatActivity {
-    TextView resNombre,resApellido, resUsuario, resEdad, resCorreo,resGenero,resPasos;
+    TextView resNombre,resApellido, resUsuario, resEdad, resCorreo,resGenero,resPasos,resTalla;
     EditText contraAnteior,contraNueva;
     Button Cambiar;
     String contravieja;
@@ -39,6 +39,7 @@ public class Informacion extends AppCompatActivity {
         resCorreo=(TextView)findViewById(R.id.resCorreo);
         resEdad=(TextView)findViewById(R.id.resEdad);
         resGenero=(TextView)findViewById(R.id.resGenero);
+        resTalla=(TextView)findViewById(R.id.resTalla);
         resPasos=(TextView)findViewById(R.id.resPasos);
         contraAnteior=(EditText)findViewById(R.id.contraAnterior);
         contraNueva=(EditText)findViewById(R.id.contraNueva);
@@ -82,6 +83,7 @@ public class Informacion extends AppCompatActivity {
             resUsuario.setText(res.getString("Usuario"));
             resCorreo.setText(res.getString("Correo"));
             resEdad.setText(res.getString("Edad"));
+            resTalla.setText(res.getString("Talla"));
             resGenero.setText(res.getString("Genero"));
             contravieja=res.getString("Pass");
             res.close();
@@ -100,7 +102,7 @@ public class Informacion extends AppCompatActivity {
             contraNueva.setText("");
         } else {
             contravieja=contraNueva.getText().toString();
-            String orden ="UPDATE DatosPersonales SET Pass='"+contraNueva.getText().toString()+"' WHERE Usuario='"+usuario+"'";
+            String orden ="UPDATE RegistroUsuarios_db SET Pass='"+contraNueva.getText().toString()+"' WHERE Usuario='"+usuario+"'";
             try {
                 PreparedStatement pedir = contacto.conectarabase().prepareStatement(orden);
                 pedir.executeUpdate();

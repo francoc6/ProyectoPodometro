@@ -88,8 +88,8 @@ public class Registro extends AppCompatActivity {
                         pedir.setString(4, Pass.getText().toString());
                         pedir.setString(5, Correo.getText().toString());
                         pedir.setString(6, Edad.getText().toString());
-                        pedir.setString(7, Talla.getText().toString());
-                        pedir.setString(8, gen);
+                        pedir.setString(7, gen);
+                        pedir.setString(8, Talla.getText().toString());
                         pedir.executeUpdate();
                         pedir.close();
                         Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
@@ -172,6 +172,7 @@ public class Registro extends AppCompatActivity {
         if (Integer.valueOf(Edad) < 10 | Integer.valueOf(Edad) > 90) {
             resultado += "Ingrese edad entre 10 y 90.-";
         }
+
         if (Pass.length() > 15) {
             resultado += "Ingrese una contraseña mas corta.-";
         }
