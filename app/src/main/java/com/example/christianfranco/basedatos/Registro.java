@@ -20,7 +20,7 @@ public class Registro extends AppCompatActivity {
 
 
     RadioButton radioH, radioM;
-    EditText Nombre, Apellido, Usuario, Correo, Edad, Pass;
+    EditText Nombre, Apellido, Usuario, Correo, Edad, Pass, Talla;
     Button Cancelar, Registrar;
 
     @Override
@@ -33,6 +33,7 @@ public class Registro extends AppCompatActivity {
         Correo = (EditText) findViewById(R.id.Correo);
         Edad = (EditText) findViewById(R.id.Edad);
         Pass = (EditText) findViewById(R.id.pass);
+        Talla= (EditText)findViewById(R.id.talla);
         radioH = (RadioButton) findViewById(R.id.i22);
         radioM = (RadioButton) findViewById(R.id.radioM);
         Cancelar = (Button) findViewById(R.id.BotonCancelar);

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -41,7 +42,7 @@ public class Grafica extends AppCompatActivity {
         List yAxisValues = new ArrayList();
         List axisValues = new ArrayList();
 
-        Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
+        Line line = new Line(yAxisValues).setColor(Color.parseColor("#ffca1c1f"));//ROJO---color de la linea con los puntos
 
 
         for(int i = 0; i < axisData.size(); i++){
@@ -59,7 +60,6 @@ public class Grafica extends AppCompatActivity {
         LineChartData data = new LineChartData();
         data.setLines(lines);
 
-
         //parte x
         Axis Xaxis = new Axis();
         Xaxis.setValues(axisValues);
@@ -67,12 +67,14 @@ public class Grafica extends AppCompatActivity {
         Xaxis.setTextSize(16);
         Xaxis.setName("Fecha");
         Xaxis.setTextColor(Color.parseColor("#03A9F4"));
+        //Xaxis.setTextColor(Color.parseColor("#ffca1c1f"));//rojo tanto la raya del eje como los valores y titulo
 
         //parte y
         Axis yAxis = new Axis();
         data.setAxisYLeft(yAxis);
 
         yAxis.setTextColor(Color.parseColor("#03A9F4"));
+       // yAxis.setTextColor(R.color.ROJO);
         yAxis.setTextSize(16);
         yAxis.setName("Valores");
 
@@ -85,8 +87,21 @@ public class Grafica extends AppCompatActivity {
 
         lineChartView.setLineChartData(data);
 
-
-
+        lineChartView.setOnValueTouchListener(new ValueTouchListener());
 
     }
+
+    private class ValueTouchListener implements LineChartOnValueSelectListener {
+        @Override
+        public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
+
+
+        }
+
+        @Override
+        public void onValueDeselected() {
+
+        }
+    }
+
 }

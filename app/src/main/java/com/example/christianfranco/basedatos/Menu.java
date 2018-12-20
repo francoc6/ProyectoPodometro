@@ -132,14 +132,12 @@ public class Menu extends AppCompatActivity {
     public void alerta() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Configurar Ubicacion")
-                .setMessage("Se necesita que Ubicacion este encendido.\npor favor active su ubicación " +
-                        "usa esta app")
+                .setMessage("Se necesita que Ubicacion este encendido.\nPor favor activelo")
                 .setPositiveButton("Configuración de ubicación", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                         Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivity(myIntent);
-
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
