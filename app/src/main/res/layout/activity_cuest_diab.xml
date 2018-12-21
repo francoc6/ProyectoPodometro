@@ -369,10 +369,8 @@
             </RadioGroup>
 
 
-
-
             <Button
-                android:id="@+id/iniAceptar"
+                android:id="@+id/btnAceptar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
