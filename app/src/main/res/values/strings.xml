@@ -44,4 +44,38 @@
     <string name="iniP4">Pregunta 4 </string>
     <string name="iniP5">Pregunta 5 </string>
 
+
+    <string name="TituloDiabetes">¿Esta usted en riesgo de padecer diabetes tipo 2?</string>
+    <string name="SubDiabetes">Llene las preguntas  de acuerdo a las  instrucciones</string>
+    <string name="P1">1.¿Qué edad tiene? </string>
+    <string name="P1op1">Menos de 40 años </string>
+    <string name="P1op2">40-49 años </string>
+    <string name="P1op3">50-59 años </string>
+    <string name="P1op4">60 años o más </string>
+
+    <string name="P2">2.¿Es usted hombre o mujer? </string>
+    <string name="P2op1">Hombre </string>
+    <string name="P2op2">Mujer </string>
+
+    <string name="P3">3.Si es mujer, ¿tuvo alguna vez diabetesgestacional (glucosa/azúcar alta durante el embarazo)? </string>
+    <string name="P3op1">Si </string>
+    <string name="P3op2">No </string>
+
+    <string name="P4">4.¿Tiene familiares (mamá, papá, hermano, hermana) que padecen diabetes? </string>
+    <string name="P4op1">Si </string>
+    <string name="P4op2">No </string>
+
+    <string name="P5">5.¿Alguna vez le ha dicho un profesional de salud que tiene presión arterial alta (o hipertensión)? </string>
+    <string name="P5op1">Si </string>
+    <string name="P5op2">No </string>
+
+    <string name="P6">6.¿Realiza algún tipo de actividad física? </string>
+    <string name="P6op1">Si </string>
+    <string name="P6op2">No </string>
+
+    <string name="P7">7.Acorde a la tabla, ¿Cuál es su peso? </string>
+    <string name="Texto7">Para ver la tabla referencial haga click </string>
+
+
+
 </resources>
