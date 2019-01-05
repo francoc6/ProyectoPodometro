@@ -229,11 +229,11 @@ public class Preguntas extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Se agrego a la base", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+            memorycard(u,f,h,t,p,PI,PF,Lat,Long,temp,Ciudad);//en caso d e que no se pueda guardar se almacenan los daos en memoria interna, para que no se  pierdan
+            Toast.makeText(getApplicationContext(),"Problemas de conexion, los datos seran agregados luego", Toast.LENGTH_SHORT).show();
             Intent go = new Intent(Preguntas.this,Menu.class);
             startActivity(go);
             finish();
-            //guardarluego(u,t,f,p,PI,PF);//los almaceno para luego subirlos a la base
         }
     }
 
@@ -255,22 +255,8 @@ public class Preguntas extends AppCompatActivity {
         editor.commit();
     }
 
-
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
-    }
-
-    //metodo para almacenar datos en memoria del dispositivo, si no hay conexion a la base
-    public void guardarluego(String u, String t, String f, String p, String PI, String PF) {
-        SharedPreferences keepdata = getSharedPreferences("GuardarDatos", getApplicationContext().MODE_PRIVATE);
-        SharedPreferences.Editor editor = keepdata.edit();
-        editor.putString("Usuario", u);
-        editor.putString("Tiempo",t);
-        editor.putString("Fecha",f);
-        editor.putString("Pasos",p);
-        editor.putString("PregIni",PI);
-        editor.putString("PregFin",PF);
-        editor.commit();
     }
 }
