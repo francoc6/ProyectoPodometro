@@ -173,7 +173,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         }
     }
 
-    //metodos para el reloj
+   ////////////////////////////////////////////////////////metodos para el reloj/////////////////////////////////////////////////////
     public void start() {
         if (!banderapausa) {
             simpleChronometer.setBase(SystemClock.elapsedRealtime() - tiempopausa);
@@ -181,7 +181,6 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             banderapausa = true;
         }
     }
-
 
     public void pausa() {
         if (banderapausa) {
@@ -250,9 +249,10 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         }
         return res;
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    ////////prueba de conexion-no hace otra cosa/////////////////////////////////////////////////////////////////////////////////////////////////
     Conectar conectar = new Conectar();
-
     public void prueba() {
         List<String> preg = new ArrayList<>();
         try {
@@ -272,6 +272,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             finish();
         }
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////POSICION///////////////////////////////////////////////////////////////////////////////////////
 
