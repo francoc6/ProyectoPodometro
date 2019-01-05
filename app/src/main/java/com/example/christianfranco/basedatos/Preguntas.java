@@ -230,7 +230,7 @@ public class Preguntas extends AppCompatActivity {
             pedir.close();//cierro la conexion
         } catch (SQLException e) {
             memorycard(u,f,h,t,p,PI,PF,Lat,Long,temp,Ciudad);//en caso d e que no se pueda guardar se almacenan los daos en memoria interna, para que no se  pierdan
-            Toast.makeText(getApplicationContext(),"Problemas de conexion, los datos seran agregados luego", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Problemas de conexion, los datos serán agregados luego", Toast.LENGTH_SHORT).show();
             Intent go = new Intent(Preguntas.this,Menu.class);
             startActivity(go);
             finish();
