@@ -31,6 +31,7 @@ public class Preguntas extends AppCompatActivity {
     private Button Aceptar;
     public static TextView Preg1, Preg2, Preg3, Preg4;
     SharedPreferences usuariognr, posicion,temp;//lo uso para obtener el usuario almacenado
+    SharedPreferences us,fec,ho,ti,pa,prei,pref,lati,longi,te,ci,activi;
     public String PF;
     boolean confirmar = false;
 
@@ -235,6 +236,25 @@ public class Preguntas extends AppCompatActivity {
             //guardarluego(u,t,f,p,PI,PF);//los almaceno para luego subirlos a la base
         }
     }
+
+    //almacena los datos, si no hay red, para evitar perdida de datos
+    public void memorycard(String u,  String f, String h ,String t,String p, String PI, String PF, String Lat,String Long,String temp,String Ciudad){
+        activi=getSharedPreferences("Guardar",getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = activi.edit();
+        editor.putString("usuario",u);
+        editor.putString("fecha",f);
+        editor.putString("hora",h);
+        editor.putString("tiempo",t);
+        editor.putString("pasos",p);
+        editor.putString("preguntainicial",PI);
+        editor.putString("preguntafinal",PF);
+        editor.putString("latitud",Lat);
+        editor.putString("longitud",Long);
+        editor.putString("temperatura",temp);
+        editor.putString("ciudad",Ciudad);
+        editor.commit();
+    }
+
 
     //boton fisico
     @Override
