@@ -21,7 +21,6 @@ public class Logros extends AppCompatActivity {
     private TextView mLoadingText;
     public static ImageView copa1,copa2,copa3,copa4;
 
-    private int mProgressStatus = 0;
     private int pasos=0;
 
     private Handler mHandler = new Handler();

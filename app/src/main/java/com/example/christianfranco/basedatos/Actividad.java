@@ -161,7 +161,6 @@ public class Actividad extends AppCompatActivity implements LocationListener {
                 }
             }
         });
-
     }
 
     //boton fisico
@@ -174,7 +173,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         }
     }
 
-   ////////////////////////////////////////////////////////metodos para el reloj/////////////////////////////////////////////////////
+    //metodos para el reloj
     public void start() {
         if (!banderapausa) {
             simpleChronometer.setBase(SystemClock.elapsedRealtime() - tiempopausa);
@@ -182,6 +181,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             banderapausa = true;
         }
     }
+
 
     public void pausa() {
         if (banderapausa) {
@@ -250,11 +250,9 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         }
         return res;
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    ////////prueba de conexion///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Conectar conectar = new Conectar();
+
     public void prueba() {
         List<String> preg = new ArrayList<>();
         try {
@@ -274,7 +272,6 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             finish();
         }
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////POSICION///////////////////////////////////////////////////////////////////////////////////////
 
@@ -374,7 +371,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(WEATHER_URL, params, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] header, JSONObject response) {
-               // Log.d("Clima", "Success" + response.toString());
+                // Log.d("Clima", "Success" + response.toString());
                 WeatherDataModel weatherdata = WeatherDataModel.fromJSON(response);
                 ObtenerDatos(weatherdata);
             }
@@ -383,7 +380,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
                 //Log.d("Clima", "Status code" + statuscode);
                 //Log.d("Clima", "Fail" + e.toString());
                 Toast.makeText(Actividad.this, "Invalid Location", Toast.LENGTH_SHORT).show();
-              //  getWeatherForCurrentLocation();
+                //  getWeatherForCurrentLocation();
             }
 
         });

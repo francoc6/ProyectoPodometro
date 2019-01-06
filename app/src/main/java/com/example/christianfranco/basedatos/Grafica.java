@@ -7,6 +7,8 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
+import lecho.lib.hellocharts.formatter.SimpleLineChartValueFormatter;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -21,7 +23,7 @@ public class Grafica extends AppCompatActivity {
     LineChartView lineChartView;
     ArrayList<String> Datos= new ArrayList<>();
     ArrayList<String> axisData= new ArrayList<>();
-    ArrayList<Integer> yAxisData= new ArrayList<>();
+    ArrayList<Float> yAxisData= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class Grafica extends AppCompatActivity {
         for(int i=0;i<Datos.size();i++){
             String[] parts = Datos.get(i).split("     ");
             axisData.add(parts[0]);
-            yAxisData.add(Integer.valueOf(parts[1]));
+            yAxisData.add(Float.valueOf(parts[1]));
         }
 
         List yAxisValues = new ArrayList();
@@ -55,6 +57,9 @@ public class Grafica extends AppCompatActivity {
 
         List lines = new ArrayList();
         lines.add(line);
+        line.setFormatter(new SimpleLineChartValueFormatter(2));
+      //  line.setHasLabelsOnlyForSelected(true);
+        line.setHasLabels(true);
 
 
         LineChartData data = new LineChartData();
@@ -77,7 +82,8 @@ public class Grafica extends AppCompatActivity {
        // yAxis.setTextColor(R.color.ROJO);
         yAxis.setTextSize(16);
         yAxis.setName("Valores");
-
+        yAxis.setFormatter(new SimpleAxisValueFormatter(2));
+        yAxis.setMaxLabelChars(6);
 
         Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
         viewport.top =110;

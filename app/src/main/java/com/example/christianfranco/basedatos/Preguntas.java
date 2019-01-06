@@ -31,11 +31,10 @@ public class Preguntas extends AppCompatActivity {
     private Button Aceptar;
     public static TextView Preg1, Preg2, Preg3, Preg4;
     SharedPreferences usuariognr, posicion,temp;//lo uso para obtener el usuario almacenado
-    SharedPreferences us,fec,ho,ti,pa,prei,pref,lati,longi,te,ci,activi;
     public String PF;
     boolean confirmar = false;
 
-///////////////////////Obtengo la fecha y la hora////////////////////////////////////////////////
+    ///////////////////////Obtengo la fecha y la hora////////////////////////////////////////////////
     java.util.Calendar calendarNow = new GregorianCalendar(TimeZone.getTimeZone("America/Guayaquil"));
     String time= calendarNow.getTime().toString();
     String[] parts = time.split(" ");//Thu Dec 06 21:06:21 GMT-05:00 2018
@@ -229,34 +228,29 @@ public class Preguntas extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Se agrego a la base", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
         } catch (SQLException e) {
-            memorycard(u,f,h,t,p,PI,PF,Lat,Long,temp,Ciudad);//en caso d e que no se pueda guardar se almacenan los daos en memoria interna, para que no se  pierdan
-            Toast.makeText(getApplicationContext(),"Problemas de conexion, los datos serán agregados luego", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
             Intent go = new Intent(Preguntas.this,Menu.class);
             startActivity(go);
             finish();
+            //guardarluego(u,t,f,p,PI,PF);//los almaceno para luego subirlos a la base
         }
-    }
-
-    //almacena los datos, si no hay red, para evitar perdida de datos
-    public void memorycard(String u,  String f, String h ,String t,String p, String PI, String PF, String Lat,String Long,String temp,String Ciudad){
-        activi=getSharedPreferences("Guardar",getApplicationContext().MODE_PRIVATE);
-        SharedPreferences.Editor editor = activi.edit();
-        editor.putString("usuario",u);
-        editor.putString("fecha",f);
-        editor.putString("hora",h);
-        editor.putString("tiempo",t);
-        editor.putString("pasos",p);
-        editor.putString("preguntainicial",PI);
-        editor.putString("preguntafinal",PF);
-        editor.putString("latitud",Lat);
-        editor.putString("longitud",Long);
-        editor.putString("temperatura",temp);
-        editor.putString("ciudad",Ciudad);
-        editor.commit();
     }
 
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
+    }
+
+    //metodo para almacenar datos en memoria del dispositivo, si no hay conexion a la base
+    public void guardarluego(String u, String t, String f, String p, String PI, String PF) {
+        SharedPreferences keepdata = getSharedPreferences("GuardarDatos", getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = keepdata.edit();
+        editor.putString("Usuario", u);
+        editor.putString("Tiempo",t);
+        editor.putString("Fecha",f);
+        editor.putString("Pasos",p);
+        editor.putString("PregIni",PI);
+        editor.putString("PregFin",PF);
+        editor.commit();
     }
 }
