@@ -72,6 +72,8 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         //posicion
         CheckPermission();
 
+
+
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
 
         if (yasehizo) {
@@ -87,10 +89,12 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             //para que solo se pueda presionar empezar
             BtnPausa.setEnabled(false);
             BtnStop.setEnabled(false);
+            //preguntas
+            guardarpreguntas();
             IntSerBack.detener();//detener el servicio
             stopService(intentservice);
         }
-        prueba();//para probar conexion
+       // prueba();//para probar conexion
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -320,7 +324,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         if(!yasehizo) {//para que solo lo haga al iniciar la pantalla
             if (location.getLongitude() != 0 && location.getLatitude() != 0) {
                 guardatos(tvLati, tvLongi);
-                Toast.makeText(getApplicationContext(), "Se obtuvo posicion " + tvLati + " " + tvLongi, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(), "Se obtuvo posicion " + tvLati + " " + tvLongi, Toast.LENGTH_SHORT).show();
                 getWeatherForCurrentLocation(tvLati, tvLongi);//inicio metodo para obtener clima con la posicion
                 //onDestroy();
             }
@@ -390,7 +394,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     public void ObtenerDatos(WeatherDataModel data){
         temperatura=data.getTemperature();
         ciudad=data.getCity();
-        Toast.makeText(getApplicationContext(),temperatura+" y "+ciudad, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(),temperatura+" y "+ciudad, Toast.LENGTH_SHORT).show();
         SharedPreferences keepdata = getSharedPreferences("Clima", getApplicationContext().MODE_PRIVATE);
         SharedPreferences.Editor editor = keepdata.edit();
         editor.putString("Temperatura", temperatura);
@@ -400,6 +404,50 @@ public class Actividad extends AppCompatActivity implements LocationListener {
 
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////preguntas////////////////////////////////////////////////////////////////////////////////////////
+    //guardo las preguntas inicilaes y finales
+
+    public void guardarpreguntas(){
+        List<String> pregi = new ArrayList<>();
+        List<String> pregf = new ArrayList<>();
+           try {
+               Statement pedir = conectar.conectarabase().createStatement();
+               String orden = "SELECT Texto FROM Preguntas_db WHERE TIPO='Inicio'";
+               ResultSet res = null;
+               res = pedir.executeQuery(orden);
+         //res.next();
+               while (res.next()) {
+                   pregi.add(res.getString("Texto"));
+               }
+               res.close();
+        //guardo las preguntas las preguntas para mostrar
+
+               SharedPreferences data= getSharedPreferences("Preguntas", getApplicationContext().MODE_PRIVATE);
+               SharedPreferences.Editor editor =data.edit();
+               editor.putString("i1",pregi.get(0));
+               editor.putString("i2",pregi.get(1));
+               editor.putString("i3",pregi.get(2));
+               editor.putString("i4",pregi.get(3));
+               editor.commit();
+
+               res = pedir.executeQuery("SELECT Texto FROM Preguntas_db WHERE TIPO='Fin'");
+               while (res.next()) {
+                   pregf.add(res.getString("Texto"));
+               }
+               res.close();
+               editor.putString("f1",pregf.get(0));
+               editor.putString("f2",pregf.get(1));
+               editor.putString("f3",pregf.get(2));
+               editor.putString("f4",pregf.get(3));
+               editor.commit();
+           } catch (Exception e) {
+             //  Toast.makeText(getApplicationContext(),"No se puede obtener preguntas.", Toast.LENGTH_SHORT).show();
+           }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 }
 

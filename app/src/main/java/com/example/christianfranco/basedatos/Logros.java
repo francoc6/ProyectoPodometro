@@ -17,8 +17,7 @@ import java.util.ArrayList;
 
 public class Logros extends AppCompatActivity {
 
-    private ProgressBar mProgressBar1,mProgressBar2;
-    private TextView mLoadingText;
+    private TextView mLoadingText,posicion;
     public static ImageView copa1,copa2,copa3,copa4;
 
     private int pasos=0;
@@ -35,12 +34,13 @@ public class Logros extends AppCompatActivity {
         usuariognr = getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
         final String usuario =usuariognr.getString("usuario","vacio");
 
-        mProgressBar1 = (ProgressBar) findViewById(R.id.progressBar);
-        mProgressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
+        posicion= (TextView)findViewById(R.id.posicion);
         copa1=(ImageView) findViewById(R.id.copa1);
         copa2=(ImageView)findViewById(R.id.copa2);
         copa3=(ImageView)findViewById(R.id.copa3);
         copa4=(ImageView)findViewById(R.id.copa4);
+
+        posicion.setText("Usted esta en el puesto: ");
 
     pasos=obtenerpasos(usuario);//obtengo todos los pasos que ha realizado el usuario
         Retos.retos(pasos);//funcion para encender los trofeos
@@ -83,4 +83,23 @@ public class Logros extends AppCompatActivity {
         startActivity(menu);
         finish();
     }
+
+    public void lugar(String u){
+        String orden ="select Pasos from TotalPasos_db WHERE Usuario='"+u+"'";
+       String respuesta;
+        try {
+            Statement pedir = contacto.conectarabase().createStatement();
+            ResultSet res=null;
+            res = pedir.executeQuery(orden);
+            // res.next();
+            respuesta=res.getString("Pasos");
+            res.close();
+            posicion.setText(respuesta);
+
+        }catch (Exception e) {
+            Toast.makeText(this, "Error en la red.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }

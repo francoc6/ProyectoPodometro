@@ -92,6 +92,10 @@ public class Registro extends AppCompatActivity {
                         pedir.setString(8, Talla.getText().toString());
                         pedir.executeUpdate();
                         pedir.close();
+                        Statement ans = contacto.conectarabase().createStatement();
+                        ans.executeUpdate("INSERT INTO TotalPasos_db VALUES ('"+Usuario.getText().toString()+"', 0)");//agrego registro a tabla posicion
+                        ans.close();
+
                         Toast.makeText(getApplicationContext(), "USUARIO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), "Revisa tu conexion", Toast.LENGTH_SHORT).show();
