@@ -52,7 +52,7 @@ public class AgregarDato extends AppCompatActivity {
                 if(dato.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Ingrese un valor", Toast.LENGTH_SHORT).show();
                 }else{
-                    agregardato(obtenerindice(parts[0]),usuario,dato.getText().toString(),fecha);
+                    agregardato(obtenerindice(parts[0]),usuario,Float.valueOf(dato.getText().toString()).toString(),fecha);//para facilitar la graficacion
                     dato.setText("");
                 }
             }
