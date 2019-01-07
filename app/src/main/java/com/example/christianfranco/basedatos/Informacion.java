@@ -115,27 +115,20 @@ public class Informacion extends AppCompatActivity {
     }
 
     public  Integer obtenerpasos(String u){
-        Integer total=0;
         //conexion y descarga de datos
-        String orden ="select Pasos from ACTIVIDAD WHERE Usuario='"+u+"'";
-        ArrayList<String> ans = new ArrayList<>();
+        String orden = "select Pasos from TotalPasos_db WHERE Usuario='" + u + "'";
+        int ans = 0;
         try {
             Statement pedir = contacto.conectarabase().createStatement();
-            ResultSet res=null;
+            ResultSet res = null;
             res = pedir.executeQuery(orden);
-            // res.next();
-            while (res.next()) {
-                ans.add(res.getString("Pasos"));
-            }
+            res.next();
+            ans = Integer.valueOf(res.getString("Pasos"));
             res.close();
-        }catch (Exception e) {
-            Toast.makeText(this,"Intentelo luego.", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Intentelo luego", Toast.LENGTH_SHORT).show();
         }
-        ans.size();
-        for(int i=0;i<ans.size();i++){
-            total+=Integer.valueOf(ans.get(i));
-        }
-        return total;
+        return ans;
     }
 
     //boton fisico

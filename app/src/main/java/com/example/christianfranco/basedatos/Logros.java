@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 public class Logros extends AppCompatActivity {
 
-    private TextView mLoadingText,posicion;
-    public static ImageView copa1,copa2,copa3,copa4;
+    private TextView mLoadingText, posicion;
+    public static ImageView copa1, copa2, copa3, copa4;
 
-    private int pasos=0;
+    private int pasos = 0;
 
     private Handler mHandler = new Handler();
 
@@ -31,75 +31,92 @@ public class Logros extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logros);
 
-        usuariognr = getSharedPreferences("Guardarusuario",MODE_PRIVATE);//instancio el objeto para obtener usuario
-        final String usuario =usuariognr.getString("usuario","vacio");
+        usuariognr = getSharedPreferences("Guardarusuario", MODE_PRIVATE);//instancio el objeto para obtener usuario
+        final String usuario = usuariognr.getString("usuario", "vacio");
 
-        posicion= (TextView)findViewById(R.id.posicion);
-        copa1=(ImageView) findViewById(R.id.copa1);
-        copa2=(ImageView)findViewById(R.id.copa2);
-        copa3=(ImageView)findViewById(R.id.copa3);
-        copa4=(ImageView)findViewById(R.id.copa4);
+        posicion = (TextView) findViewById(R.id.posicion);
+        copa1 = (ImageView) findViewById(R.id.copa1);
+        copa2 = (ImageView) findViewById(R.id.copa2);
+        copa3 = (ImageView) findViewById(R.id.copa3);
+        copa4 = (ImageView) findViewById(R.id.copa4);
 
         posicion.setText("Usted esta en el puesto: ");
 
-    pasos=obtenerpasos(usuario);//obtengo todos los pasos que ha realizado el usuario
+        pasos = obtenerpasos(usuario);//obtengo todos los pasos que ha realizado el usuario
+        int mayor = compara(usuario);
+        if (pasos == mayor) {
+            posicion.setText("Estas en primer lugar. No te descuides!");
+        } else {
+            posicion.setText("Te faltan " + (mayor - pasos) + " pasos para estar en primer  lugar");
+        }
+
+
         Retos.retos(pasos);//funcion para encender los trofeos
     }
 
     //metodo para obtener los pasos totales realizados ingresados a la base de datos
     Conectar contacto = new Conectar();
-    public  Integer obtenerpasos(String u){
-        Integer total=0;
+
+    public Integer obtenerpasos(String u) {
         //conexion y descarga de datos
-        String orden ="select Pasos from ACTIVIDAD WHERE Usuario='"+u+"'";
-        ArrayList<String> ans = new ArrayList<>();
+        String orden = "select Pasos from TotalPasos_db WHERE Usuario='" + u + "'";
+        int ans = 0;
         try {
             Statement pedir = contacto.conectarabase().createStatement();
-            ResultSet res=null;
+            ResultSet res = null;
             res = pedir.executeQuery(orden);
-            // res.next();
-            while (res.next()) {
-                ans.add(res.getString("Pasos"));
-            }
+            res.next();
+            ans = Integer.valueOf(res.getString("Pasos"));
             res.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             Toast.makeText(this, "Error en la red.", Toast.LENGTH_SHORT).show();
-            Intent go = new Intent(Logros.this,Menu.class);
+            Intent go = new Intent(Logros.this, Menu.class);
             startActivity(go);
             finish();
         }
-        ans.size();
-
-        for(int i=0;i<ans.size();i++){
-            total+=Integer.valueOf(ans.get(i));
-        }
-        return total;
+        return ans;
     }
+
+
 
     //boton fisico
     @Override
     public void onBackPressed() {//al presionarlo regresa al menu principal, solo si no esta contando pasos, obligando que utilicen el btn de  la app regresar
-        Intent menu = new Intent(Logros.this,Menu.class);
+        Intent menu = new Intent(Logros.this, Menu.class);
         startActivity(menu);
         finish();
     }
 
-    public void lugar(String u){
-        String orden ="select Pasos from TotalPasos_db WHERE Usuario='"+u+"'";
-       String respuesta;
+
+    //obtengo todos los pasos de la tabla
+    public ArrayList<Integer> vtotal() {
+        //conexion y descarga de datos
+        String orden = "select Pasos from TotalPasos_db";
+        ArrayList<Integer> ans = new ArrayList<>();
         try {
             Statement pedir = contacto.conectarabase().createStatement();
-            ResultSet res=null;
+            ResultSet res = null;
             res = pedir.executeQuery(orden);
             // res.next();
-            respuesta=res.getString("Pasos");
+            while (res.next()) {
+                ans.add(Integer.valueOf(res.getString("Pasos")));
+            }
             res.close();
-            posicion.setText(respuesta);
-
-        }catch (Exception e) {
-            Toast.makeText(this, "Error en la red.", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Problema de Red. Intentalo luego.", Toast.LENGTH_SHORT).show();
         }
+        return ans;
     }
 
 
+    public Integer compara(String u) {
+        ArrayList<Integer> t = vtotal();
+        int temp = 0;
+        for (int y = 0; y < t.size(); y++) {
+            if (t.get(y) >= temp) {
+                temp = t.get(y);
+            }
+        }
+        return temp;
+    }
 }
