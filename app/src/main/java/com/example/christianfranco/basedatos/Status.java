@@ -18,7 +18,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Status extends AppCompatActivity {
-    TextView PGR,PG,Ppresion,Ppeso,TGR,TG,Tpresion,Tpeso;
+    //TextView PGR,PG,Ppresion,Ppeso,TGR,TG,Tpresion,Tpeso;
+    TextView GT,HT,CT,TT,COLT,COLLT,PEST,CIRT,CIRCT,PAT,IMT;
+    TextView GR,HR,CR,TR,COLR,COLLR,PESR,CIRR,CIRCR,PAR,IMR;
+
     SharedPreferences usuariognr;//lo uso para obtener el usuario almacenado
     Boolean ban=false;
 
@@ -35,22 +38,37 @@ public class Status extends AppCompatActivity {
 
         final DialogIni dialog = new DialogIni();
 
-        PGR=(TextView)findViewById(R.id.PGR);
-        Ppresion=(TextView)findViewById(R.id.Ppresion);
-        PG=(TextView)findViewById(R.id.PG);
-        Ppeso=(TextView)findViewById(R.id.Ppeso);
 
-        TGR=(TextView)findViewById(R.id.TGR);
-        Tpresion=(TextView)findViewById(R.id.Tpresion);
-        TG=(TextView)findViewById(R.id.TG);
-        Tpeso=(TextView)findViewById(R.id.Tpeso);
+        GT=(TextView)findViewById(R.id.GT);
+        HT=(TextView)findViewById(R.id.HT);
+        CT=(TextView)findViewById(R.id.CT);
+        TT=(TextView)findViewById(R.id.TT);
+        COLT=(TextView)findViewById(R.id.COLT);
+        COLLT=(TextView)findViewById(R.id.COLLT);
+        PEST=(TextView)findViewById(R.id.PEST);
+        CIRT=(TextView)findViewById(R.id.CIRT);
+        CIRCT=(TextView)findViewById(R.id.CIRCT);
+        PAT=(TextView)findViewById(R.id.PAT);
+        IMT=(TextView)findViewById(R.id.IMT);
+
+        GR=(TextView)findViewById(R.id.GR);
+        HR=(TextView)findViewById(R.id.HR);
+        CR=(TextView)findViewById(R.id.CR);
+        TR=(TextView)findViewById(R.id.TR);
+        COLR=(TextView)findViewById(R.id.COLR);
+        COLLR=(TextView)findViewById(R.id.COLLR);
+        PESR=(TextView)findViewById(R.id.PESR);
+        CIRR=(TextView)findViewById(R.id.CIRR);
+        CIRCR=(TextView)findViewById(R.id.CIRCR);
+        PAR=(TextView)findViewById(R.id.PAR);
+        IMR=(TextView)findViewById(R.id.IMR);
 
         res=obtenerdatos(usuario);
         if(ban==false) {
             color();
         }
 
-        TG.setOnClickListener(new View.OnClickListener() {
+        GT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.show(getSupportFragmentManager(), "dialogo");
@@ -82,10 +100,29 @@ public class Status extends AppCompatActivity {
                 temp.clear();
             }
             res.close();
-            PG.setText(resul.get(0));
-            PGR.setText(resul.get(1));
-            Ppresion.setText(resul.get(2));
-            Ppeso.setText(resul.get(3));
+            GR.setText(resul.get(0));
+            HR.setText(resul.get(1));
+            CR.setText(resul.get(2));
+            TR.setText(resul.get(3));
+            COLR.setText(resul.get(4));
+            COLLR.setText(resul.get(5));
+            PESR.setText(resul.get(6));
+            CIRR.setText(resul.get(7));
+            CIRCR.setText(resul.get(8));
+            PAR.setText(resul.get(9));
+
+            res=pedir.executeQuery("select Talla from RegistroUsuarios_db where Usuario='"+u+"'");
+            res.next();
+            Float talla=Float.valueOf(res.getString("Talla"));
+            res.close();
+            Float peso=Float.valueOf(resul.get(6));
+            Float re=peso/(talla*talla);
+            if(resul.get(6).equals("Sin registro")){
+                IMR.setText("No se ha ingresado peso");
+            }else{
+                IMR.setText(re.toString());
+            }
+
         } catch (Exception e) {
             ban=true;
             Toast.makeText(getApplicationContext(),"Error de red.", Toast.LENGTH_SHORT).show();
@@ -106,13 +143,13 @@ public class Status extends AppCompatActivity {
     public void color (){
         if (!(res.get(0).equals("Sin Registro"))){
             if (Float.valueOf(res.get(0)) > 200) {//si es mayor a 200 es DIABETES
-                TG.setBackgroundResource(R.color.ROJO);
+                TR.setBackgroundResource(R.color.ROJO);
                 respuestaG="Diabetes";
             } else if (144 < Float.valueOf(res.get(0)) && Integer.valueOf(res.get(0)) < 149) {//entre 144 y 149 es PREDIABETES
-                TG.setBackgroundResource(R.color.AMARILLO);
+                TR.setBackgroundResource(R.color.AMARILLO);
                 respuestaG="PRE-DIABETES";
             } else {//Normal
-                TG.setBackgroundResource(R.color.VERDE);
+                TR.setBackgroundResource(R.color.VERDE);
                 respuestaG="Normal";
             }
         }
