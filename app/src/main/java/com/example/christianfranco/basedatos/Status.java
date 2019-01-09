@@ -143,13 +143,13 @@ public class Status extends AppCompatActivity {
     public void color (){
         if (!(res.get(0).equals("Sin Registro"))){
             if (Float.valueOf(res.get(0)) > 200) {//si es mayor a 200 es DIABETES
-                TR.setBackgroundResource(R.color.ROJO);
+                GT.setBackgroundResource(R.color.ROJO);
                 respuestaG="Diabetes";
             } else if (144 < Float.valueOf(res.get(0)) && Integer.valueOf(res.get(0)) < 149) {//entre 144 y 149 es PREDIABETES
-                TR.setBackgroundResource(R.color.AMARILLO);
+                GT.setBackgroundResource(R.color.AMARILLO);
                 respuestaG="PRE-DIABETES";
             } else {//Normal
-                TR.setBackgroundResource(R.color.VERDE);
+                GT.setBackgroundResource(R.color.VERDE);
                 respuestaG="Normal";
             }
         }
