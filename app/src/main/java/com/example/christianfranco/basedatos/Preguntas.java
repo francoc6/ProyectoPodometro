@@ -103,12 +103,16 @@ public class Preguntas extends AppCompatActivity {
                 resultados();
                 if (confirmar == true) {
                     if (!Conectar.banderaformulario) {
-                        posicion(usuario, String.valueOf(Actividad.pasos));//actualizo la tabla de posicion para logros
+                        // posicion(usuario, String.valueOf(Actividad.pasos));//actualizo la tabla de posicion para logros
                         agregaractividad(usuario, fecha, hora, String.valueOf(Actividad.obtenertiempo(Actividad.tiempofinal)), String.valueOf(Actividad.pasos), Actividad.Preguntas_I, PF, Lati, Longi, Temperatura, Ciudad);
+                        Intent salir = new Intent(Preguntas.this, Menu.class);
+                        startActivity(salir);
+                        finish();
+                    } else {
+                        Intent salir = new Intent(Preguntas.this, Actividad.class);
+                        startActivity(salir);
+                        finish();
                     }
-                    Intent salir = new Intent(Preguntas.this, Actividad.class);
-                    startActivity(salir);
-                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Por favor responda el formulario", Toast.LENGTH_SHORT).show();
                 }
@@ -178,40 +182,6 @@ public class Preguntas extends AppCompatActivity {
         }
     }
 
-    //obtengo las preguntas a presentar desde la base de datos
-    Conectar conectar = new Conectar();
-
-    //public void obtenerPreguntas() {
-    //    List<String> preg = new ArrayList<>();
-    //     String tipo;
-    //   if (Conectar.banderaformulario) {
-    //       tipo = "Inicio";
-    //   } else {
-    //       tipo = "Fin";
-    //   }
-    //   try {
-    //       Statement pedir = conectar.conectarabase().createStatement();
-    //       String orden = "SELECT Texto FROM Preguntas_db WHERE TIPO='" + tipo + "'";
-    //       ResultSet res = null;
-    //       res = pedir.executeQuery(orden);
-    // res.next();
-    //       while (res.next()) {
-    //           preg.add(res.getString("Texto"));
-    //       }
-    //       res.close();
-    //agrego las preguntas para mostrar
-    //       Preg1.setText(preg.get(0));
-    //       Preg2.setText(preg.get(1));
-    //       Preg3.setText(preg.get(2));
-    //       Preg4.setText(preg.get(3));
-    //   } catch (Exception e) {
-    //       Toast.makeText(getApplicationContext(),"No se puede obtener preguntas.", Toast.LENGTH_SHORT).show();
-    //       Intent go = new Intent(Preguntas.this,Menu.class);
-    //       startActivity(go);
-    //       finish();
-    //   }
-    //}
-
     public void cargarpreguntas() {
         String tipo;
         if (Conectar.banderaformulario) {
@@ -236,6 +206,7 @@ public class Preguntas extends AppCompatActivity {
     }
 
     //metodo para agregar datos a la base
+    Conectar conectar = new Conectar();
     public void agregaractividad(String u, String f, String h, String t, String p, String PI, String PF, String Lat, String Long, String temp, String Ciudad) {
         String orden = "insert into ACTIVIDAD values(?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -253,12 +224,10 @@ public class Preguntas extends AppCompatActivity {
             pedir.executeUpdate();
             Toast.makeText(getApplicationContext(), "Se agrego a la base", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
+            posicion(u, p);//actualizo la tabla de posicion para logros
         } catch (SQLException e) {
             guardarluego(u, f, h, t, p, PI, PF, Lat, Long, temp, Ciudad);//los almaceno para luego subirlos a la base
             Toast.makeText(getApplicationContext(), "Hubo un problemqa de red, se guardaran los  datos luego", Toast.LENGTH_SHORT).show();
-            Intent go = new Intent(Preguntas.this, Menu.class);
-            startActivity(go);
-            finish();
         }
     }
 
@@ -293,18 +262,16 @@ public class Preguntas extends AppCompatActivity {
             ResultSet res = null;
             res = pedir.executeQuery(orden);
             res.next();
-            int r1,r2,r3;
-            r1= Integer.valueOf(p);
-            r2=Integer.valueOf(res.getInt("Pasos"));//paso el string a int para poder sumarlo
-            r3=r1+r2;
-
+            int r1, r2, r3;
+            r1 = Integer.valueOf(p);
+            r2 = Integer.valueOf(res.getInt("Pasos"));//paso el string a int para poder sumarlo
+            r3 = r1 + r2;
             //utilizo executeUodate ya que no necesito respuesta
-            pedir.executeUpdate("UPDATE TotalPasos_db SET Pasos =" + r3 + " WHERE Usuario ='" + u + "'");//actualizo el valor de la tabla
-
+            pedir.executeUpdate("UPDATE TotalPasos_db SET Pasos =" + r3 + " WHERE Usuario ='" + u + "'");//actualizo el valor de la tabl
             Toast.makeText(getApplicationContext(), "Se modifico registro", Toast.LENGTH_SHORT).show();
             pedir.close();//cierro la conexion
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }
