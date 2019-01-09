@@ -37,7 +37,7 @@ public class Consulta extends AppCompatActivity {
         consultar=(Button)findViewById(R.id.consultar);
         grafico=(Button)findViewById(R.id.Grafico);
         datoaconsultar = (Spinner) findViewById(R.id.spinnerconsulta);
-        String[] variables = {"Glucosa:", "GlobulosRojos:","Presion:","Peso:"};
+        String[] variables = {"Glucosa", "Hemoglobina","Colesterol","Trigliceridos","Colesterol HDL","Colesterol LDL","Peso","Circunfernecia cintura","Circunferencia cadera","P Arterial Sistolica/Diastolica" };
         datoaconsultar.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variables));
 
         consultar.setOnClickListener(new View.OnClickListener() {
@@ -45,9 +45,7 @@ public class Consulta extends AppCompatActivity {
             public void onClick(View v) {
                 //veo la seleccion del usuario
                 String selec=datoaconsultar.getSelectedItem().toString();
-                String[] parts = selec.split(":");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
-                var =parts[0];//asigno la seleccion a una variable
-                datos=respuesta( AgregarDato.obtenerindice(var),usuario);//obtengo el indice con una funcion preexistente, hago la busqueda en la base
+                datos=respuesta( AgregarDato.obtenerindice(selec),usuario);//obtengo el indice con una funcion preexistente, hago la busqueda en la base
                 if(ban==false) {
                     if (datos.isEmpty()) {//si no hay elementos que presentar, no se muestra el dialogo
                         Toast.makeText(getApplicationContext(), "No hay datos por presentar", Toast.LENGTH_SHORT).show();
@@ -62,9 +60,7 @@ public class Consulta extends AppCompatActivity {
             public void onClick(View v) {
                 //veo la seleccion del usuario
                 String selec=datoaconsultar.getSelectedItem().toString();
-                String[] parts = selec.split(":");//para tomar solo la palabra y no la unidad lo llamo con parts[0]
-                var =parts[0];//asigno la seleccion a una variable
-                datos=respuesta( AgregarDato.obtenerindice(var),usuario);
+                datos=respuesta( AgregarDato.obtenerindice(selec),usuario);
                 if(ban==false) {
                     if (datos.isEmpty()) {//si no hay elementos que presentar, no se muestra el dialogo
                         Toast.makeText(getApplicationContext(), "No hay datos por presentar", Toast.LENGTH_SHORT).show();

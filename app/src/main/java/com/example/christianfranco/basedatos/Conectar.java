@@ -20,7 +20,7 @@ public class Conectar extends AppCompatActivity {
             StrictMode.ThreadPolicy policy =new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            //conexion= DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.2.8;port=1433;databaseName=Proyecto_db;user=sa;password=admin;");
+           //conexion= DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.179.72;port=1433;databaseName=Proyecto_db;user=sa;password=admin;");
 
             conexion= DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.1.104;port=1433;databaseName=Proyecto_db;user=sa;password=admin;");
         }catch(Exception d){

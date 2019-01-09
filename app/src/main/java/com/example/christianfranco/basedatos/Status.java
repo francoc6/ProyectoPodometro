@@ -68,7 +68,7 @@ public class Status extends AppCompatActivity {
         try {
             Statement pedir = conectar.conectarabase().createStatement();
             ResultSet res = null;
-            for (int x=1;x<5;x++){
+            for (int x=1;x<11;x++){//ya que hay 10 variables
                 res = pedir.executeQuery("select Valor from Variables_db where Usuario='"+u+"' AND Tipo='"+x+"'");
                 while (res.next()) {
                     temp.add(res.getString("Valor"));

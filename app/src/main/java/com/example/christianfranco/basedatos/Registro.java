@@ -173,8 +173,8 @@ public class Registro extends AppCompatActivity {
         if (Correo.length() > 35) {
             resultado += "Ingrese su correo correctamente.-";
         }
-        if (Integer.valueOf(Edad) < 10 | Integer.valueOf(Edad) > 90) {
-            resultado += "Ingrese edad entre 10 y 90.-";
+        if (Integer.valueOf(Edad) < 18 | Integer.valueOf(Edad) > 64) {
+            resultado += "Ingrese edad entre 18 y 64.-";
         }
 
         if (Pass.length() > 15) {
