@@ -18,9 +18,11 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.christianfranco.basedatos.ContadordePasos.StepDetector;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
 import cz.msebera.android.httpclient.Header;
 
 import com.example.christianfranco.basedatos.ContadordePasos.IntSerBack;
@@ -51,7 +53,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     ////////////////////////////////////////clima////////////////////////////////////////////////////////////////////////
     final String APP_ID = "b13f14be7c0909550f568e788748a9b8";
     final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
-    public String temperatura,ciudad;
+    public String temperatura, ciudad;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -64,14 +66,14 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         BtnStop = (Button) findViewById(R.id.btn_stop);
         BtnRegresar = (Button) findViewById(R.id.btnRegresar);
 
-        TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
+        //TvSteps.setText(TEXT_NUM_STEPS + IntSerBack.getNumSteps());//obtengo los pasos dados, para que aparezca al iniciar
+
 
         simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer);
         simpleChronometer.setFormat("%s");
 
         //posicion
         CheckPermission();
-
 
 
         final Intent intentservice = new Intent(this, IntSerBack.class);//inicio el servicio
@@ -94,7 +96,6 @@ public class Actividad extends AppCompatActivity implements LocationListener {
             IntSerBack.detener();//detener el servicio
             stopService(intentservice);
         }
-       // prueba();//para probar conexion
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +103,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
                 //cronometro
                 start();
                 if (yasehizo == false) {
+                    cambiarvalor();//modifico para el contador de  pasos
                     Intent preg = new Intent(Actividad.this, Preguntas.class);
                     startActivity(preg);
                     finish();
@@ -112,6 +114,7 @@ public class Actividad extends AppCompatActivity implements LocationListener {
                     //intentservice
                     IntSerBack.start();
                     startService(intentservice);
+
                 }
             }
         });
@@ -134,6 +137,8 @@ public class Actividad extends AppCompatActivity implements LocationListener {
         BtnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                IntSerBack.bandera = false;
+
                 if (banderapausa) {
                     pasos = IntSerBack.getNumSteps();
                 }
@@ -321,10 +326,10 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     public void onLocationChanged(Location location) {
         tvLongi = String.valueOf(location.getLongitude());
         tvLati = String.valueOf(location.getLatitude());
-        if(!yasehizo) {//para que solo lo haga al iniciar la pantalla
+        if (!yasehizo) {//para que solo lo haga al iniciar la pantalla
             if (location.getLongitude() != 0 && location.getLatitude() != 0) {
                 guardatos(tvLati, tvLongi);
-              //  Toast.makeText(getApplicationContext(), "Se obtuvo posicion " + tvLati + " " + tvLongi, Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(), "Se obtuvo posicion " + tvLati + " " + tvLongi, Toast.LENGTH_SHORT).show();
                 getWeatherForCurrentLocation(tvLati, tvLongi);//inicio metodo para obtener clima con la posicion
                 //onDestroy();
             }
@@ -391,10 +396,10 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     }
 
     //los asigna a las variables temperatura y ciudad
-    public void ObtenerDatos(WeatherDataModel data){
-        temperatura=data.getTemperature();
-        ciudad=data.getCity();
-       // Toast.makeText(getApplicationContext(),temperatura+" y "+ciudad, Toast.LENGTH_SHORT).show();
+    public void ObtenerDatos(WeatherDataModel data) {
+        temperatura = data.getTemperature();
+        ciudad = data.getCity();
+        // Toast.makeText(getApplicationContext(),temperatura+" y "+ciudad, Toast.LENGTH_SHORT).show();
         SharedPreferences keepdata = getSharedPreferences("Clima", getApplicationContext().MODE_PRIVATE);
         SharedPreferences.Editor editor = keepdata.edit();
         editor.putString("Temperatura", temperatura);
@@ -408,46 +413,60 @@ public class Actividad extends AppCompatActivity implements LocationListener {
     //////////////////////preguntas////////////////////////////////////////////////////////////////////////////////////////
     //guardo las preguntas inicilaes y finales
 
-    public void guardarpreguntas(){
+    public void guardarpreguntas() {
         List<String> pregi = new ArrayList<>();
         List<String> pregf = new ArrayList<>();
-           try {
-               Statement pedir = conectar.conectarabase().createStatement();
-               String orden = "SELECT Texto FROM Preguntas_db WHERE TIPO='Inicio'";
-               ResultSet res = null;
-               res = pedir.executeQuery(orden);
-         //res.next();
-               while (res.next()) {
-                   pregi.add(res.getString("Texto"));
-               }
-               res.close();
-        //guardo las preguntas las preguntas para mostrar
+        try {
+            Statement pedir = conectar.conectarabase().createStatement();
+            String orden = "SELECT Texto FROM Preguntas_db WHERE TIPO='Inicio'";
+            ResultSet res = null;
+            res = pedir.executeQuery(orden);
+            //res.next();
+            while (res.next()) {
+                pregi.add(res.getString("Texto"));
+            }
+            res.close();
+            //guardo las preguntas las preguntas para mostrar
 
-               SharedPreferences data= getSharedPreferences("Preguntas", getApplicationContext().MODE_PRIVATE);
-               SharedPreferences.Editor editor =data.edit();
-               editor.putString("i1",pregi.get(0));
-               editor.putString("i2",pregi.get(1));
-               editor.putString("i3",pregi.get(2));
-               editor.putString("i4",pregi.get(3));
-               editor.commit();
+            SharedPreferences data = getSharedPreferences("Preguntas", getApplicationContext().MODE_PRIVATE);
+            SharedPreferences.Editor editor = data.edit();
+            editor.putString("i1", pregi.get(0));
+            editor.putString("i2", pregi.get(1));
+            editor.putString("i3", pregi.get(2));
+            editor.putString("i4", pregi.get(3));
+            editor.commit();
 
-               res = pedir.executeQuery("SELECT Texto FROM Preguntas_db WHERE TIPO='Fin'");
-               while (res.next()) {
-                   pregf.add(res.getString("Texto"));
-               }
-               res.close();
-               editor.putString("f1",pregf.get(0));
-               editor.putString("f2",pregf.get(1));
-               editor.putString("f3",pregf.get(2));
-               editor.putString("f4",pregf.get(3));
-               editor.commit();
-           } catch (Exception e) {
-             //  Toast.makeText(getApplicationContext(),"No se puede obtener preguntas.", Toast.LENGTH_SHORT).show();
-           }
+            res = pedir.executeQuery("SELECT Texto FROM Preguntas_db WHERE TIPO='Fin'");
+            while (res.next()) {
+                pregf.add(res.getString("Texto"));
+            }
+            res.close();
+            editor.putString("f1", pregf.get(0));
+            editor.putString("f2", pregf.get(1));
+            editor.putString("f3", pregf.get(2));
+            editor.putString("f4", pregf.get(3));
+            editor.commit();
+        } catch (Exception e) {
+            //  Toast.makeText(getApplicationContext(),"No se puede obtener preguntas.", Toast.LENGTH_SHORT).show();
+        }
+    }
+////////////////////////////////////////////////////////
+
+    //////////////////////////Metodos del contador de pasos para que funcionen correctamente////////////////////////////////
+    public int obtenervalor() {
+        int r = 0;
+        SharedPreferences data = getSharedPreferences("Valor", getApplicationContext().MODE_PRIVATE);//instancio el objeto para obtener usuario
+        r = (data.getInt("1", 2));//OOOJOOOOOOOOOOOOOOOO IMPORTANTEEEEE!!!!!!!!!!!!!!!!!!! EL VALOR DEFAULT
+        return r;
     }
 
+    public void cambiarvalor() {
+        int ant = obtenervalor();
+        SharedPreferences val = getSharedPreferences("Valor", getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = val.edit();
+        editor.putInt("1", ant + 1);
+        editor.commit();
+        StepDetector.val = ant + 1;
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 }
-
